@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>News & Updates — JWPA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --crimson:       #7f181b;
+      --crimson-dark:  #5e1114;
+      --crimson-light: #a52024;
+      --crimson-mist:  #fdf2f2;
+      --navy:          #0f172a;
+      --slate:         #334155;
+      --muted:         #64748b;
+      --muted-light:   #94a3b8;
+      --border:        #e2e8f0;
+      --border-light:  #f1f5f9;
+      --bg:            #f8fafc;
+      --white:         #ffffff;
+      --font-display:  'Playfair Display', Georgia, serif;
+      --font-body:     'Outfit', system-ui, sans-serif;
+      --container:     1160px;
+      --radius-sm:     8px;
+      --radius:        12px;
+      --radius-lg:     20px;
+      --shadow-sm:     0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+      --shadow:        0 4px 16px rgba(15,23,42,.07), 0 1px 4px rgba(15,23,42,.04);
+      --shadow-md:     0 12px 32px rgba(15,23,42,.10), 0 2px 8px rgba(15,23,42,.05);
+      --shadow-lg:     0 24px 48px rgba(15,23,42,.13), 0 4px 12px rgba(15,23,42,.06);
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 15px; line-height: 1.65;
+      color: var(--slate); background: var(--white);
+      -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    :focus-visible { outline: 3px solid rgba(127,24,27,.3); outline-offset: 3px; border-radius: 4px; }
+    .container { max-width: var(--container); margin: 0 auto; padding: 0 2rem; }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: .45rem; font-family: var(--font-body); font-weight: 600;
+      border: none; border-radius: var(--radius-sm); cursor: pointer;
+      line-height: 1; white-space: nowrap; transition: all .2s ease;
+    }
+    .btn-sm  { padding: .5rem 1.1rem;  font-size: .8rem; }
+    .btn-md  { padding: .7rem 1.5rem;  font-size: .875rem; }
+    .btn-lg  { padding: .875rem 2rem;  font-size: .9rem; }
+    .btn-primary { background: var(--crimson); color: var(--white); box-shadow: 0 2px 8px rgba(127,24,27,.3); }
+    .btn-primary:hover { background: var(--crimson-dark); transform: translateY(-1px); }
+    .btn-outline { background: var(--white); color: var(--navy); border: 1.5px solid var(--border); }
+    .btn-outline:hover { border-color: var(--muted-light); background: var(--bg); transform: translateY(-1px); }
+    .btn-ghost { background: rgba(255,255,255,.12); color: var(--white); border: 1.5px solid rgba(255,255,255,.25); }
+    .btn-ghost:hover { background: rgba(255,255,255,.2); }
+    .btn-white { background: var(--white); color: var(--crimson); font-weight: 700; padding: .7rem 1.75rem; font-size: .875rem; border-radius: var(--radius-sm); display: inline-flex; align-items: center; transition: all .2s; }
+    .btn-white:hover { background: var(--bg); transform: translateY(-1px); }
+
+    /* ── Type ── */
+    .section-label {
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-size: .68rem; font-weight: 700; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--crimson); margin-bottom: 1rem;
+    }
+    .section-label::before {
+      content: ''; display: block; width: 22px; height: 2px;
+      background: var(--crimson); border-radius: 2px; flex-shrink: 0;
+    }
+    .section-heading {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3vw, 2.25rem);
+      font-weight: 800; color: var(--navy);
+      letter-spacing: -.02em; line-height: 1.15; margin-bottom: .75rem;
+    }
+
+    /* ══════════════════════════════════════════
+       NAVIGATION
+    ══════════════════════════════════════════ */
+    #navbar {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; height: 66px;
+      max-width: var(--container); margin: 0 auto; padding: 0 2rem; gap: 2rem;
+    }
+    .nav-brand { display: flex; flex-direction: column; line-height: 1.2; flex-shrink: 0; }
+    .nav-brand-name { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; color: var(--navy); }
+    .nav-brand-sub { font-size: .58rem; font-weight: 600; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+    .nav-links { display: flex; align-items: center; gap: .15rem; list-style: none; flex: 1; }
+    .nav-item { position: relative; }
+    .nav-link {
+      display: inline-flex; align-items: center; gap: .3rem; padding: .45rem .8rem;
+      border-radius: 6px; font-size: .775rem; font-weight: 600; color: var(--muted);
+      letter-spacing: .03em; text-transform: uppercase; transition: all .18s;
+      cursor: pointer; user-select: none;
+    }
+    .nav-link:hover, .nav-item:hover .nav-link, .nav-item.open .nav-link { color: var(--navy); background: var(--bg); }
+    .nav-link.active { color: var(--crimson); }
+    .nav-chevron { width: 11px; height: 11px; transition: transform .2s; flex-shrink: 0; }
+    .nav-item:hover .nav-chevron, .nav-item.open .nav-chevron { transform: rotate(180deg); }
+    .dropdown {
+      display: none; position: absolute; top: calc(100% + 6px); left: 0;
+      min-width: 210px; background: var(--white); border: 1.5px solid var(--border);
+      border-radius: var(--radius); box-shadow: var(--shadow-md);
+      padding: .5rem; z-index: 300; animation: dropFade .15s ease;
+    }
+    @keyframes dropFade { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+    .nav-item:hover .dropdown, .nav-item.open .dropdown { display: block; }
+    .dropdown a { display: block; padding: .625rem 1rem; font-size: .85rem; font-weight: 500; color: var(--slate); border-radius: 8px; transition: all .15s; white-space: nowrap; }
+    .dropdown a:hover { background: var(--bg); color: var(--crimson); }
+    .dropdown-divider { height: 1px; background: var(--border-light); margin: .4rem .5rem; }
+    .nav-actions { display: flex; align-items: center; gap: .65rem; flex-shrink: 0; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: .5rem; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--navy); border-radius: 2px; }
+    .mobile-menu {
+      display: none; position: fixed; top: 66px; left: 0; right: 0;
+      background: var(--white); border-top: 1px solid var(--border);
+      box-shadow: var(--shadow-lg); padding: 1rem 2rem 2rem;
+      z-index: 199; max-height: calc(100vh - 66px); overflow-y: auto;
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu a { display: block; padding: .7rem 0; font-size: .95rem; font-weight: 600; color: var(--slate); border-bottom: 1px solid var(--border-light); }
+    .mobile-menu a:hover { color: var(--crimson); }
+    .mobile-group-label { font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted-light); padding: .875rem 0 .35rem; }
+    .mobile-sub a { padding: .5rem 1rem; font-size: .875rem; font-weight: 500; color: var(--muted); }
+
+    /* ══════════════════════════════════════════
+       PAGE HERO
+    ══════════════════════════════════════════ */
+    #page-hero {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 0 3.5rem;
+      position: relative; overflow: hidden;
+    }
+    #page-hero::before {
+      content: '';
+      position: absolute; top: -120px; right: -80px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(127,24,27,.045) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-label {
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-size: .68rem; font-weight: 700; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--crimson); margin-bottom: 1rem;
+    }
+    .hero-label::before { content: ''; display: block; width: 22px; height: 2px; background: var(--crimson); border-radius: 2px; }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800; color: var(--navy);
+      letter-spacing: -.02em; line-height: 1.1; margin-bottom: .875rem;
+    }
+    .hero-desc { font-size: 1rem; color: var(--muted); line-height: 1.75; max-width: 560px; }
+
+    /* ══════════════════════════════════════════
+       FEATURED ARTICLE — top story
+    ══════════════════════════════════════════ */
+    #featured {
+      padding: 5rem 0 4rem;
+      background: var(--white);
+    }
+
+    .featured-article {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      box-shadow: var(--shadow);
+      transition: box-shadow .25s;
+    }
+    .featured-article:hover { box-shadow: var(--shadow-md); }
+
+    /* Left: content */
+    .featured-body { padding: 2.75rem 3rem; display: flex; flex-direction: column; justify-content: center; }
+
+    .article-category {
+      display: inline-flex; align-items: center; gap: .4rem;
+      background: var(--crimson-mist);
+      border: 1.5px solid rgba(127,24,27,.12);
+      border-radius: 20px;
+      padding: .25rem .75rem;
+      font-size: .6rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--crimson); margin-bottom: .875rem;
+      width: fit-content;
+    }
+    .article-date {
+      font-size: .72rem; font-weight: 600;
+      color: var(--muted-light); letter-spacing: .06em;
+      text-transform: uppercase; margin-bottom: .5rem;
+    }
+    .featured-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.35rem, 2.5vw, 1.9rem);
+      font-weight: 800; color: var(--navy);
+      letter-spacing: -.02em; line-height: 1.2; margin-bottom: .875rem;
+    }
+    .featured-excerpt {
+      font-size: .925rem; color: var(--muted);
+      line-height: 1.8; margin-bottom: 1.75rem; flex: 1;
+    }
+    .read-more {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-size: .8rem; font-weight: 700; color: var(--crimson);
+      transition: gap .15s;
+    }
+    .read-more:hover { gap: .7rem; }
+    .read-more svg { width: 14px; height: 14px; }
+
+    /* Right: image */
+    .featured-image {
+      background: var(--border-light);
+      border-left: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .featured-image img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+    .featured-image-placeholder {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: .65rem; color: var(--muted-light);
+    }
+    .featured-image-placeholder svg { width: 36px; height: 36px; }
+    .featured-image-placeholder span { font-size: .65rem; font-weight: 600; text-align: center; padding: 0 1.5rem; }
+
+    /* ══════════════════════════════════════════
+       NEWS GRID
+    ══════════════════════════════════════════ */
+    #news-grid {
+      padding: 4rem 0 5rem;
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+
+    .news-header {
+      display: flex; align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;
+    }
+
+    /* Filter tabs */
+    .filter-tabs { display: flex; gap: .35rem; flex-wrap: wrap; }
+    .filter-tab {
+      padding: .4rem .9rem;
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      font-size: .75rem; font-weight: 600;
+      color: var(--muted); background: var(--white);
+      cursor: pointer; transition: all .18s;
+    }
+    .filter-tab:hover { border-color: var(--muted-light); color: var(--navy); }
+    .filter-tab.active { background: var(--crimson); color: var(--white); border-color: var(--crimson); }
+
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .news-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: box-shadow .25s, transform .25s, border-color .25s;
+      box-shadow: var(--shadow-sm);
+    }
+    .news-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+      border-color: rgba(127,24,27,.15);
+    }
+
+    /* Card image */
+    .news-card-image {
+      height: 160px;
+      background: var(--border-light);
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .news-card-image img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      position: absolute; inset: 0;
+    }
+    .news-card-image-placeholder {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: .5rem; color: var(--muted-light);
+      position: relative; z-index: 1;
+    }
+    .news-card-image-placeholder svg { width: 26px; height: 26px; }
+    .news-card-image-placeholder span { font-size: .62rem; font-weight: 600; }
+
+    /* Card top accent by category */
+    .news-card-bar { height: 3px; }
+    .bar-program   { background: var(--crimson); }
+    .bar-community { background: #0891b2; }
+    .bar-org       { background: var(--navy); }
+    .bar-advocacy  { background: #7c3aed; }
+
+    .news-card-body { padding: 1.35rem; flex: 1; display: flex; flex-direction: column; }
+    .news-card-meta {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: .5rem;
+    }
+    .news-card-category {
+      font-size: .6rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--crimson);
+    }
+    .news-card-date {
+      font-size: .68rem; color: var(--muted-light); font-weight: 600;
+    }
+    .news-card-title {
+      font-size: .95rem; font-weight: 700;
+      color: var(--navy); line-height: 1.35;
+      margin-bottom: .5rem;
+    }
+    .news-card-excerpt {
+      font-size: .8rem; color: var(--muted);
+      line-height: 1.65; flex: 1; margin-bottom: 1rem;
+    }
+    .news-card-link {
+      font-size: .78rem; font-weight: 700; color: var(--crimson);
+      display: inline-flex; align-items: center; gap: .35rem;
+      transition: gap .15s; align-self: flex-start;
+    }
+    .news-card-link:hover { gap: .6rem; }
+    .news-card-link svg { width: 12px; height: 12px; }
+
+    /* ══════════════════════════════════════════
+       NEWSLETTER STRIP
+    ══════════════════════════════════════════ */
+    #newsletter-strip {
+      padding: 3.5rem 0;
+      background: var(--white);
+      border-top: 1px solid var(--border);
+    }
+    .nl-card {
+      background: var(--navy);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 3rem; align-items: center;
+      position: relative; overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    .nl-card::before {
+      content: ''; position: absolute; top: -80px; right: -60px;
+      width: 320px; height: 320px;
+      background: radial-gradient(circle, rgba(127,24,27,.3), transparent 65%);
+      pointer-events: none;
+    }
+    .nl-eyebrow {
+      font-size: .63rem; font-weight: 700;
+      letter-spacing: .16em; text-transform: uppercase;
+      color: var(--crimson-light); margin-bottom: .6rem;
+    }
+    .nl-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem; font-weight: 800;
+      color: var(--white); line-height: 1.2; margin-bottom: .4rem;
+    }
+    .nl-desc { font-size: .875rem; color: rgba(255,255,255,.5); }
+    .nl-form {
+      display: flex; gap: .65rem;
+      flex-shrink: 0; position: relative; z-index: 1;
+      flex-wrap: wrap;
+    }
+    .nl-input {
+      padding: .75rem 1.1rem;
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: var(--radius-sm);
+      background: rgba(255,255,255,.08);
+      font-family: var(--font-body); font-size: .875rem;
+      color: var(--white); min-width: 220px;
+      transition: border-color .18s;
+    }
+    .nl-input::placeholder { color: rgba(255,255,255,.3); }
+    .nl-input:focus { outline: none; border-color: rgba(255,255,255,.35); }
+
+    /* ══════════════════════════════════════════
+       SUBMIT NEWS CTA
+    ══════════════════════════════════════════ */
+    #submit-news {
+      padding: 3rem 0;
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+    .submit-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem 2.5rem;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+      box-shadow: var(--shadow-sm);
+    }
+    .submit-icon {
+      width: 46px; height: 46px; flex-shrink: 0;
+      background: var(--crimson-mist); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--crimson);
+    }
+    .submit-icon svg { width: 21px; height: 21px; }
+    .submit-title { font-size: .975rem; font-weight: 700; color: var(--navy); margin-bottom: .2rem; }
+    .submit-desc  { font-size: .825rem; color: var(--muted); }
+
+    /* ══════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════ */
+    footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,.06); padding: 4rem 0 2rem; color: rgba(255,255,255,.55); }
+    .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.3fr; gap: 2.5rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,.07); margin-bottom: 1.75rem; }
+    .footer-brand-name { font-family: var(--font-display); font-size: 1.2rem; font-weight: 800; color: var(--white); margin-bottom: .4rem; }
+    .footer-brand-sub { font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; color: rgba(255,255,255,.3); margin-bottom: .875rem; }
+    .footer-brand-desc { font-size: .82rem; line-height: 1.7; max-width: 240px; }
+    .footer-col h4 { font-size: .65rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.9); margin-bottom: 1.1rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+    .footer-col a { font-size: .83rem; transition: color .15s; }
+    .footer-col a:hover { color: var(--white); }
+    .footer-nl { display: flex; gap: .5rem; margin-bottom: .6rem; }
+    .footer-nl input { flex: 1; min-width: 0; padding: .625rem .875rem; border: 1px solid rgba(255,255,255,.12); border-radius: 7px; background: rgba(255,255,255,.06); font-family: var(--font-body); font-size: .82rem; color: var(--white); }
+    .footer-nl input::placeholder { color: rgba(255,255,255,.25); }
+    .footer-nl input:focus { outline: none; border-color: rgba(255,255,255,.3); }
+    .footer-nl-note { font-size: .7rem; color: rgba(255,255,255,.3); line-height: 1.55; }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom p { font-size: .78rem; }
+
+    .toast { position: fixed; bottom: 1.75rem; right: 1.75rem; background: var(--navy); color: var(--white); padding: .875rem 1.25rem; border-radius: 10px; box-shadow: var(--shadow-lg); font-size: .83rem; font-weight: 600; display: flex; align-items: center; gap: .65rem; z-index: 999; transform: translateY(80px); opacity: 0; transition: all .35s cubic-bezier(.34,1.56,.64,1); max-width: 320px; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast-icon { width: 22px; height: 22px; background: var(--crimson); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .toast-icon svg { width: 11px; height: 11px; color: var(--white); }
+
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .55s ease, transform .55s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 980px) {
+      .featured-article { grid-template-columns: 1fr; }
+      .featured-image   { display: none; }
+      .featured-body    { padding: 2rem; }
+      .articles-grid    { grid-template-columns: 1fr 1fr; }
+      .nl-card          { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-grid      { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .nav-links, .nav-actions { display: none; }
+      .hamburger      { display: flex; }
+      .articles-grid  { grid-template-columns: 1fr; }
+      .submit-card    { flex-direction: column; align-items: flex-start; }
+      .footer-grid    { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════ NAV ══ -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <span class="nav-brand-name">JWPA</span>
+        <span class="nav-brand-sub">Jersey Women Physician Alliance</span>
+      </a>
+      <ul class="nav-links">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item" id="navAbout">
+          <span class="nav-link" tabindex="0">About Us
+            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+          <div class="dropdown">
+            <a href="about.html">About JWPA</a>
+            <a href="mission.html">Mission Statement</a>
+            <a href="founder.html">The Founder</a>
+            <div class="dropdown-divider"></div>
+            <a href="leadership.html">Leadership Team</a>
+            <a href="partners.html">Partners</a>
+          </div>
+        </li>
+        <li class="nav-item" id="navPrograms">
+          <span class="nav-link" tabindex="0">Programs
+            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+          <div class="dropdown">
+            <a href="programs.html">All Programs</a>
+            <div class="dropdown-divider"></div>
+            <a href="tws.html">Teens With Stethoscopes</a>
+            <a href="mentorship.html">Mentorship Circles</a>
+          </div>
+        </li>
+        <li class="nav-item" id="navEvents">
+          <span class="nav-link" tabindex="0">Events
+            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+          <div class="dropdown">
+            <a href="calendar.html">Calendar</a>
+            <a href="past-events.html">Past Events</a>
+            <div class="dropdown-divider"></div>
+            <a href="volunteer.html">Volunteer</a>
+            <a href="sponsorship.html">Sponsorship</a>
+          </div>
+        </li>
+        <li class="nav-item" id="navMedia">
+          <span class="nav-link active" tabindex="0">Media
+            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+          <div class="dropdown">
+            <a href="physician-of-the-month.html">Physician of the Month</a>
+            <a href="news.html">News</a>
+            <a href="press.html">Press</a>
+            <div class="dropdown-divider"></div>
+            <a href="resources.html">Resources &amp; Downloads</a>
+            <a href="photo-gallery.html">Photo Gallery</a>
+          </div>
+        </li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="contact.html" class="btn btn-primary btn-sm">Join JWPA</a>
+        <a href="donate.html"  class="btn btn-outline btn-sm">Donate</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <div class="mobile-group-label">About Us</div>
+    <div class="mobile-sub">
+      <a href="about.html">About JWPA</a>
+      <a href="mission.html">Mission Statement</a>
+      <a href="founder.html">The Founder</a>
+      <a href="leadership.html">Leadership Team</a>
+      <a href="partners.html">Partners</a>
+    </div>
+    <div class="mobile-group-label">Programs</div>
+    <div class="mobile-sub">
+      <a href="programs.html">All Programs</a>
+      <a href="tws.html">Teens With Stethoscopes</a>
+      <a href="mentorship.html">Mentorship Circles</a>
+    </div>
+    <div class="mobile-group-label">Events</div>
+    <div class="mobile-sub">
+      <a href="calendar.html">Calendar</a>
+      <a href="past-events.html">Past Events</a>
+      <a href="volunteer.html">Volunteer</a>
+      <a href="sponsorship.html">Sponsorship</a>
+    </div>
+    <div class="mobile-group-label">Media</div>
+    <div class="mobile-sub">
+      <a href="physician-of-the-month.html">Physician of the Month</a>
+      <a href="news.html">News</a>
+      <a href="press.html">Press</a>
+      <a href="resources.html">Resources &amp; Downloads</a>
+      <a href="photo-gallery.html">Photo Gallery</a>
+    </div>
+    <a href="contact.html">Contact</a>
+    <a href="donate.html" style="color:var(--crimson)">Donate</a>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       PAGE HERO
+  ══════════════════════════════════════════ -->
+  <section id="page-hero">
+    <div class="container">
+      <div class="hero-label reveal">Media</div>
+      <h1 class="hero-title reveal">News &amp; Updates</h1>
+      <p class="hero-desc reveal">
+        The latest from the Jersey Women Physician Alliance — program updates,
+        member highlights, and announcements from across the organization.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       FEATURED ARTICLE
+  ══════════════════════════════════════════ -->
+  <section id="featured">
+    <div class="container">
+      <div class="section-label reveal">Top Story</div>
+      <h2 class="section-heading reveal" style="margin-bottom:1.75rem">Latest from JWPA</h2>
+
+      <!--
+        HOW TO UPDATE:
+        Replace the article-date, article-category, featured-title,
+        featured-excerpt, and the image src each time you post a new top story.
+        The image column is hidden on mobile automatically.
+      -->
+      <div class="featured-article reveal">
+        <div class="featured-body">
+          <div class="article-category">Programs</div>
+          <div class="article-date">April 2026</div>
+          <div class="featured-title">TWS 2026 Applications Are Now Open</div>
+          <p class="featured-excerpt">
+            High school students across New Jersey can now apply for the 2026 Teens
+            With Stethoscopes program — a free, one-day immersive experience introducing
+            students to medicine through clinical stations, physician panels, and mentorship.
+            Space is limited and the program fills quickly. Students interested in a future
+            in healthcare are encouraged to apply early.
+          </p>
+          <a href="tws.html" class="read-more">
+            Learn about TWS
+            <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+        <div class="featured-image">
+          <img src="NEWS-FEATURED-IMAGE.jpg" alt="TWS 2026" onerror="this.style.display='none'" />
+          <div class="featured-image-placeholder">
+            <svg fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24">
+              <rect x="3" y="3" width="18" height="18" rx="3"/>
+              <path d="M3 15l4-4 3 3 4-5 4 6"/><circle cx="8.5" cy="8.5" r="1.5"/>
+            </svg>
+            <span>Replace src="NEWS-FEATURED-IMAGE.jpg"</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       NEWS GRID
+  ══════════════════════════════════════════ -->
+  <section id="news-grid">
+    <div class="container">
+
+      <div class="news-header">
+        <div>
+          <div class="section-label reveal">All Articles</div>
+          <h2 class="section-heading reveal" style="margin-bottom:0">Recent news</h2>
+        </div>
+        <div class="filter-tabs reveal">
+          <button class="filter-tab active" onclick="filterNews('all', this)">All</button>
+          <button class="filter-tab" onclick="filterNews('program', this)">Programs</button>
+          <button class="filter-tab" onclick="filterNews('org', this)">Organization</button>
+          <button class="filter-tab" onclick="filterNews('community', this)">Community</button>
+        </div>
+      </div>
+
+      <!--
+        HOW TO ADD AN ARTICLE:
+        Copy one .news-card div, update data-category to match a filter tab,
+        change the bar class (bar-program, bar-org, bar-community, bar-advocacy),
+        update the category label, date, title, excerpt, and link href.
+        To add an image, replace the placeholder img src.
+      -->
+      <div class="articles-grid" id="articleGrid">
+
+        <!-- Article 1 -->
+        <div class="news-card reveal" data-category="program">
+          <div class="news-card-image">
+            <img src="NEWS-IMAGE-1.jpg" alt="" onerror="this.style.display='none'" />
+            <div class="news-card-image-placeholder">
+              <svg fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 15l4-4 3 3 4-5 4 6"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>
+              <span>Add image</span>
+            </div>
+          </div>
+          <div class="news-card-bar bar-program"></div>
+          <div class="news-card-body">
+            <div class="news-card-meta">
+              <span class="news-card-category">Programs</span>
+              <span class="news-card-date">April 2026</span>
+            </div>
+            <div class="news-card-title">TWS 2026 Applications Now Open</div>
+            <p class="news-card-excerpt">NJ high school students can now apply for the 2026 Teens With Stethoscopes immersion program. Space is limited — apply early.</p>
+            <a href="tws.html" class="news-card-link">
+              Read more
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Article 2 -->
+        <div class="news-card reveal" data-category="org">
+          <div class="news-card-image">
+            <img src="NEWS-IMAGE-2.jpg" alt="" onerror="this.style.display='none'" />
+            <div class="news-card-image-placeholder">
+              <svg fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 15l4-4 3 3 4-5 4 6"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>
+              <span>Add image</span>
+            </div>
+          </div>
+          <div class="news-card-bar bar-org"></div>
+          <div class="news-card-body">
+            <div class="news-card-meta">
+              <span class="news-card-category">Organization</span>
+              <span class="news-card-date">March 2026</span>
+            </div>
+            <div class="news-card-title">JWPA Welcomes New Board Members</div>
+            <p class="news-card-excerpt">JWPA is pleased to announce new additions to the Leadership Team, bringing expanded expertise and leadership to the organization.</p>
+            <a href="leadership.html" class="news-card-link">
+              Meet the board
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Article 3 -->
+        <div class="news-card reveal" data-category="org">
+          <div class="news-card-image">
+            <img src="NEWS-IMAGE-3.jpg" alt="" onerror="this.style.display='none'" />
+            <div class="news-card-image-placeholder">
+              <svg fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 15l4-4 3 3 4-5 4 6"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>
+              <span>Add image</span>
+            </div>
+          </div>
+          <div class="news-card-bar bar-org"></div>
+          <div class="news-card-body">
+            <div class="news-card-meta">
+              <span class="news-card-category">Organization</span>
+              <span class="news-card-date">October 2025</span>
+            </div>
+            <div class="news-card-title">Annual Gala 2025 — Save the Date</div>
+            <p class="news-card-excerpt">The JWPA Annual Celebration &amp; Awards Dinner will be held October 10, 2025 at Akbar Restaurant in Edison, NJ. Registration is open.</p>
+            <a href="calendar.html" class="news-card-link">
+              View event details
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Article 4 -->
+        <div class="news-card reveal" data-category="program">
+          <div class="news-card-image">
+            <img src="NEWS-IMAGE-4.jpg" alt="" onerror="this.style.display='none'" />
+            <div class="news-card-image-placeholder">
+              <svg fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 15l4-4 3 3 4-5 4 6"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>
+              <span>Add image</span>
+            </div>
+          </div>
+          <div class="news-card-bar bar-program"></div>
+          <div class="news-card-body">
+            <div class="news-card-meta">
+              <span class="news-card-category">Programs</span>
+              <span class="news-card-date">March 2026</span>
+            </div>
+            <div class="news-card-title">TWS Inaugural Event 2026 Recap</div>
+            <p class="news-card-excerpt">On March 21, 2026, JWPA hosted the first-ever Teens With Stethoscopes event — a milestone day for students, physicians, and the community.</p>
+            <a href="past-events.html" class="news-card-link">
+              See the recap
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Article 5 -->
+        <div class="news-card reveal" data-category="community">
+          <div class="news-card-image">
+            <img src="NEWS-IMAGE-5.jpg" alt="" onerror="this.style.display='none'" />
+            <div class="news-card-image-placeholder">
+              <svg fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 15l4-4 3 3 4-5 4 6"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>
+              <span>Add image</span>
+            </div>
+          </div>
+          <div class="news-card-bar bar-community"></div>
+          <div class="news-card-body">
+            <div class="news-card-meta">
+              <span class="news-card-category">Community</span>
+              <span class="news-card-date">February 2026</span>
+            </div>
+            <div class="news-card-title">JWPA Partners with Allied Digestive Health</div>
+            <p class="news-card-excerpt">JWPA welcomes Allied Digestive Health as a valued partner, reflecting a shared commitment to advancing women in specialty medicine across NJ.</p>
+            <a href="partners.html" class="news-card-link">
+              Learn about our partners
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Article 6 -->
+        <div class="news-card reveal" data-category="org">
+          <div class="news-card-image">
+            <img src="NEWS-IMAGE-6.jpg" alt="" onerror="this.style.display='none'" />
+            <div class="news-card-image-placeholder">
+              <svg fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 15l4-4 3 3 4-5 4 6"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>
+              <span>Add image</span>
+            </div>
+          </div>
+          <div class="news-card-bar bar-org"></div>
+          <div class="news-card-body">
+            <div class="news-card-meta">
+              <span class="news-card-category">Organization</span>
+              <span class="news-card-date">November 2018</span>
+            </div>
+            <div class="news-card-title">JWPA Founded by Dr. Sudha Nahar</div>
+            <p class="news-card-excerpt">In November 2018, Dr. Nahar founded the Jersey Women Physician Alliance with a singular belief: women in medicine are stronger together.</p>
+            <a href="founder.html" class="news-card-link">
+              Meet the founder
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       NEWSLETTER STRIP
+  ══════════════════════════════════════════ -->
+  <section id="newsletter-strip">
+    <div class="container">
+      <div class="nl-card reveal">
+        <div style="position:relative;z-index:1">
+          <div class="nl-eyebrow">Stay in the Loop</div>
+          <div class="nl-title">Get JWPA news delivered to your inbox</div>
+          <p class="nl-desc">Monthly updates on programs, events, member highlights, and more.</p>
+        </div>
+        <div class="nl-form">
+          <input type="email" id="nlEmail" class="nl-input" placeholder="Your email address" />
+          <button class="btn btn-white" onclick="submitNewsletter()">Subscribe</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       SUBMIT NEWS
+  ══════════════════════════════════════════ -->
+  <section id="submit-news">
+    <div class="container">
+      <div class="submit-card reveal">
+        <div class="submit-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+          </svg>
+        </div>
+        <div style="flex:1">
+          <div class="submit-title">Have a story to share?</div>
+          <p class="submit-desc">Member achievements, community impact, research milestones — send your news to info@jwpa.org and we'll consider it for a feature.</p>
+        </div>
+        <a href="mailto:info@jwpa.org?subject=JWPA+News+Submission" class="btn btn-primary btn-md">Submit a Story</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ FOOTER ══ -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand-name">JWPA</div>
+          <div class="footer-brand-sub">Jersey Women Physician Alliance</div>
+          <p class="footer-brand-desc">A physician-led nonprofit advancing women in medicine across New Jersey through mentorship, advocacy, and community outreach.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Organization</h4>
+          <ul>
+            <li><a href="about.html">About JWPA</a></li>
+            <li><a href="mission.html">Mission Statement</a></li>
+            <li><a href="founder.html">The Founder</a></li>
+            <li><a href="leadership.html">Leadership Team</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Get Involved</h4>
+          <ul>
+            <li><a href="contact.html">Join JWPA</a></li>
+            <li><a href="donate.html">Donate</a></li>
+            <li><a href="volunteer.html">Volunteer</a></li>
+            <li><a href="sponsorship.html">Sponsorship</a></li>
+            <li><a href="newsletter.html">Newsletter</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Stay Updated</h4>
+          <div class="footer-nl">
+            <input type="email" id="footerNl" placeholder="Your email address" />
+            <button class="btn btn-primary btn-sm" onclick="submitFooterNl()">Go</button>
+          </div>
+          <p class="footer-nl-note">Join our newsletter for events, programs, and opportunities.</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 JWPA. All rights reserved.</p>
+        <p>Jersey Women Physician Alliance &middot; New Jersey, USA</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast">
+    <div class="toast-icon"><svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+    <span id="toastMsg">Done!</span>
+  </div>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    document.querySelectorAll('.nav-item[id]').forEach(item => {
+      item.querySelector('.nav-link').addEventListener('click', e => {
+        e.stopPropagation();
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.nav-item[id]').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.nav-item[id]').forEach(i => i.classList.remove('open'));
+    });
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.07 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3800);
+    }
+
+    function filterNews(category, btn) {
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('#articleGrid .news-card').forEach(card => {
+        card.style.display = (category === 'all' || card.dataset.category === category) ? '' : 'none';
+      });
+    }
+
+    function submitNewsletter() {
+      const email = document.getElementById('nlEmail').value.trim();
+      if (!email || !email.includes('@')) { showToast('Please enter a valid email address.'); return; }
+      window.location.href = 'mailto:newsletter@jwpa.org?subject=Newsletter+Subscription&body=Please+add+me+to+the+JWPA+newsletter.+Email:+' + encodeURIComponent(email);
+      showToast('Request sent!');
+    }
+
+    function submitFooterNl() {
+      const email = document.getElementById('footerNl').value.trim();
+      if (!email || !email.includes('@')) { showToast('Please enter a valid email address.'); return; }
+      window.location.href = 'mailto:newsletter@jwpa.org?subject=Newsletter+Subscription&body=Please+add+me+to+the+JWPA+newsletter.+Email:+' + encodeURIComponent(email);
+      showToast('Request sent!');
+    }
+  </script>
+</body>
+</html>

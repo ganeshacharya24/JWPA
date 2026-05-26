@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Photo Gallery — JWPA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --crimson:       #7f181b;
+      --crimson-dark:  #5e1114;
+      --crimson-mist:  #fdf2f2;
+      --navy:          #0f172a;
+      --slate:         #334155;
+      --muted:         #64748b;
+      --muted-light:   #94a3b8;
+      --border:        #e2e8f0;
+      --border-light:  #f1f5f9;
+      --bg:            #f8fafc;
+      --white:         #ffffff;
+      --font-display:  'Playfair Display', Georgia, serif;
+      --font-body:     'Outfit', system-ui, sans-serif;
+      --container:     1160px;
+      --radius-sm:     8px;
+      --radius:        12px;
+      --radius-lg:     20px;
+      --shadow-sm:     0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+      --shadow:        0 4px 16px rgba(15,23,42,.07), 0 1px 4px rgba(15,23,42,.04);
+      --shadow-md:     0 12px 32px rgba(15,23,42,.10), 0 2px 8px rgba(15,23,42,.05);
+      --shadow-lg:     0 24px 48px rgba(15,23,42,.13), 0 4px 12px rgba(15,23,42,.06);
+    }
+
+    body { font-family: var(--font-body); font-size: 15px; line-height: 1.65; color: var(--slate); background: var(--white); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+    :focus-visible { outline: 3px solid rgba(127,24,27,.3); outline-offset: 3px; border-radius: 4px; }
+    .container { max-width: var(--container); margin: 0 auto; padding: 0 2rem; }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: .45rem; font-family: var(--font-body); font-weight: 600; border: none; border-radius: var(--radius-sm); cursor: pointer; line-height: 1; white-space: nowrap; transition: all .2s ease; }
+    .btn-sm  { padding: .5rem 1.1rem; font-size: .8rem; }
+    .btn-md  { padding: .7rem 1.5rem; font-size: .875rem; }
+    .btn-lg  { padding: .875rem 2rem; font-size: .9rem; }
+    .btn-primary { background: var(--crimson); color: var(--white); box-shadow: 0 2px 8px rgba(127,24,27,.3); }
+    .btn-primary:hover { background: var(--crimson-dark); transform: translateY(-1px); }
+    .btn-outline { background: var(--white); color: var(--navy); border: 1.5px solid var(--border); }
+    .btn-outline:hover { border-color: var(--muted-light); background: var(--bg); transform: translateY(-1px); }
+
+    /* ── NAV ── */
+    #navbar { position: sticky; top: 0; z-index: 200; background: rgba(255,255,255,.96); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-inner { display: flex; align-items: center; height: 66px; max-width: var(--container); margin: 0 auto; padding: 0 2rem; gap: 2rem; }
+    .nav-brand { display: flex; flex-direction: column; line-height: 1.2; flex-shrink: 0; }
+    .nav-brand-name { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; color: var(--navy); }
+    .nav-brand-sub { font-size: .58rem; font-weight: 600; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+    .nav-links { display: flex; align-items: center; gap: .15rem; list-style: none; flex: 1; }
+    .nav-item { position: relative; }
+    .nav-link { display: inline-flex; align-items: center; gap: .3rem; padding: .45rem .8rem; border-radius: 6px; font-size: .775rem; font-weight: 600; color: var(--muted); letter-spacing: .03em; text-transform: uppercase; transition: all .18s; cursor: pointer; user-select: none; }
+    .nav-link:hover, .nav-item:hover .nav-link, .nav-item.open .nav-link { color: var(--navy); background: var(--bg); }
+    .nav-link.active { color: var(--crimson); }
+    .nav-chevron { width: 11px; height: 11px; transition: transform .2s; flex-shrink: 0; }
+    .nav-item:hover .nav-chevron, .nav-item.open .nav-chevron { transform: rotate(180deg); }
+    .dropdown { display: none; position: absolute; top: calc(100% + 6px); left: 0; min-width: 210px; background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-md); padding: .5rem; z-index: 300; animation: dropFade .15s ease; }
+    @keyframes dropFade { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+    .nav-item:hover .dropdown, .nav-item.open .dropdown { display: block; }
+    .dropdown a { display: block; padding: .625rem 1rem; font-size: .85rem; font-weight: 500; color: var(--slate); border-radius: 8px; transition: all .15s; white-space: nowrap; }
+    .dropdown a:hover { background: var(--bg); color: var(--crimson); }
+    .dropdown-divider { height: 1px; background: var(--border-light); margin: .4rem .5rem; }
+    .nav-actions { display: flex; align-items: center; gap: .65rem; flex-shrink: 0; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: .5rem; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--navy); border-radius: 2px; }
+    .mobile-menu { display: none; position: fixed; top: 66px; left: 0; right: 0; background: var(--white); border-top: 1px solid var(--border); box-shadow: var(--shadow-lg); padding: 1rem 2rem 2rem; z-index: 199; max-height: calc(100vh - 66px); overflow-y: auto; }
+    .mobile-menu.open { display: block; }
+    .mobile-menu a { display: block; padding: .7rem 0; font-size: .95rem; font-weight: 600; color: var(--slate); border-bottom: 1px solid var(--border-light); }
+    .mobile-menu a:hover { color: var(--crimson); }
+    .mobile-group-label { font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted-light); padding: .875rem 0 .35rem; }
+    .mobile-sub a { padding: .5rem 1rem; font-size: .875rem; font-weight: 500; color: var(--muted); }
+
+    /* ── HERO ── */
+    #page-hero { background: var(--bg); border-bottom: 1px solid var(--border); padding: 4rem 0 3.5rem; position: relative; overflow: hidden; }
+    #page-hero::before { content: ''; position: absolute; top: -120px; right: -80px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(127,24,27,.045) 0%, transparent 70%); pointer-events: none; }
+    .hero-label { display: inline-flex; align-items: center; gap: .6rem; font-size: .68rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--crimson); margin-bottom: 1rem; }
+    .hero-label::before { content: ''; display: block; width: 22px; height: 2px; background: var(--crimson); border-radius: 2px; }
+    .hero-title { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; color: var(--navy); letter-spacing: -.02em; line-height: 1.1; margin-bottom: .875rem; }
+    .hero-desc { font-size: 1rem; color: var(--muted); line-height: 1.75; max-width: 560px; }
+
+    /* ══════════════════════════════════════════
+       GALLERY SHELL
+    ══════════════════════════════════════════ */
+    #gallery-section { padding: 5rem 0; background: var(--white); }
+
+    /* ── Breadcrumb ── */
+    .breadcrumb {
+      display: flex; align-items: center; gap: .5rem;
+      flex-wrap: wrap; margin-bottom: 2rem;
+      font-size: .8rem; font-weight: 600; color: var(--muted);
+    }
+    .breadcrumb-item { cursor: pointer; transition: color .15s; }
+    .breadcrumb-item:hover { color: var(--crimson); }
+    .breadcrumb-item.active { color: var(--navy); cursor: default; }
+    .breadcrumb-sep { color: var(--border); }
+
+    /* ── View: Albums ── */
+    .album-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .album-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow .25s, transform .25s, border-color .25s;
+      box-shadow: var(--shadow-sm);
+    }
+    .album-card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); border-color: rgba(127,24,27,.2); }
+
+    .album-cover {
+      height: 240px;
+      background: var(--border-light);
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .album-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .album-cover-placeholder {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: .75rem; color: var(--muted-light);
+    }
+    .album-cover-placeholder svg { width: 48px; height: 48px; }
+    .album-cover-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(15,23,42,.7) 0%, transparent 55%);
+    }
+    .album-cover-label {
+      position: absolute; bottom: 1rem; left: 1.25rem;
+      font-size: .6rem; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: rgba(255,255,255,.75);
+    }
+
+    .album-body { padding: 1.5rem; }
+    .album-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 800; color: var(--navy); margin-bottom: .35rem; }
+    .album-desc  { font-size: .83rem; color: var(--muted); line-height: 1.6; margin-bottom: .875rem; }
+    .album-meta  { display: flex; align-items: center; justify-content: space-between; }
+    .album-count { font-size: .72rem; font-weight: 600; color: var(--muted-light); }
+    .album-arrow { font-size: .8rem; font-weight: 700; color: var(--crimson); display: flex; align-items: center; gap: .3rem; }
+    .album-arrow svg { width: 14px; height: 14px; }
+
+    /* ── View: Years ── */
+    .years-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+
+    .year-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      text-align: center;
+      cursor: pointer;
+      transition: box-shadow .25s, transform .25s, border-color .25s;
+      box-shadow: var(--shadow-sm);
+    }
+    .year-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); border-color: rgba(127,24,27,.2); }
+    .year-num { font-family: var(--font-display); font-size: 2.25rem; font-weight: 800; color: var(--navy); margin-bottom: .25rem; }
+    .year-event-count { font-size: .72rem; font-weight: 600; color: var(--muted-light); margin-bottom: .875rem; }
+    .year-link { font-size: .8rem; font-weight: 700; color: var(--crimson); display: inline-flex; align-items: center; gap: .35rem; }
+    .year-link svg { width: 13px; height: 13px; }
+
+    /* ── View: Months ── */
+    .months-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .month-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow .25s, transform .25s, border-color .25s;
+      box-shadow: var(--shadow-sm);
+    }
+    .month-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); border-color: rgba(127,24,27,.2); }
+
+    .month-thumb {
+      height: 140px;
+      background: var(--border-light);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted-light); position: relative; overflow: hidden;
+    }
+    .month-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .month-thumb-ph { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .4rem; }
+    .month-thumb-ph svg { width: 28px; height: 28px; }
+    .month-thumb-ph span { font-size: .62rem; font-weight: 600; }
+
+    .month-body { padding: 1rem 1.25rem; }
+    .month-name { font-size: .95rem; font-weight: 700; color: var(--navy); margin-bottom: .15rem; }
+    .month-event { font-size: .78rem; color: var(--muted); }
+
+    /* ── View: Photos ── */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: .875rem;
+    }
+
+    .photo-item {
+      aspect-ratio: 1;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: var(--border-light);
+      position: relative;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .photo-item:hover { transform: scale(1.03); box-shadow: var(--shadow-md); }
+    .photo-item img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform .3s;
+    }
+    .photo-item:hover img { transform: scale(1.07); }
+
+    /* Placeholder tile */
+    .photo-placeholder {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: .4rem; color: var(--muted-light);
+      font-size: .6rem; font-weight: 600; text-align: center;
+      padding: .5rem;
+    }
+    .photo-placeholder svg { width: 24px; height: 24px; }
+
+    /* Overlay on hover */
+    .photo-overlay {
+      position: absolute; inset: 0;
+      background: rgba(15,23,42,.45);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity .2s;
+    }
+    .photo-item:hover .photo-overlay { opacity: 1; }
+    .photo-overlay svg { width: 28px; height: 28px; color: var(--white); }
+
+    /* ── Section heading row ── */
+    .gallery-header {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;
+    }
+    .gallery-header-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; color: var(--navy); }
+
+    /* ══════════════════════════════════════════
+       LIGHTBOX
+    ══════════════════════════════════════════ */
+    #lightbox {
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(10,14,26,.92);
+      display: none; align-items: center; justify-content: center;
+      padding: 2rem;
+    }
+    #lightbox.open { display: flex; }
+    .lightbox-img {
+      max-width: 90vw; max-height: 85vh;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      display: block;
+    }
+    .lightbox-close {
+      position: absolute; top: 1.25rem; right: 1.5rem;
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+      border-radius: 50%; width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--white); transition: background .2s;
+    }
+    .lightbox-close:hover { background: rgba(255,255,255,.2); }
+    .lightbox-close svg { width: 18px; height: 18px; }
+    .lightbox-nav {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+      border-radius: 50%; width: 44px; height: 44px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--white); transition: background .2s;
+    }
+    .lightbox-nav:hover { background: rgba(255,255,255,.2); }
+    .lightbox-nav svg { width: 20px; height: 20px; }
+    #lightbox-prev { left: 1.25rem; }
+    #lightbox-next { right: 1.25rem; }
+    .lightbox-caption {
+      position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+      font-size: .8rem; font-weight: 600; color: rgba(255,255,255,.6);
+      white-space: nowrap;
+    }
+
+    /* ══════════════════════════════════════════
+       SUBMIT PHOTOS STRIP
+    ══════════════════════════════════════════ */
+    #submit-photos {
+      padding: 3.5rem 0;
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+    .submit-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem 2.5rem;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+      box-shadow: var(--shadow-sm);
+    }
+    .submit-icon { width: 46px; height: 46px; background: var(--crimson-mist); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--crimson); flex-shrink: 0; }
+    .submit-icon svg { width: 21px; height: 21px; }
+    .submit-title { font-size: .975rem; font-weight: 700; color: var(--navy); margin-bottom: .2rem; }
+    .submit-desc  { font-size: .825rem; color: var(--muted); }
+
+    /* ── FOOTER ── */
+    footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,.06); padding: 4rem 0 2rem; color: rgba(255,255,255,.55); }
+    .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.3fr; gap: 2.5rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,.07); margin-bottom: 1.75rem; }
+    .footer-brand-name { font-family: var(--font-display); font-size: 1.2rem; font-weight: 800; color: var(--white); margin-bottom: .4rem; }
+    .footer-brand-sub { font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; color: rgba(255,255,255,.3); margin-bottom: .875rem; }
+    .footer-brand-desc { font-size: .82rem; line-height: 1.7; max-width: 240px; }
+    .footer-col h4 { font-size: .65rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.9); margin-bottom: 1.1rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+    .footer-col a { font-size: .83rem; transition: color .15s; }
+    .footer-col a:hover { color: var(--white); }
+    .footer-nl { display: flex; gap: .5rem; margin-bottom: .6rem; }
+    .footer-nl input { flex: 1; min-width: 0; padding: .625rem .875rem; border: 1px solid rgba(255,255,255,.12); border-radius: 7px; background: rgba(255,255,255,.06); font-family: var(--font-body); font-size: .82rem; color: var(--white); }
+    .footer-nl input::placeholder { color: rgba(255,255,255,.25); }
+    .footer-nl input:focus { outline: none; border-color: rgba(255,255,255,.3); }
+    .footer-nl-note { font-size: .7rem; color: rgba(255,255,255,.3); line-height: 1.55; }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom p { font-size: .78rem; }
+
+    .toast { position: fixed; bottom: 1.75rem; right: 1.75rem; background: var(--navy); color: var(--white); padding: .875rem 1.25rem; border-radius: 10px; box-shadow: var(--shadow-lg); font-size: .83rem; font-weight: 600; display: flex; align-items: center; gap: .65rem; z-index: 999; transform: translateY(80px); opacity: 0; transition: all .35s cubic-bezier(.34,1.56,.64,1); max-width: 320px; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast-icon { width: 22px; height: 22px; background: var(--crimson); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .toast-icon svg { width: 11px; height: 11px; color: var(--white); }
+
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .55s ease, transform .55s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 980px) {
+      .years-grid  { grid-template-columns: 1fr 1fr; }
+      .photo-grid  { grid-template-columns: repeat(3, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .nav-links, .nav-actions { display: none; }
+      .hamburger   { display: flex; }
+      .album-grid  { grid-template-columns: 1fr; }
+      .years-grid  { grid-template-columns: 1fr 1fr; }
+      .months-grid { grid-template-columns: 1fr 1fr; }
+      .photo-grid  { grid-template-columns: repeat(2, 1fr); }
+      .submit-card { flex-direction: column; align-items: flex-start; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <span class="nav-brand-name">JWPA</span>
+        <span class="nav-brand-sub">Jersey Women Physician Alliance</span>
+      </a>
+      <ul class="nav-links">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item" id="navAbout">
+          <span class="nav-link" tabindex="0">About Us
+            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+          <div class="dropdown">
+            <a href="about.html">About JWPA</a>
+            <a href="mission.html">Mission Statement</a>
+            <a href="founder.html">The Founder</a>
+            <div class="dropdown-divider"></div>
+            <a href="leadership.html">Leadership Team</a>
+            <a href="partners.html">Partners</a>
+          </div>
+        </li>
+        <li class="nav-item" id="navPrograms">
+          <span class="nav-link" tabindex="0">Programs
+            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+          <div class="dropdown">
+            <a href="programs.html">All Programs</a>
+            <div class="dropdown-divider"></div>
+            <a href="tws.html">Teens With Stethoscopes</a>
+            <a href="mentorship.html">Mentorship Circles</a>
+          </div>
+        </li>
+        <li class="nav-item" id="navEvents">
+          <span class="nav-link" tabindex="0">Events
+            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+          <div class="dropdown">
+            <a href="calendar.html">Calendar</a>
+            <a href="past-events.html">Past Events</a>
+            <div class="dropdown-divider"></div>
+            <a href="volunteer.html">Volunteer</a>
+            <a href="sponsorship.html">Sponsorship</a>
+          </div>
+        </li>
+        <li class="nav-item" id="navMedia">
+          <span class="nav-link active" tabindex="0">Media
+            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+          <div class="dropdown">
+            <a href="physician-of-the-month.html">Physician of the Month</a>
+            <a href="news.html">News</a>
+            <a href="press.html">Press</a>
+            <div class="dropdown-divider"></div>
+            <a href="resources.html">Resources &amp; Downloads</a>
+            <a href="photo-gallery.html">Photo Gallery</a>
+          </div>
+        </li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="contact.html" class="btn btn-primary btn-sm">Join JWPA</a>
+        <a href="donate.html"  class="btn btn-outline btn-sm">Donate</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <div class="mobile-group-label">About Us</div>
+    <div class="mobile-sub">
+      <a href="about.html">About JWPA</a>
+      <a href="mission.html">Mission Statement</a>
+      <a href="founder.html">The Founder</a>
+      <a href="leadership.html">Leadership Team</a>
+      <a href="partners.html">Partners</a>
+    </div>
+    <div class="mobile-group-label">Programs</div>
+    <div class="mobile-sub">
+      <a href="programs.html">All Programs</a>
+      <a href="tws.html">Teens With Stethoscopes</a>
+      <a href="mentorship.html">Mentorship Circles</a>
+    </div>
+    <div class="mobile-group-label">Events</div>
+    <div class="mobile-sub">
+      <a href="calendar.html">Calendar</a>
+      <a href="past-events.html">Past Events</a>
+      <a href="volunteer.html">Volunteer</a>
+      <a href="sponsorship.html">Sponsorship</a>
+    </div>
+    <div class="mobile-group-label">Media</div>
+    <div class="mobile-sub">
+      <a href="physician-of-the-month.html">Physician of the Month</a>
+      <a href="news.html">News</a>
+      <a href="press.html">Press</a>
+      <a href="resources.html">Resources &amp; Downloads</a>
+      <a href="photo-gallery.html">Photo Gallery</a>
+    </div>
+    <a href="contact.html">Contact</a>
+    <a href="donate.html" style="color:var(--crimson)">Donate</a>
+  </div>
+
+  <!-- PAGE HERO -->
+  <section id="page-hero">
+    <div class="container">
+      <div class="hero-label reveal">Media</div>
+      <h1 class="hero-title reveal">Photo Gallery</h1>
+      <p class="hero-desc reveal">
+        Moments from JWPA events and TWS programs across New Jersey.
+        Browse by album, year, and month.
+      </p>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery-section">
+    <div class="container">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb" id="breadcrumb"></nav>
+
+      <!-- Gallery view container -->
+      <div id="gallery-view"></div>
+
+    </div>
+  </section>
+
+  <!-- SUBMIT PHOTOS -->
+  <section id="submit-photos">
+    <div class="container">
+      <div class="submit-card reveal">
+        <div class="submit-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+        </div>
+        <div style="flex:1">
+          <div class="submit-title">Were you at a JWPA event? Share your photos.</div>
+          <p class="submit-desc">Send photos to info@jwpa.org and we'll add them to the gallery. Please include the event name and date.</p>
+        </div>
+        <a href="mailto:info@jwpa.org?subject=Photo+Submission" class="btn btn-primary btn-md">Submit Photos</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand-name">JWPA</div>
+          <div class="footer-brand-sub">Jersey Women Physician Alliance</div>
+          <p class="footer-brand-desc">A physician-led nonprofit advancing women in medicine across New Jersey through mentorship, advocacy, and community outreach.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Organization</h4>
+          <ul>
+            <li><a href="about.html">About JWPA</a></li>
+            <li><a href="mission.html">Mission Statement</a></li>
+            <li><a href="founder.html">The Founder</a></li>
+            <li><a href="leadership.html">Leadership Team</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Get Involved</h4>
+          <ul>
+            <li><a href="contact.html">Join JWPA</a></li>
+            <li><a href="donate.html">Donate</a></li>
+            <li><a href="volunteer.html">Volunteer</a></li>
+            <li><a href="sponsorship.html">Sponsorship</a></li>
+            <li><a href="newsletter.html">Newsletter</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Stay Updated</h4>
+          <div class="footer-nl">
+            <input type="email" id="footerNl" placeholder="Your email address" />
+            <button class="btn btn-primary btn-sm" onclick="submitFooterNl()">Go</button>
+          </div>
+          <p class="footer-nl-note">Join our newsletter for events, programs, and opportunities.</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 JWPA. All rights reserved.</p>
+        <p>Jersey Women Physician Alliance &middot; New Jersey, USA</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast">
+    <div class="toast-icon"><svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+    <span id="toastMsg">Done!</span>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox">
+    <button class="lightbox-close" onclick="closeLightbox()">
+      <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <button class="lightbox-nav" id="lightbox-prev" onclick="lightboxNav(-1)">
+      <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+    <button class="lightbox-nav" id="lightbox-next" onclick="lightboxNav(1)">
+      <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+
+  <script>
+    /* ══════════════════════════════════════════
+       GALLERY DATA
+       ──────────────────────────────────────────
+       HOW TO ADD PHOTOS:
+       In each month's `photos` array, add objects like:
+       { src: 'your-photo.jpg', caption: 'Photo description' }
+       
+       HOW TO ADD A NEW MONTH:
+       Add to the relevant album's year, e.g.:
+       { month: 'April', event: 'Event Name', cover: 'cover.jpg', photos: [...] }
+       
+       HOW TO ADD A NEW YEAR:
+       Add to the relevant album's `years` array:
+       { year: '2027', months: [...] }
+       
+       HOW TO ADD A NEW ALBUM:
+       Copy one album object in the ALBUMS array below.
+    ══════════════════════════════════════════ */
+    const ALBUMS = [
+      {
+        id: 'jwpa',
+        title: 'JWPA Events',
+        desc: 'Annual galas, networking evenings, and community gatherings across New Jersey.',
+        cover: 'JWPA-COVER-PHOTO.jpg',
+        coverLabel: 'Annual Galas · Networking · Community',
+        years: [
+          {
+            year: '2025',
+            months: [
+              {
+                month: 'October',
+                event: 'JWPA Annual Gala 2025',
+                cover: 'JWPA-2025-10-COVER.jpg',
+                photos: [
+                  { src: 'JWPA-2025-10-01.jpg', caption: 'Annual Gala 2025 · October 2025' },
+                  { src: 'JWPA-2025-10-02.jpg', caption: 'Annual Gala 2025 · October 2025' },
+                  { src: 'JWPA-2025-10-03.jpg', caption: 'Annual Gala 2025 · October 2025' },
+                  { src: 'JWPA-2025-10-04.jpg', caption: 'Annual Gala 2025 · October 2025' },
+                  { src: 'JWPA-2025-10-05.jpg', caption: 'Annual Gala 2025 · October 2025' },
+                  { src: 'JWPA-2025-10-06.jpg', caption: 'Annual Gala 2025 · October 2025' },
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'tws',
+        title: 'Teens With Stethoscopes',
+        desc: 'Photos from TWS immersion days — students, physicians, and clinical stations across NJ.',
+        cover: 'TWS-COVER-PHOTO.jpg',
+        coverLabel: 'Student Immersion · Physician Panels',
+        years: [
+          {
+            year: '2026',
+            months: [
+              {
+                month: 'March',
+                event: 'TWS Inaugural Event — March 21, 2026',
+                cover: 'TWS-2026-03-COVER.jpg',
+                photos: [
+                  /*
+                    Replace these src values with your actual TWS photo filenames.
+                    All photos should be in the same folder as this HTML file.
+                    Example: { src: 'tws-2026-photo-1.jpg', caption: 'TWS students at clinical station · March 2026' }
+                  */
+                  { src: 'TWS-2026-03-01.jpg', caption: 'TWS Inaugural Event · March 21, 2026' },
+                  { src: 'TWS-2026-03-02.jpg', caption: 'TWS Inaugural Event · March 21, 2026' },
+                  { src: 'TWS-2026-03-03.jpg', caption: 'TWS Inaugural Event · March 21, 2026' },
+                  { src: 'TWS-2026-03-04.jpg', caption: 'TWS Inaugural Event · March 21, 2026' },
+                  { src: 'TWS-2026-03-05.jpg', caption: 'TWS Inaugural Event · March 21, 2026' },
+                  { src: 'TWS-2026-03-06.jpg', caption: 'TWS Inaugural Event · March 21, 2026' },
+                  { src: 'TWS-2026-03-07.jpg', caption: 'TWS Inaugural Event · March 21, 2026' },
+                  { src: 'TWS-2026-03-08.jpg', caption: 'TWS Inaugural Event · March 21, 2026' },
+                  { src: 'TWS-2026-03-09.jpg', caption: 'TWS Inaugural Event · March 21, 2026' },
+                  { src: 'TWS-2026-03-10.jpg', caption: 'TWS Inaugural Event · March 21, 2026' },
+                  { src: 'TWS-2026-03-11.jpg', caption: 'TWS Inaugural Event · March 21, 2026' },
+                  { src: 'TWS-2026-03-12.jpg', caption: 'TWS Inaugural Event · March 21, 2026' },
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ];
+
+    /* ══════════════════════════════════════════
+       STATE
+    ══════════════════════════════════════════ */
+    let state = { view: 'albums', albumId: null, year: null, month: null };
+    let lightboxPhotos = [];
+    let lightboxIndex  = 0;
+
+    /* ══════════════════════════════════════════
+       NAVIGATION
+    ══════════════════════════════════════════ */
+    function navigate(newState) {
+      state = { ...state, ...newState };
+      render();
+      window.scrollTo({ top: document.getElementById('gallery-section').offsetTop - 80, behavior: 'smooth' });
+    }
+
+    function render() {
+      renderBreadcrumb();
+      const view = document.getElementById('gallery-view');
+
+      if (state.view === 'albums') {
+        view.innerHTML = renderAlbums();
+      } else if (state.view === 'years') {
+        const album = ALBUMS.find(a => a.id === state.albumId);
+        view.innerHTML = renderYears(album);
+      } else if (state.view === 'months') {
+        const album = ALBUMS.find(a => a.id === state.albumId);
+        const year  = album.years.find(y => y.year === state.year);
+        view.innerHTML = renderMonths(album, year);
+      } else if (state.view === 'photos') {
+        const album = ALBUMS.find(a => a.id === state.albumId);
+        const year  = album.years.find(y => y.year === state.year);
+        const month = year.months.find(m => m.month === state.month);
+        view.innerHTML = renderPhotos(album, year, month);
+        lightboxPhotos = month.photos;
+      }
+    }
+
+    function renderBreadcrumb() {
+      const bc = document.getElementById('breadcrumb');
+      const items = [{ label: 'All Albums', view: 'albums', albumId: null, year: null, month: null }];
+
+      if (state.albumId) {
+        const album = ALBUMS.find(a => a.id === state.albumId);
+        items.push({ label: album.title, view: 'years', albumId: state.albumId, year: null, month: null });
+      }
+      if (state.year) {
+        items.push({ label: state.year, view: 'months', albumId: state.albumId, year: state.year, month: null });
+      }
+      if (state.month) {
+        items.push({ label: state.month, view: 'photos', albumId: state.albumId, year: state.year, month: state.month });
+      }
+
+      bc.innerHTML = items.map((item, i) => {
+        const isLast = i === items.length - 1;
+        return `
+          ${i > 0 ? '<span class="breadcrumb-sep">›</span>' : ''}
+          <span class="breadcrumb-item ${isLast ? 'active' : ''}"
+            onclick="${isLast ? '' : `navigate({view:'${item.view}',albumId:${item.albumId ? `'${item.albumId}'` : null},year:${item.year ? `'${item.year}'` : null},month:null})`}">
+            ${item.label}
+          </span>
+        `;
+      }).join('');
+    }
+
+    /* ── Album view ── */
+    function renderAlbums() {
+      return `
+        <div class="gallery-header">
+          <div class="gallery-header-title">Choose an album</div>
+        </div>
+        <div class="album-grid">
+          ${ALBUMS.map(album => `
+            <div class="album-card" onclick="navigate({view:'years',albumId:'${album.id}',year:null,month:null})">
+              <div class="album-cover">
+                <img src="${album.cover}" alt="${album.title}" onerror="this.style.display='none'" />
+                <div class="album-cover-placeholder">
+                  <svg fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                    <circle cx="12" cy="13" r="4"/>
+                  </svg>
+                  <span style="font-size:.72rem;font-weight:600">Replace: ${album.cover}</span>
+                </div>
+                <div class="album-cover-overlay"></div>
+                <div class="album-cover-label">${album.coverLabel}</div>
+              </div>
+              <div class="album-body">
+                <div class="album-title">${album.title}</div>
+                <p class="album-desc">${album.desc}</p>
+                <div class="album-meta">
+                  <span class="album-count">${album.years.reduce((t,y) => t + y.months.reduce((tt,m) => tt + m.photos.length, 0), 0)} photos · ${album.years.length} year${album.years.length !== 1 ? 's' : ''}</span>
+                  <span class="album-arrow">Browse <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+                </div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    /* ── Years view ── */
+    function renderYears(album) {
+      return `
+        <div class="gallery-header">
+          <div class="gallery-header-title">${album.title}</div>
+        </div>
+        <div class="years-grid">
+          ${album.years.map(y => `
+            <div class="year-card" onclick="navigate({view:'months',albumId:'${album.id}',year:'${y.year}',month:null})">
+              <div class="year-num">${y.year}</div>
+              <div class="year-event-count">${y.months.length} event${y.months.length !== 1 ? 's' : ''} · ${y.months.reduce((t,m) => t + m.photos.length, 0)} photos</div>
+              <span class="year-link">
+                View events
+                <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </span>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    /* ── Months view ── */
+    function renderMonths(album, year) {
+      return `
+        <div class="gallery-header">
+          <div class="gallery-header-title">${album.title} · ${year.year}</div>
+        </div>
+        <div class="months-grid">
+          ${year.months.map(m => `
+            <div class="month-card" onclick="navigate({view:'photos',albumId:'${album.id}',year:'${year.year}',month:'${m.month}'})">
+              <div class="month-thumb">
+                <img src="${m.cover}" alt="${m.event}" onerror="this.style.display='none'" />
+                <div class="month-thumb-ph">
+                  <svg fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24">
+                    <rect x="3" y="3" width="18" height="18" rx="3"/>
+                    <path d="M3 15l4-4 3 3 4-5 4 6"/><circle cx="8.5" cy="8.5" r="1.5"/>
+                  </svg>
+                  <span>Add cover: ${m.cover}</span>
+                </div>
+              </div>
+              <div class="month-body">
+                <div class="month-name">${m.month} ${year.year}</div>
+                <div class="month-event">${m.event} · ${m.photos.length} photos</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    /* ── Photos view ── */
+    function renderPhotos(album, year, month) {
+      return `
+        <div class="gallery-header">
+          <div>
+            <div class="gallery-header-title">${month.event}</div>
+            <div style="font-size:.8rem;color:var(--muted);margin-top:.25rem">${month.photos.length} photos</div>
+          </div>
+          <a href="mailto:info@jwpa.org?subject=Photo+Submission" class="btn btn-outline btn-sm">Submit Photos</a>
+        </div>
+        <div class="photo-grid">
+          ${month.photos.map((photo, i) => `
+            <div class="photo-item" onclick="openLightbox(${i})">
+              <img src="${photo.src}" alt="${photo.caption}" onerror="this.style.display='none'" />
+              <div class="photo-placeholder">
+                <svg fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24">
+                  <rect x="3" y="3" width="18" height="18" rx="3"/>
+                  <path d="M3 15l4-4 3 3 4-5 4 6"/><circle cx="8.5" cy="8.5" r="1.5"/>
+                </svg>
+                ${photo.src}
+              </div>
+              <div class="photo-overlay">
+                <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
+                  <path d="M21 21l-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
+                </svg>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    /* ══════════════════════════════════════════
+       LIGHTBOX
+    ══════════════════════════════════════════ */
+    function openLightbox(index) {
+      lightboxIndex = index;
+      showLightboxPhoto();
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function lightboxNav(dir) {
+      lightboxIndex = (lightboxIndex + dir + lightboxPhotos.length) % lightboxPhotos.length;
+      showLightboxPhoto();
+    }
+
+    function showLightboxPhoto() {
+      const photo = lightboxPhotos[lightboxIndex];
+      document.getElementById('lightbox-img').src = photo.src;
+      document.getElementById('lightbox-img').alt = photo.caption;
+      document.getElementById('lightbox-caption').textContent = `${photo.caption} · ${lightboxIndex + 1} / ${lightboxPhotos.length}`;
+    }
+
+    document.getElementById('lightbox').addEventListener('click', function(e) {
+      if (e.target === this) closeLightbox();
+    });
+
+    document.addEventListener('keydown', e => {
+      if (!document.getElementById('lightbox').classList.contains('open')) return;
+      if (e.key === 'ArrowLeft')  lightboxNav(-1);
+      if (e.key === 'ArrowRight') lightboxNav(1);
+      if (e.key === 'Escape')     closeLightbox();
+    });
+
+    /* ══════════════════════════════════════════
+       NAV + INIT
+    ══════════════════════════════════════════ */
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    document.querySelectorAll('.nav-item[id]').forEach(item => {
+      item.querySelector('.nav-link').addEventListener('click', e => {
+        e.stopPropagation();
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.nav-item[id]').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.nav-item[id]').forEach(i => i.classList.remove('open'));
+    });
+
+    const revealObs = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.07 });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3800);
+    }
+
+    function submitFooterNl() {
+      const email = document.getElementById('footerNl').value.trim();
+      if (!email || !email.includes('@')) { showToast('Please enter a valid email address.'); return; }
+      window.location.href = 'mailto:newsletter@jwpa.org?subject=Newsletter+Subscription&body=Please+add+me+to+the+JWPA+newsletter.+Email:+' + encodeURIComponent(email);
+      showToast('Request sent!');
+    }
+
+    // Boot
+    render();
+  </script>
+</body>
+</html>

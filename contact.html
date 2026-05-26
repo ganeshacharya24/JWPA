@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us — JWPA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --crimson:       #7f181b;
+      --crimson-dark:  #5e1114;
+      --crimson-mist:  #fdf2f2;
+      --navy:          #0f172a;
+      --slate:         #334155;
+      --muted:         #64748b;
+      --muted-light:   #94a3b8;
+      --border:        #e2e8f0;
+      --border-light:  #f1f5f9;
+      --bg:            #f8fafc;
+      --white:         #ffffff;
+      --font-display:  'Playfair Display', Georgia, serif;
+      --font-body:     'Outfit', system-ui, sans-serif;
+      --container:     1160px;
+      --radius-sm:     8px;
+      --radius:        12px;
+      --radius-lg:     20px;
+      --shadow-sm:     0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+      --shadow:        0 4px 16px rgba(15,23,42,.07), 0 1px 4px rgba(15,23,42,.04);
+      --shadow-md:     0 12px 32px rgba(15,23,42,.10), 0 2px 8px rgba(15,23,42,.05);
+      --shadow-lg:     0 24px 48px rgba(15,23,42,.13), 0 4px 12px rgba(15,23,42,.06);
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 15px; line-height: 1.65;
+      color: var(--slate); background: var(--white);
+      -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    :focus-visible { outline: 3px solid rgba(127,24,27,.3); outline-offset: 3px; border-radius: 4px; }
+    .container { max-width: var(--container); margin: 0 auto; padding: 0 2rem; }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: .45rem; font-family: var(--font-body); font-weight: 600;
+      border: none; border-radius: var(--radius-sm); cursor: pointer;
+      line-height: 1; white-space: nowrap; transition: all .2s ease;
+    }
+    .btn-sm  { padding: .5rem 1.1rem;  font-size: .8rem; }
+    .btn-md  { padding: .7rem 1.5rem;  font-size: .875rem; }
+    .btn-lg  { padding: .875rem 2rem;  font-size: .9rem; }
+    .btn-primary { background: var(--crimson); color: var(--white); box-shadow: 0 2px 8px rgba(127,24,27,.3); }
+    .btn-primary:hover { background: var(--crimson-dark); transform: translateY(-1px); }
+    .btn-outline { background: var(--white); color: var(--navy); border: 1.5px solid var(--border); }
+    .btn-outline:hover { border-color: var(--muted-light); background: var(--bg); transform: translateY(-1px); }
+
+    /* ── Type ── */
+    .section-label {
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-size: .68rem; font-weight: 700; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--crimson); margin-bottom: 1rem;
+    }
+    .section-label::before {
+      content: ''; display: block; width: 22px; height: 2px;
+      background: var(--crimson); border-radius: 2px; flex-shrink: 0;
+    }
+    .section-heading {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3vw, 2.25rem);
+      font-weight: 800; color: var(--navy);
+      letter-spacing: -.02em; line-height: 1.15; margin-bottom: .75rem;
+    }
+
+    /* ══════════════════════════════════════════
+       NAVIGATION
+    ══════════════════════════════════════════ */
+    #navbar {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; height: 66px;
+      max-width: var(--container); margin: 0 auto; padding: 0 2rem; gap: 2rem;
+    }
+    .nav-brand { display: flex; flex-direction: column; line-height: 1.2; flex-shrink: 0; }
+    .nav-brand-name { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; color: var(--navy); }
+    .nav-brand-sub { font-size: .58rem; font-weight: 600; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+    .nav-links { display: flex; align-items: center; gap: .15rem; list-style: none; flex: 1; }
+    .nav-item { position: relative; }
+    .nav-link {
+      display: inline-flex; align-items: center; gap: .3rem; padding: .45rem .8rem;
+      border-radius: 6px; font-size: .775rem; font-weight: 600; color: var(--muted);
+      letter-spacing: .03em; text-transform: uppercase; transition: all .18s;
+      cursor: pointer; user-select: none;
+    }
+    .nav-link:hover, .nav-item:hover .nav-link, .nav-item.open .nav-link { color: var(--navy); background: var(--bg); }
+    .nav-link.active { color: var(--crimson); }
+    .nav-chevron { width: 11px; height: 11px; transition: transform .2s; flex-shrink: 0; }
+    .nav-item:hover .nav-chevron, .nav-item.open .nav-chevron { transform: rotate(180deg); }
+    .dropdown {
+      display: none; position: absolute; top: calc(100% + 6px); left: 0;
+      min-width: 210px; background: var(--white); border: 1.5px solid var(--border);
+      border-radius: var(--radius); box-shadow: var(--shadow-md);
+      padding: .5rem; z-index: 300; animation: dropFade .15s ease;
+    }
+    @keyframes dropFade { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+    .nav-item:hover .dropdown, .nav-item.open .dropdown { display: block; }
+    .dropdown a { display: block; padding: .625rem 1rem; font-size: .85rem; font-weight: 500; color: var(--slate); border-radius: 8px; transition: all .15s; white-space: nowrap; }
+    .dropdown a:hover { background: var(--bg); color: var(--crimson); }
+    .dropdown-divider { height: 1px; background: var(--border-light); margin: .4rem .5rem; }
+    .nav-actions { display: flex; align-items: center; gap: .65rem; flex-shrink: 0; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: .5rem; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--navy); border-radius: 2px; }
+    .mobile-menu {
+      display: none; position: fixed; top: 66px; left: 0; right: 0;
+      background: var(--white); border-top: 1px solid var(--border);
+      box-shadow: var(--shadow-lg); padding: 1rem 2rem 2rem;
+      z-index: 199; max-height: calc(100vh - 66px); overflow-y: auto;
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu a { display: block; padding: .7rem 0; font-size: .95rem; font-weight: 600; color: var(--slate); border-bottom: 1px solid var(--border-light); }
+    .mobile-menu a:hover { color: var(--crimson); }
+    .mobile-group-label { font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted-light); padding: .875rem 0 .35rem; }
+    .mobile-sub a { padding: .5rem 1rem; font-size: .875rem; font-weight: 500; color: var(--muted); }
+
+    /* ══════════════════════════════════════════
+       PAGE HERO — light, matches other pages
+    ══════════════════════════════════════════ */
+    #page-hero {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 0 3.5rem;
+      position: relative; overflow: hidden;
+    }
+    #page-hero::before {
+      content: '';
+      position: absolute; top: -120px; right: -80px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(127,24,27,.045) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      position: relative; z-index: 1;
+    }
+    .hero-label {
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-size: .68rem; font-weight: 700; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--crimson); margin-bottom: 1rem;
+    }
+    .hero-label::before {
+      content: ''; display: block; width: 22px; height: 2px;
+      background: var(--crimson); border-radius: 2px;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800; color: var(--navy);
+      letter-spacing: -.02em; line-height: 1.1;
+      margin-bottom: .875rem;
+    }
+    .hero-desc {
+      font-size: 1rem; color: var(--muted);
+      line-height: 1.75; max-width: 560px;
+    }
+
+    /* ══════════════════════════════════════════
+       MAIN CONTENT — form + info side by side
+    ══════════════════════════════════════════ */
+    #contact-main {
+      padding: 5rem 0;
+      background: var(--white);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    /* ── Contact form ── */
+    .contact-form-wrap {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      box-shadow: var(--shadow);
+    }
+    .form-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem; font-weight: 800;
+      color: var(--navy); margin-bottom: .4rem;
+    }
+    .form-subtitle {
+      font-size: .85rem; color: var(--muted);
+      line-height: 1.6; margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: .875rem; }
+    .form-group { display: flex; flex-direction: column; gap: .3rem; margin-bottom: .875rem; }
+    .form-group label {
+      font-size: .67rem; font-weight: 700;
+      color: var(--slate); letter-spacing: .07em; text-transform: uppercase;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%; padding: .65rem .9rem;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body); font-size: .875rem;
+      color: var(--navy); background: var(--white);
+      transition: border-color .18s, box-shadow .18s;
+      appearance: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--crimson);
+      box-shadow: 0 0 0 3px rgba(127,24,27,.08);
+    }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-submit {
+      width: 100%; padding: .875rem;
+      margin-top: 1.25rem; font-size: .9rem;
+      display: flex; align-items: center;
+      justify-content: center; gap: .5rem;
+    }
+
+    /* ── Sidebar: contact info ── */
+    .contact-sidebar { display: flex; flex-direction: column; gap: 1.25rem; }
+
+    /* Response time */
+    .sidebar-response {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      display: flex; align-items: center; gap: .875rem;
+    }
+    .response-dot {
+      width: 10px; height: 10px; flex-shrink: 0;
+      background: #22c55e; border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(34,197,94,.18);
+    }
+    .response-text { font-size: .82rem; color: var(--muted); line-height: 1.5; }
+    .response-text strong { color: var(--navy); font-weight: 700; }
+
+    /* Info cards */
+    .info-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      display: flex; align-items: flex-start; gap: .875rem;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow .2s, transform .2s;
+    }
+    .info-card:hover { box-shadow: var(--shadow); transform: translateX(3px); }
+    .info-icon {
+      width: 38px; height: 38px; flex-shrink: 0;
+      background: var(--crimson-mist); border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--crimson);
+    }
+    .info-icon svg { width: 17px; height: 17px; }
+    .info-label {
+      font-size: .63rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--muted-light); margin-bottom: .2rem;
+    }
+    .info-title {
+      font-size: .875rem; font-weight: 700;
+      color: var(--navy); margin-bottom: .15rem;
+    }
+    .info-value { font-size: .82rem; color: var(--muted); }
+    .info-value a { color: var(--crimson); transition: opacity .15s; }
+    .info-value a:hover { opacity: .75; }
+
+    /* ══════════════════════════════════════════
+       DIRECT EMAILS STRIP
+    ══════════════════════════════════════════ */
+    #direct {
+      padding: 3.5rem 0;
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+    .direct-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .direct-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: box-shadow .2s, transform .2s, border-color .2s;
+    }
+    .direct-card:hover {
+      box-shadow: var(--shadow-md); transform: translateY(-3px);
+      border-color: rgba(127,24,27,.2);
+    }
+    .direct-icon {
+      width: 42px; height: 42px;
+      background: var(--crimson-mist); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--crimson); margin-bottom: .875rem;
+    }
+    .direct-icon svg { width: 19px; height: 19px; }
+    .direct-title {
+      font-size: .9rem; font-weight: 700;
+      color: var(--navy); margin-bottom: .3rem;
+    }
+    .direct-desc {
+      font-size: .78rem; color: var(--muted);
+      line-height: 1.55; margin-bottom: .875rem;
+    }
+    .direct-email {
+      font-size: .8rem; font-weight: 600; color: var(--crimson);
+      display: inline-flex; align-items: center; gap: .35rem;
+      transition: opacity .15s;
+    }
+    .direct-email:hover { opacity: .75; }
+    .direct-email svg { width: 12px; height: 12px; }
+
+    /* ══════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════ */
+    footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,.06); padding: 4rem 0 2rem; color: rgba(255,255,255,.55); }
+    .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.3fr; gap: 2.5rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,.07); margin-bottom: 1.75rem; }
+    .footer-brand-name { font-family: var(--font-display); font-size: 1.2rem; font-weight: 800; color: var(--white); margin-bottom: .4rem; }
+    .footer-brand-sub { font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; color: rgba(255,255,255,.3); margin-bottom: .875rem; }
+    .footer-brand-desc { font-size: .82rem; line-height: 1.7; max-width: 240px; }
+    .footer-col h4 { font-size: .65rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.9); margin-bottom: 1.1rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+    .footer-col a { font-size: .83rem; transition: color .15s; }
+    .footer-col a:hover { color: var(--white); }
+    .footer-nl { display: flex; gap: .5rem; margin-bottom: .6rem; }
+    .footer-nl input { flex: 1; min-width: 0; padding: .625rem .875rem; border: 1px solid rgba(255,255,255,.12); border-radius: 7px; background: rgba(255,255,255,.06); font-family: var(--font-body); font-size: .82rem; color: var(--white); }
+    .footer-nl input::placeholder { color: rgba(255,255,255,.25); }
+    .footer-nl input:focus { outline: none; border-color: rgba(255,255,255,.3); }
+    .footer-nl-note { font-size: .7rem; color: rgba(255,255,255,.3); line-height: 1.55; }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom p { font-size: .78rem; }
+
+    /* ── Toast ── */
+    .toast { position: fixed; bottom: 1.75rem; right: 1.75rem; background: var(--navy); color: var(--white); padding: .875rem 1.25rem; border-radius: 10px; box-shadow: var(--shadow-lg); font-size: .83rem; font-weight: 600; display: flex; align-items: center; gap: .65rem; z-index: 999; transform: translateY(80px); opacity: 0; transition: all .35s cubic-bezier(.34,1.56,.64,1); max-width: 320px; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast-icon { width: 22px; height: 22px; background: var(--crimson); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .toast-icon svg { width: 11px; height: 11px; color: var(--white); }
+
+    /* ── Reveal ── */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .55s ease, transform .55s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* ── Responsive ── */
+    @media (max-width: 980px) {
+      .contact-grid  { grid-template-columns: 1fr; gap: 3rem; }
+      .direct-grid   { grid-template-columns: 1fr 1fr; }
+      .footer-grid   { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .nav-links, .nav-actions { display: none; }
+      .hamburger     { display: flex; }
+      .form-row      { grid-template-columns: 1fr; }
+      .direct-grid   { grid-template-columns: 1fr; }
+      .footer-grid   { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════ NAV ══ -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <span class="nav-brand-name">JWPA</span>
+        <span class="nav-brand-sub">Jersey Women Physician Alliance</span>
+      </a>
+      <ul class="nav-links">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item" id="navAbout">
+          <span class="nav-link" tabindex="0">About Us
+            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+          <div class="dropdown">
+            <a href="about.html">About JWPA</a>
+            <a href="mission.html">Mission Statement</a>
+            <a href="founder.html">The Founder</a>
+            <div class="dropdown-divider"></div>
+            <a href="leadership.html">Leadership Team</a>
+            <a href="partners.html">Partners</a>
+          </div>
+        </li>
+        <li class="nav-item" id="navPrograms">
+          <span class="nav-link" tabindex="0">Programs
+            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+          <div class="dropdown">
+            <a href="programs.html">All Programs</a>
+            <div class="dropdown-divider"></div>
+            <a href="tws.html">Teens With Stethoscopes</a>
+            <a href="mentorship.html">Mentorship Circles</a>
+          </div>
+        </li>
+        <li class="nav-item" id="navEvents">
+          <span class="nav-link" tabindex="0">Events
+            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+          <div class="dropdown">
+            <a href="calendar.html">Calendar</a>
+            <a href="past-events.html">Past Events</a>
+            <div class="dropdown-divider"></div>
+            <a href="volunteer.html">Volunteer</a>
+            <a href="sponsorship.html">Sponsorship</a>
+          </div>
+        </li>
+        <li class="nav-item" id="navMedia">
+          <span class="nav-link" tabindex="0">Media
+            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+          <div class="dropdown">
+            <a href="physician-of-the-month.html">Physician of the Month</a>
+            <a href="news.html">News</a>
+            <a href="press.html">Press</a>
+            <div class="dropdown-divider"></div>
+            <a href="resources.html">Resources &amp; Downloads</a>
+            <a href="photo-gallery.html">Photo Gallery</a>
+          </div>
+        </li>
+        <li class="nav-item"><a href="contact.html" class="nav-link active">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="contact.html" class="btn btn-primary btn-sm">Join JWPA</a>
+        <a href="donate.html"  class="btn btn-outline btn-sm">Donate</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <div class="mobile-group-label">About Us</div>
+    <div class="mobile-sub">
+      <a href="about.html">About JWPA</a>
+      <a href="mission.html">Mission Statement</a>
+      <a href="founder.html">The Founder</a>
+      <a href="leadership.html">Leadership Team</a>
+      <a href="partners.html">Partners</a>
+    </div>
+    <div class="mobile-group-label">Programs</div>
+    <div class="mobile-sub">
+      <a href="programs.html">All Programs</a>
+      <a href="tws.html">Teens With Stethoscopes</a>
+      <a href="mentorship.html">Mentorship Circles</a>
+    </div>
+    <div class="mobile-group-label">Events</div>
+    <div class="mobile-sub">
+      <a href="calendar.html">Calendar</a>
+      <a href="past-events.html">Past Events</a>
+      <a href="volunteer.html">Volunteer</a>
+      <a href="sponsorship.html">Sponsorship</a>
+    </div>
+    <div class="mobile-group-label">Media</div>
+    <div class="mobile-sub">
+      <a href="physician-of-the-month.html">Physician of the Month</a>
+      <a href="news.html">News</a>
+      <a href="press.html">Press</a>
+      <a href="resources.html">Resources &amp; Downloads</a>
+      <a href="photo-gallery.html">Photo Gallery</a>
+    </div>
+    <a href="contact.html">Contact</a>
+    <a href="donate.html" style="color:var(--crimson)">Donate</a>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       PAGE HERO
+  ══════════════════════════════════════════ -->
+  <section id="page-hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-label reveal">Contact</div>
+        <h1 class="hero-title reveal">Get in Touch</h1>
+        <p class="hero-desc reveal">
+          Have a question about JWPA, TWS, events, or partnerships?
+          Fill out the form or reach out directly — we respond within 2 business days.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       CONTACT FORM + SIDEBAR
+  ══════════════════════════════════════════ -->
+  <section id="contact-main">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- Form -->
+        <div class="contact-form-wrap reveal">
+          <div class="form-title">Send a Message</div>
+          <p class="form-subtitle">
+            We read every message and route it to the right person on our team.
+          </p>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name *</label>
+              <input type="text" id="cFirst" placeholder="Jane" />
+            </div>
+            <div class="form-group">
+              <label>Last Name *</label>
+              <input type="text" id="cLast" placeholder="Smith" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email Address *</label>
+            <input type="email" id="cEmail" placeholder="jane@email.com" />
+          </div>
+          <div class="form-group">
+            <label>Topic</label>
+            <select id="cTopic">
+              <option value="">Select a topic…</option>
+              <option>General Inquiry</option>
+              <option>Join JWPA</option>
+              <option>TWS / Student Program</option>
+              <option>Event Registration</option>
+              <option>Partnership / Sponsorship</option>
+              <option>Volunteer</option>
+              <option>Media / Press</option>
+              <option>Donation</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Message *</label>
+            <textarea id="cMsg" placeholder="How can we help?"></textarea>
+          </div>
+
+          <button class="btn btn-primary form-submit" onclick="submitContact()">
+            Send Message
+            <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="16" height="16">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="contact-sidebar">
+
+          <!-- Response time -->
+          <div class="sidebar-response reveal">
+            <div class="response-dot"></div>
+            <div class="response-text">
+              <strong>We respond within 2 business days.</strong><br>
+              For urgent matters, email info@jwpa.org directly.
+            </div>
+          </div>
+
+          <!-- Info cards -->
+          <div class="info-card reveal">
+            <div class="info-icon">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <div>
+              <div class="info-label">General Inquiries</div>
+              <div class="info-title">Email Us</div>
+              <div class="info-value"><a href="mailto:info@jwpa.org">info@jwpa.org</a></div>
+            </div>
+          </div>
+
+          <div class="info-card reveal">
+            <div class="info-icon">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+              </svg>
+            </div>
+            <div>
+              <div class="info-label">TWS Program</div>
+              <div class="info-title">Student &amp; School Inquiries</div>
+              <div class="info-value"><a href="mailto:tws@jwpa.org">tws@jwpa.org</a></div>
+            </div>
+          </div>
+
+          <div class="info-card reveal">
+            <div class="info-icon">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <div>
+              <div class="info-label">Partnerships</div>
+              <div class="info-title">Sponsorship &amp; Collaboration</div>
+              <div class="info-value"><a href="mailto:partnerships@jwpa.org">partnerships@jwpa.org</a></div>
+            </div>
+          </div>
+
+          <div class="info-card reveal">
+            <div class="info-icon">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+            </div>
+            <div>
+              <div class="info-label">Location</div>
+              <div class="info-title">New Jersey, USA</div>
+              <div class="info-value">Statewide — serving all 21 counties</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       DIRECT CONTACTS
+  ══════════════════════════════════════════ -->
+  <section id="direct">
+    <div class="container">
+      <div class="section-label reveal">Direct Contacts</div>
+      <h2 class="section-heading reveal" style="margin-bottom:1.5rem">Reach the right team</h2>
+      <div class="direct-grid">
+
+        <div class="direct-card reveal">
+          <div class="direct-icon">
+            <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </div>
+          <div class="direct-title">General Inquiries</div>
+          <p class="direct-desc">Membership, general information, or anything else about JWPA and its programs.</p>
+          <a href="mailto:info@jwpa.org" class="direct-email">
+            info@jwpa.org
+            <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <div class="direct-card reveal">
+          <div class="direct-icon">
+            <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+            </svg>
+          </div>
+          <div class="direct-title">Teens With Stethoscopes</div>
+          <p class="direct-desc">Student applications, school partnerships, parent inquiries, and program logistics.</p>
+          <a href="mailto:tws@jwpa.org" class="direct-email">
+            tws@jwpa.org
+            <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <div class="direct-card reveal">
+          <div class="direct-icon">
+            <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <div class="direct-title">Partnerships &amp; Sponsorship</div>
+          <p class="direct-desc">Hospital partnerships, corporate sponsorships, and collaboration opportunities.</p>
+          <a href="mailto:partnerships@jwpa.org" class="direct-email">
+            partnerships@jwpa.org
+            <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ FOOTER ══ -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand-name">JWPA</div>
+          <div class="footer-brand-sub">Jersey Women Physician Alliance</div>
+          <p class="footer-brand-desc">A physician-led nonprofit advancing women in medicine across New Jersey through mentorship, advocacy, and community outreach.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Organization</h4>
+          <ul>
+            <li><a href="about.html">About JWPA</a></li>
+            <li><a href="mission.html">Mission Statement</a></li>
+            <li><a href="founder.html">The Founder</a></li>
+            <li><a href="leadership.html">Leadership Team</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Get Involved</h4>
+          <ul>
+            <li><a href="contact.html">Join JWPA</a></li>
+            <li><a href="donate.html">Donate</a></li>
+            <li><a href="volunteer.html">Volunteer</a></li>
+            <li><a href="sponsorship.html">Sponsorship</a></li>
+            <li><a href="newsletter.html">Newsletter</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Stay Updated</h4>
+          <div class="footer-nl">
+            <input type="email" id="footerNl" placeholder="Your email address" />
+            <button class="btn btn-primary btn-sm" onclick="submitFooterNl()">Go</button>
+          </div>
+          <p class="footer-nl-note">Join our newsletter for events, programs, and opportunities.</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 JWPA. All rights reserved.</p>
+        <p>Jersey Women Physician Alliance &middot; New Jersey, USA</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast">
+    <div class="toast-icon"><svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+    <span id="toastMsg">Done!</span>
+  </div>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    document.querySelectorAll('.nav-item[id]').forEach(item => {
+      item.querySelector('.nav-link').addEventListener('click', e => {
+        e.stopPropagation();
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.nav-item[id]').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.nav-item[id]').forEach(i => i.classList.remove('open'));
+    });
+
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.07 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3800);
+    }
+
+    function submitContact() {
+      const first = document.getElementById('cFirst').value.trim();
+      const last  = document.getElementById('cLast').value.trim();
+      const email = document.getElementById('cEmail').value.trim();
+      const topic = document.getElementById('cTopic').value || 'General Inquiry';
+      const msg   = document.getElementById('cMsg').value.trim();
+
+      if (!first || !email || !msg) {
+        showToast('Please fill in your name, email, and message.');
+        return;
+      }
+      const subject = encodeURIComponent('JWPA — ' + topic + ' from ' + first + ' ' + last);
+      const body = encodeURIComponent(
+        'From:  ' + first + ' ' + last + '\n' +
+        'Email: ' + email + '\n' +
+        'Topic: ' + topic + '\n\n' + msg
+      );
+      window.location.href = 'mailto:info@jwpa.org?subject=' + subject + '&body=' + body;
+      showToast('Opening email client…');
+    }
+
+    function submitFooterNl() {
+      const email = document.getElementById('footerNl').value.trim();
+      if (!email || !email.includes('@')) { showToast('Please enter a valid email address.'); return; }
+      window.location.href = 'mailto:newsletter@jwpa.org?subject=Newsletter+Subscription&body=Please+add+me+to+the+JWPA+newsletter.+Email:+' + encodeURIComponent(email);
+      showToast('Request sent!');
+    }
+  </script>
+</body>
+</html>

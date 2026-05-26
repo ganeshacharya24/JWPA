@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teens With Stethoscopes — JWPA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    img { display: block; max-width: 100%; }
+
+    :root {
+      --crimson:       #7f181b;
+      --crimson-dark:  #5e1114;
+      --crimson-light: #a52024;
+      --crimson-mist:  #fdf2f2;
+      --navy:          #0f172a;
+      --slate:         #334155;
+      --muted:         #64748b;
+      --muted-light:   #94a3b8;
+      --border:        #e2e8f0;
+      --border-light:  #f1f5f9;
+      --bg:            #f8fafc;
+      --white:         #ffffff;
+      --font-display:  'Playfair Display', Georgia, serif;
+      --font-body:     'Outfit', system-ui, sans-serif;
+      --container:     1160px;
+      --radius-sm:     8px;
+      --radius:        12px;
+      --radius-lg:     20px;
+      --shadow-sm:     0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+      --shadow:        0 4px 16px rgba(15,23,42,.07), 0 1px 4px rgba(15,23,42,.04);
+      --shadow-md:     0 12px 32px rgba(15,23,42,.10), 0 2px 8px rgba(15,23,42,.05);
+      --shadow-lg:     0 24px 48px rgba(15,23,42,.13), 0 4px 12px rgba(15,23,42,.06);
+    }
+
+    body { font-family: var(--font-body); font-size: 15px; line-height: 1.65; color: var(--slate); background: var(--white); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+    :focus-visible { outline: 3px solid rgba(127,24,27,.3); outline-offset: 3px; border-radius: 4px; }
+    .container { max-width: var(--container); margin: 0 auto; padding: 0 2rem; }
+
+    /* ── Buttons ── */
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: .45rem; font-family: var(--font-body); font-weight: 600; border: none; border-radius: var(--radius-sm); cursor: pointer; line-height: 1; white-space: nowrap; transition: all .2s ease; }
+    .btn-sm  { padding: .5rem 1.1rem;  font-size: .8rem; }
+    .btn-md  { padding: .7rem 1.5rem;  font-size: .875rem; }
+    .btn-lg  { padding: .9rem 2rem;    font-size: .95rem; }
+    .btn-primary { background: var(--crimson); color: var(--white); box-shadow: 0 2px 8px rgba(127,24,27,.3); }
+    .btn-primary:hover { background: var(--crimson-dark); transform: translateY(-1px); }
+    .btn-outline { background: var(--white); color: var(--navy); border: 1.5px solid var(--border); }
+    .btn-outline:hover { border-color: var(--muted-light); background: var(--bg); transform: translateY(-1px); }
+    .btn-ghost { background: rgba(255,255,255,.12); color: var(--white); border: 1.5px solid rgba(255,255,255,.3); }
+    .btn-ghost:hover { background: rgba(255,255,255,.22); }
+    .btn-soft { display: inline-flex; align-items: center; justify-content: center; padding: .55rem 1.1rem; font-size: .82rem; font-weight: 600; border: 1.5px solid rgba(127,24,27,.2); background: var(--crimson-mist); color: var(--crimson); border-radius: var(--radius-sm); transition: all .18s; }
+    .btn-soft:hover { background: rgba(127,24,27,.1); }
+    .btn-white { background: var(--white); color: var(--crimson); font-weight: 700; padding: .8rem 2rem; font-size: .95rem; border-radius: var(--radius-sm); display: inline-flex; align-items: center; transition: all .2s; }
+    .btn-white:hover { background: var(--bg); transform: translateY(-1px); }
+
+    /* ── Type ── */
+    .section-label { display: inline-flex; align-items: center; gap: .6rem; font-size: .68rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--crimson); margin-bottom: 1rem; }
+    .section-label::before { content: ''; display: block; width: 22px; height: 2px; background: var(--crimson); border-radius: 2px; flex-shrink: 0; }
+    .section-heading { font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.25rem); font-weight: 800; color: var(--navy); letter-spacing: -.02em; line-height: 1.15; margin-bottom: .75rem; }
+    .section-sub { font-size: .95rem; color: var(--muted); line-height: 1.75; margin-bottom: 2rem; max-width: 640px; }
+    .divider { width: 40px; height: 3px; background: var(--crimson); border-radius: 2px; margin: 1rem 0 1.5rem; }
+
+    /* ══════════════════════════════════════════
+       NAV
+    ══════════════════════════════════════════ */
+    #navbar { position: sticky; top: 0; z-index: 200; background: rgba(255,255,255,.96); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-inner { display: flex; align-items: center; height: 66px; max-width: var(--container); margin: 0 auto; padding: 0 2rem; gap: 2rem; }
+    .nav-brand { display: flex; flex-direction: column; line-height: 1.2; flex-shrink: 0; }
+    .nav-brand-name { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; color: var(--navy); }
+    .nav-brand-sub { font-size: .58rem; font-weight: 600; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+    .nav-links { display: flex; align-items: center; gap: .15rem; list-style: none; flex: 1; }
+    .nav-item { position: relative; }
+    .nav-link { display: inline-flex; align-items: center; gap: .3rem; padding: .45rem .8rem; border-radius: 6px; font-size: .775rem; font-weight: 600; color: var(--muted); letter-spacing: .03em; text-transform: uppercase; transition: all .18s; cursor: pointer; user-select: none; }
+    .nav-link:hover, .nav-item:hover .nav-link, .nav-item.open .nav-link { color: var(--navy); background: var(--bg); }
+    .nav-link.active { color: var(--crimson); }
+    .nav-chevron { width: 11px; height: 11px; transition: transform .2s; flex-shrink: 0; }
+    .nav-item:hover .nav-chevron, .nav-item.open .nav-chevron { transform: rotate(180deg); }
+    .dropdown { display: none; position: absolute; top: calc(100% + 6px); left: 0; min-width: 210px; background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-md); padding: .5rem; z-index: 300; animation: dropFade .15s ease; }
+    @keyframes dropFade { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+    .nav-item:hover .dropdown, .nav-item.open .dropdown { display: block; }
+    .dropdown a { display: block; padding: .625rem 1rem; font-size: .85rem; font-weight: 500; color: var(--slate); border-radius: 8px; transition: all .15s; white-space: nowrap; }
+    .dropdown a:hover { background: var(--bg); color: var(--crimson); }
+    .dropdown a.active { color: var(--crimson); font-weight: 700; background: var(--crimson-mist); }
+    .dropdown-divider { height: 1px; background: var(--border-light); margin: .4rem .5rem; }
+    .nav-actions { display: flex; align-items: center; gap: .65rem; flex-shrink: 0; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: .5rem; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--navy); border-radius: 2px; }
+    .mobile-menu { display: none; position: fixed; top: 66px; left: 0; right: 0; background: var(--white); border-top: 1px solid var(--border); box-shadow: var(--shadow-lg); padding: 1rem 2rem 2rem; z-index: 199; max-height: calc(100vh - 66px); overflow-y: auto; }
+    .mobile-menu.open { display: block; }
+    .mobile-menu a { display: block; padding: .7rem 0; font-size: .95rem; font-weight: 600; color: var(--slate); border-bottom: 1px solid var(--border-light); }
+    .mobile-menu a:hover { color: var(--crimson); }
+    .mobile-group-label { font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted-light); padding: .875rem 0 .35rem; }
+    .mobile-sub a { padding: .5rem 1rem; font-size: .875rem; font-weight: 500; color: var(--muted); }
+
+    /* ══════════════════════════════════════════
+       TWS HERO
+    ══════════════════════════════════════════ */
+    #tws-hero {
+      background: linear-gradient(135deg, var(--crimson-dark) 0%, var(--crimson) 100%);
+      padding: 5rem 0 4rem;
+      position: relative; overflow: hidden;
+    }
+    #tws-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 70% 30%, rgba(255,255,255,.06) 0%, transparent 55%),
+                  radial-gradient(circle at 15% 80%, rgba(127,24,27,.15) 0%, transparent 45%);
+      pointer-events: none;
+    }
+    .tws-hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; position: relative; z-index: 1; }
+
+    .tws-eyebrow {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3);
+      padding: .4rem 1rem; border-radius: 100px;
+      font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--white); margin-bottom: 1.25rem;
+    }
+    .tws-dot { width: 6px; height: 6px; background: rgba(255,255,255,.9); border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    .tws-hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.1rem, 4.5vw, 3.25rem);
+      font-weight: 800; color: var(--white);
+      line-height: 1.1; letter-spacing: -.02em; margin-bottom: 1.1rem;
+    }
+    .tws-hero-title em { font-style: italic; color: rgba(255,255,255,.85); }
+    .tws-hero-desc { font-size: 1rem; color: rgba(255,255,255,.75); line-height: 1.8; margin-bottom: .5rem; max-width: 520px; }
+    .tws-founder-line { display: flex; align-items: center; gap: .5rem; font-size: .8rem; color: rgba(255,255,255,.5); margin-bottom: 1.75rem; }
+    .tws-founder-line svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .tws-hero-actions { display: flex; gap: .875rem; flex-wrap: wrap; margin-bottom: .875rem; }
+    .tws-hero-note { font-size: .78rem; color: rgba(255,255,255,.4); margin-bottom: 1.75rem; }
+
+    /* Stats row */
+    .tws-stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: rgba(255,255,255,.12); border-radius: var(--radius); overflow: hidden; }
+    .tws-stat { background: rgba(255,255,255,.08); padding: 1.1rem; text-align: center; }
+    .tws-stat-num { font-family: var(--font-display); font-size: 1.75rem; font-weight: 800; color: var(--white); }
+    .tws-stat-label { font-size: .62rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.45); margin-top: .25rem; line-height: 1.35; }
+
+    /* Hero photo card */
+    .hero-media-card { background: var(--white); border-radius: var(--radius-lg); padding: .875rem; box-shadow: var(--shadow-lg); }
+    .hero-photo-main { width: 100%; aspect-ratio: 4/3; border-radius: var(--radius); overflow: hidden; background: var(--border-light); }
+    .hero-photo-main img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-photo-row { display: grid; grid-template-columns: repeat(3,1fr); gap: .5rem; margin-top: .5rem; }
+    .hero-photo-thumb { aspect-ratio: 4/3; border-radius: var(--radius-sm); overflow: hidden; background: var(--border-light); }
+    .hero-photo-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ══════════════════════════════════════════
+       IMPACT STRIP
+    ══════════════════════════════════════════ */
+    #impact-strip {
+      background: var(--crimson-mist);
+      border-top: 1px solid rgba(127,24,27,.1);
+      border-bottom: 1px solid rgba(127,24,27,.1);
+      padding: 2rem 0;
+    }
+    .impact-row { display: grid; grid-template-columns: repeat(5,1fr); gap: 1px; background: rgba(127,24,27,.12); border-radius: var(--radius); overflow: hidden; }
+    .impact-cell { background: var(--white); padding: 1.35rem 1rem; text-align: center; }
+    .impact-num { font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; color: var(--crimson); }
+    .impact-label { font-size: .62rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-top: .25rem; line-height: 1.4; }
+
+    /* ══════════════════════════════════════════
+       SHARED CARD
+    ══════════════════════════════════════════ */
+    .card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 1.75rem; box-shadow: var(--shadow-sm); transition: box-shadow .2s, transform .2s; }
+    .card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+
+    /* ══════════════════════════════════════════
+       ABOUT
+    ══════════════════════════════════════════ */
+    #about { padding: 5rem 0; background: var(--white); }
+    .about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 4rem; align-items: center; }
+
+    .quote-block { border-left: 4px solid var(--crimson); padding: 1.25rem 1.5rem; background: var(--bg); border-radius: 0 var(--radius) var(--radius) 0; box-shadow: var(--shadow-sm); margin-top: 1.75rem; }
+    .quote-block p { font-family: var(--font-display); font-size: 1rem; font-style: italic; color: var(--slate); line-height: 1.75; }
+    .quote-block cite { display: block; margin-top: .5rem; font-size: .75rem; font-weight: 700; color: var(--muted-light); font-style: normal; letter-spacing: .04em; text-transform: uppercase; }
+
+    .highlights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .875rem; }
+    .highlight-item { background: var(--bg); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 1rem 1.1rem; transition: border-color .2s; }
+    .highlight-item:hover { border-color: rgba(127,24,27,.2); }
+    .highlight-label { font-size: .63rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--crimson); margin-bottom: .3rem; }
+    .highlight-body { font-size: .8rem; color: var(--muted); line-height: 1.55; }
+
+    /* ══════════════════════════════════════════
+       WHO IT'S FOR
+    ══════════════════════════════════════════ */
+    #who { padding: 5rem 0; background: var(--bg); border-top: 1px solid var(--border); }
+    .who-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; }
+
+    /* ══════════════════════════════════════════
+       GALLERY
+    ══════════════════════════════════════════ */
+    #gallery { padding: 4rem 0; background: var(--white); border-top: 1px solid var(--border); }
+    .gallery-section-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .gallery-photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .875rem; }
+    .gallery-photo { border-radius: var(--radius); overflow: hidden; aspect-ratio: 4/3; }
+    .gallery-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* ══════════════════════════════════════════
+       EVENT SNAPSHOT
+    ══════════════════════════════════════════ */
+    #program { padding: 5rem 0; background: var(--bg); border-top: 1px solid var(--border); }
+    .program-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: start; }
+
+    .event-meta { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-bottom: 1.25rem; }
+    .event-item { padding: .875rem 1rem; border-radius: var(--radius-sm); background: var(--crimson-mist); border: 1px solid rgba(127,24,27,.12); }
+    .event-item-label { font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: .25rem; }
+    .event-item-value { font-size: .9rem; font-weight: 700; color: var(--navy); line-height: 1.35; }
+
+    .schedule-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: .75rem; }
+    .schedule-slot { background: var(--bg); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 1rem; }
+    .schedule-time { font-size: .68rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--crimson); margin-bottom: .3rem; }
+    .schedule-title { font-size: .85rem; font-weight: 700; color: var(--navy); margin-bottom: .25rem; }
+    .schedule-body { font-size: .78rem; color: var(--muted); line-height: 1.55; }
+
+    /* Steps */
+    .steps { display: flex; flex-direction: column; gap: .875rem; }
+    .step-row { display: flex; gap: .875rem; align-items: flex-start; }
+    .step-num { width: 28px; height: 28px; background: var(--crimson); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .78rem; font-weight: 800; color: var(--white); flex-shrink: 0; margin-top: 2px; }
+    .step-title { font-size: .9rem; font-weight: 700; color: var(--navy); margin-bottom: .2rem; }
+    .step-body { font-size: .82rem; color: var(--muted); line-height: 1.55; }
+
+    /* ══════════════════════════════════════════
+       AGENDA
+    ══════════════════════════════════════════ */
+    #agenda { padding: 4rem 0; background: var(--white); border-top: 1px solid var(--border); }
+
+    /* ══════════════════════════════════════════
+       ADVISORY BOARD / VOLUNTEERS
+    ══════════════════════════════════════════ */
+    #advisory { padding: 5rem 0; background: var(--bg); border-top: 1px solid var(--border); }
+    #volunteers { padding: 5rem 0; background: var(--white); border-top: 1px solid var(--border); }
+
+    .board-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; }
+    .board-card {
+      background: var(--white); border: 1.5px solid var(--border);
+      border-radius: var(--radius); padding: 1.35rem;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow .2s, transform .2s;
+    }
+    .board-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+    .board-photo { width: 54px; height: 54px; border-radius: 50%; overflow: hidden; background: var(--border-light); margin-bottom: .875rem; }
+    .board-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .board-name { font-size: .9rem; font-weight: 700; color: var(--navy); margin-bottom: .2rem; line-height: 1.3; }
+    .board-role { font-size: .72rem; color: var(--crimson); font-weight: 600; margin-bottom: .35rem; line-height: 1.4; }
+    .board-tagline { font-size: .75rem; color: var(--muted); line-height: 1.5; }
+
+    /* ══════════════════════════════════════════
+       SPONSORS
+    ══════════════════════════════════════════ */
+    #sponsors { padding: 5rem 0; background: var(--bg); border-top: 1px solid var(--border); }
+    .sponsors-bar { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow-sm); }
+    .sponsors-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; align-items: center; }
+    .sponsor-logo { width: 150px; height: 70px; border-radius: var(--radius-sm); background: var(--white); border: 1.5px solid var(--border); padding: .75rem; display: flex; align-items: center; justify-content: center; overflow: hidden; transition: border-color .2s; }
+    .sponsor-logo:hover { border-color: rgba(127,24,27,.2); }
+    .sponsor-logo img { width: 100%; height: 100%; object-fit: contain; }
+    .sponsor-ph { font-size: .72rem; font-weight: 600; color: var(--muted-light); text-align: center; }
+
+    /* ══════════════════════════════════════════
+       DONATE
+    ══════════════════════════════════════════ */
+    #donate { padding: 5rem 0; background: var(--white); border-top: 1px solid var(--border); }
+    .donate-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 1.5rem; align-items: start; }
+    .donate-left { display: flex; flex-direction: column; gap: 1rem; }
+    .donate-right { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; }
+    .donate-kicker { font-size: .65rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--crimson); margin-bottom: .5rem; }
+
+    /* ══════════════════════════════════════════
+       FAQ
+    ══════════════════════════════════════════ */
+    #faq { padding: 5rem 0; background: var(--bg); border-top: 1px solid var(--border); }
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .faq-item { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 1.35rem; box-shadow: var(--shadow-sm); transition: border-color .2s; }
+    .faq-item:hover { border-color: rgba(127,24,27,.15); }
+    .faq-q { font-size: .9rem; font-weight: 700; color: var(--navy); margin-bottom: .4rem; }
+    .faq-a { font-size: .82rem; color: var(--muted); line-height: 1.65; }
+
+    /* ══════════════════════════════════════════
+       CTA BANNER
+    ══════════════════════════════════════════ */
+    #cta { padding: 4rem 0; background: var(--white); border-top: 1px solid var(--border); }
+    .cta-banner {
+      background: linear-gradient(135deg, var(--crimson-dark), var(--crimson));
+      border-radius: var(--radius-lg); padding: 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 2rem; box-shadow: 0 16px 40px rgba(127,24,27,.35);
+      position: relative; overflow: hidden;
+    }
+    .cta-banner::before { content: ''; position: absolute; top: -60px; right: -60px; width: 280px; height: 280px; border-radius: 50%; border: 1px solid rgba(255,255,255,.1); pointer-events: none; }
+    .cta-banner-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; color: var(--white); margin-bottom: .35rem; position: relative; z-index: 1; }
+    .cta-banner-desc { font-size: .875rem; color: rgba(255,255,255,.7); position: relative; z-index: 1; }
+    .cta-banner-actions { display: flex; gap: .875rem; flex-wrap: wrap; position: relative; z-index: 1; }
+
+    /* ══════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════ */
+    footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,.06); padding: 4rem 0 2rem; color: rgba(255,255,255,.55); }
+    .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.3fr; gap: 2.5rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,.07); margin-bottom: 1.75rem; }
+    .footer-brand-name { font-family: var(--font-display); font-size: 1.2rem; font-weight: 800; color: var(--white); margin-bottom: .4rem; }
+    .footer-brand-sub { font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; color: rgba(255,255,255,.3); margin-bottom: .875rem; }
+    .footer-brand-desc { font-size: .82rem; line-height: 1.7; max-width: 240px; }
+    .footer-col h4 { font-size: .65rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.9); margin-bottom: 1.1rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+    .footer-col a { font-size: .83rem; transition: color .15s; }
+    .footer-col a:hover { color: var(--white); }
+    .footer-nl { display: flex; gap: .5rem; margin-bottom: .6rem; }
+    .footer-nl input { flex: 1; min-width: 0; padding: .625rem .875rem; border: 1px solid rgba(255,255,255,.12); border-radius: 7px; background: rgba(255,255,255,.06); font-family: var(--font-body); font-size: .82rem; color: var(--white); }
+    .footer-nl input::placeholder { color: rgba(255,255,255,.25); }
+    .footer-nl input:focus { outline: none; border-color: rgba(255,255,255,.3); }
+    .footer-nl-note { font-size: .7rem; color: rgba(255,255,255,.3); line-height: 1.55; }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom p { font-size: .78rem; }
+
+    .toast { position: fixed; bottom: 1.75rem; right: 1.75rem; background: var(--navy); color: var(--white); padding: .875rem 1.25rem; border-radius: 10px; box-shadow: var(--shadow-lg); font-size: .83rem; font-weight: 600; display: flex; align-items: center; gap: .65rem; z-index: 999; transform: translateY(80px); opacity: 0; transition: all .35s cubic-bezier(.34,1.56,.64,1); max-width: 320px; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast-icon { width: 22px; height: 22px; background: var(--crimson); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .toast-icon svg { width: 11px; height: 11px; color: var(--white); }
+
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .55s ease, transform .55s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 980px) {
+      .tws-hero-grid, .about-grid, .gallery-section-grid, .program-grid, .donate-grid { grid-template-columns: 1fr; }
+      .board-grid { grid-template-columns: 1fr 1fr; }
+      .who-grid { grid-template-columns: 1fr 1fr; }
+      .highlights-grid, .faq-grid { grid-template-columns: 1fr 1fr; }
+      .impact-row { grid-template-columns: repeat(3,1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .nav-links, .nav-actions { display: none; }
+      .hamburger { display: flex; }
+      .board-grid { grid-template-columns: 1fr 1fr; }
+      .who-grid, .highlights-grid, .faq-grid, .gallery-photo-grid, .event-meta, .schedule-grid { grid-template-columns: 1fr; }
+      .impact-row { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .cta-banner { padding: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════ NAV ══ -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <span class="nav-brand-name">JWPA</span>
+        <span class="nav-brand-sub">Jersey Women Physician Alliance</span>
+      </a>
+      <ul class="nav-links">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item" id="navAbout">
+          <span class="nav-link" tabindex="0">About Us
+            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+          <div class="dropdown">
+            <a href="about.html">About JWPA</a>
+            <a href="mission.html">Mission Statement</a>
+            <a href="founder.html">The Founder</a>
+            <div class="dropdown-divider"></div>
+            <a href="leadership.html">Leadership Team</a>
+            <a href="partners.html">Partners</a>
+          </div>
+        </li>
+        <li class="nav-item" id="navPrograms">
+          <span class="nav-link active" tabindex="0">Programs
+            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+          <div class="dropdown">
+            <a href="programs.html">All Programs</a>
+            <div class="dropdown-divider"></div>
+            <a href="tws.html" class="active">Teens With Stethoscopes</a>
+            <a href="mentorship.html">Mentorship Circles</a>
+          </div>
+        </li>
+        <li class="nav-item" id="navEvents">
+          <span class="nav-link" tabindex="0">Events
+            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+          <div class="dropdown">
+            <a href="calendar.html">Calendar</a>
+            <a href="past-events.html">Past Events</a>
+            <div class="dropdown-divider"></div>
+            <a href="volunteer.html">Volunteer</a>
+            <a href="sponsorship.html">Sponsorship</a>
+          </div>
+        </li>
+        <li class="nav-item" id="navMedia">
+          <span class="nav-link" tabindex="0">Media
+            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+          <div class="dropdown">
+            <a href="physician-of-the-month.html">Physician of the Month</a>
+            <a href="news.html">News</a>
+            <a href="press.html">Press</a>
+            <div class="dropdown-divider"></div>
+            <a href="resources.html">Resources &amp; Downloads</a>
+            <a href="photo-gallery.html">Photo Gallery</a>
+          </div>
+        </li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSd3rig62ll7VI7LdfZ4FO-eevjgTbOHhm4bueHqYVDrVfYIBg/viewform" target="_blank" class="btn btn-primary btn-sm">Apply Now</a>
+        <a href="donate.html" class="btn btn-outline btn-sm">Donate</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <div class="mobile-group-label">About Us</div>
+    <div class="mobile-sub">
+      <a href="about.html">About JWPA</a>
+      <a href="mission.html">Mission Statement</a>
+      <a href="founder.html">The Founder</a>
+      <a href="leadership.html">Leadership Team</a>
+      <a href="partners.html">Partners</a>
+    </div>
+    <div class="mobile-group-label">Programs</div>
+    <div class="mobile-sub">
+      <a href="programs.html">All Programs</a>
+      <a href="tws.html" style="color:var(--crimson);font-weight:700">Teens With Stethoscopes</a>
+      <a href="mentorship.html">Mentorship Circles</a>
+    </div>
+    <div class="mobile-group-label">Events</div>
+    <div class="mobile-sub">
+      <a href="calendar.html">Calendar</a>
+      <a href="past-events.html">Past Events</a>
+      <a href="volunteer.html">Volunteer</a>
+      <a href="sponsorship.html">Sponsorship</a>
+    </div>
+    <div class="mobile-group-label">Media</div>
+    <div class="mobile-sub">
+      <a href="physician-of-the-month.html">Physician of the Month</a>
+      <a href="news.html">News</a>
+      <a href="press.html">Press</a>
+      <a href="resources.html">Resources &amp; Downloads</a>
+      <a href="photo-gallery.html">Photo Gallery</a>
+    </div>
+    <a href="contact.html">Contact</a>
+    <a href="donate.html">Donate</a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSd3rig62ll7VI7LdfZ4FO-eevjgTbOHhm4bueHqYVDrVfYIBg/viewform" target="_blank" style="color:var(--crimson);font-weight:700">Apply for TWS &rarr;</a>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       TWS HERO
+  ══════════════════════════════════════════ -->
+  <section id="tws-hero">
+    <div class="container">
+      <div class="tws-hero-grid">
+        <div>
+          <div class="tws-eyebrow">
+            <span class="tws-dot"></span>
+            JWPA Flagship Program &middot; Shaping Tomorrow's Healthcare Leaders
+          </div>
+          <h1 class="tws-hero-title">A one-day peek into<br><em>real healthcare careers.</em></h1>
+          <p class="tws-hero-desc">
+            Teens With Stethoscopes is a free, one-day program by the
+            <strong style="color:var(--white)">Jersey Women Physician Alliance (JWPA)</strong>
+            that helps high school students see what it's actually like to work in healthcare.
+          </p>
+          <div class="tws-founder-line">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            Founded by Dr. Sudha Nahar &middot; Founder &amp; President, JWPA
+          </div>
+          <div class="tws-hero-actions">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSd3rig62ll7VI7LdfZ4FO-eevjgTbOHhm4bueHqYVDrVfYIBg/viewform" target="_blank" class="btn btn-white">Apply Now &mdash; Free</a>
+            <a href="/images/Teens With Stethoscopes.png" target="_blank" class="btn btn-ghost btn-lg">View Flyer</a>
+            <a href="/docs/TWS-Program.pdf" target="_blank" class="btn btn-ghost btn-lg">Program PDF</a>
+          </div>
+          <p class="tws-hero-note">Short application. No experience required. Just curiosity.</p>
+          <div class="tws-stats-row">
+            <div class="tws-stat"><div class="tws-stat-num">75+</div><div class="tws-stat-label">Students expected</div></div>
+            <div class="tws-stat"><div class="tws-stat-num">10+</div><div class="tws-stat-label">Physicians &amp; mentors</div></div>
+            <div class="tws-stat"><div class="tws-stat-num">1 Day</div><div class="tws-stat-label">That changes your path</div></div>
+          </div>
+        </div>
+        <div>
+          <div class="hero-media-card">
+            <div class="hero-photo-main"><img src="/images/teaching students.jpg" alt="Students at TWS healthcare workshop" /></div>
+            <div class="hero-photo-row">
+              <div class="hero-photo-thumb"><img src="/images/learning cpr.jpg" alt="Students learning CPR" /></div>
+              <div class="hero-photo-thumb"><img src="/images/teaching obgyn.jpg" alt="OB/GYN teaching station" /></div>
+              <div class="hero-photo-thumb"><img src="/images/teaching blood pressure.jpg" alt="Blood pressure station" /></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       IMPACT STRIP
+  ══════════════════════════════════════════ -->
+  <div id="impact-strip">
+    <div class="container">
+      <div class="impact-row">
+        <div class="impact-cell"><div class="impact-num">Free</div><div class="impact-label">Always free<br>for students</div></div>
+        <div class="impact-cell"><div class="impact-num">75+</div><div class="impact-label">Students<br>expected</div></div>
+        <div class="impact-cell"><div class="impact-num">10+</div><div class="impact-label">Physicians<br>&amp; mentors</div></div>
+        <div class="impact-cell"><div class="impact-num">NJ</div><div class="impact-label">Statewide<br>reach</div></div>
+        <div class="impact-cell"><div class="impact-num">Mar '27</div><div class="impact-label">Next event<br>Edison, NJ</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       ABOUT
+  ══════════════════════════════════════════ -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="reveal">
+          <div class="section-label">About the Program</div>
+          <h2 class="section-heading">What is Teens With Stethoscopes?</h2>
+          <div class="divider"></div>
+          <p style="font-size:.95rem;color:var(--muted);line-height:1.8;margin-bottom:1.25rem">
+            A calm, welcoming day where students can ask questions, try simple clinical skills, and talk to real physicians about how they got where they are. Instead of a long lecture, students move through short, interactive stations — listening to heart sounds, learning how doctors think through a case, and hearing honest stories from women in medicine.
+          </p>
+          <p style="font-size:.95rem;color:var(--muted);line-height:1.8">
+            Founded by Dr. Sudha Nahar, TWS was built to open the doors of medicine to students who might never otherwise step inside a clinical setting — especially those from underrepresented backgrounds and under-resourced schools across New Jersey.
+          </p>
+          <div class="quote-block">
+            <p>"I founded TWS because I wanted every young person with a dream of medicine to have someone who looks like them show them the way."</p>
+            <cite>— Dr. Sudha Nahar, Gastroenterologist &middot; Founder, JWPA &amp; TWS</cite>
+          </div>
+        </div>
+        <div class="reveal">
+          <div class="highlights-grid">
+            <div class="highlight-item"><div class="highlight-label">Hands-On</div><div class="highlight-body">Try simple skills with guidance from physicians and volunteers.</div></div>
+            <div class="highlight-item"><div class="highlight-label">Real Talk</div><div class="highlight-body">Ask about school, stress, and what the job is really like.</div></div>
+            <div class="highlight-item"><div class="highlight-label">Next Steps</div><div class="highlight-body">Leave with clear ideas on what to do in high school and beyond.</div></div>
+            <div class="highlight-item"><div class="highlight-label">Mentorship</div><div class="highlight-body">Meet women physicians who have been where you are.</div></div>
+            <div class="highlight-item"><div class="highlight-label">Explore Careers</div><div class="highlight-body">See paths in medicine, nursing, research, and public health.</div></div>
+            <div class="highlight-item"><div class="highlight-label">Confidence</div><div class="highlight-body">Practice asking questions in a supportive, low-pressure setting.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       WHO IT'S FOR
+  ══════════════════════════════════════════ -->
+  <section id="who">
+    <div class="container">
+      <div class="section-label reveal">Who Can Attend</div>
+      <h2 class="section-heading reveal">Who is this for?</h2>
+      <p class="section-sub reveal">You don't have to have everything figured out. If you're curious about helping people, this is for you.</p>
+      <div class="who-grid">
+        <div class="card reveal">
+          <div style="width:44px;height:44px;background:var(--crimson-mist);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;color:var(--crimson)">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          </div>
+          <h3 style="font-weight:700;color:var(--navy);margin-bottom:.4rem">Middle &amp; High School Students</h3>
+          <p style="font-size:.85rem;color:var(--muted);line-height:1.65">8th&ndash;12th graders (ages 13&ndash;18) curious about medicine, nursing, or any healthcare career. No GPA minimum. No prior experience needed.</p>
+        </div>
+        <div class="card reveal">
+          <div style="width:44px;height:44px;background:var(--crimson-mist);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;color:var(--crimson)">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3 style="font-weight:700;color:var(--navy);margin-bottom:.4rem">Parents &amp; Guardians</h3>
+          <p style="font-size:.85rem;color:var(--muted);line-height:1.65">Adults who want to understand the path to healthcare and how to best support their teen's interest in a medical career.</p>
+        </div>
+        <div class="card reveal">
+          <div style="width:44px;height:44px;background:var(--crimson-mist);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;color:var(--crimson)">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 style="font-weight:700;color:var(--navy);margin-bottom:.4rem">Future Mentors</h3>
+          <p style="font-size:.85rem;color:var(--muted);line-height:1.65">Physicians and healthcare professionals who want to give back by sharing their story, running a station, or sitting on the physician panel.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       GALLERY
+  ══════════════════════════════════════════ -->
+  <section id="gallery">
+    <div class="container">
+      <div class="gallery-section-grid">
+        <div class="reveal">
+          <div class="section-label">The Experience</div>
+          <h2 class="section-heading">A calm, hands-on day</h2>
+          <p style="font-size:.95rem;color:var(--muted);line-height:1.75;margin-bottom:1.25rem">
+            The day is broken into small, simple blocks so it never feels overwhelming. Plenty of breaks, chances to ask questions, and time to explore.
+          </p>
+          <ul style="font-size:.88rem;color:var(--muted);padding-left:1.1rem;list-style:disc;display:flex;flex-direction:column;gap:.55rem">
+            <li>Short skill stations &mdash; vitals, simple tools, how doctors think</li>
+            <li>Small-group chats with physicians and healthcare professionals</li>
+            <li>Panel with Q&amp;A about college, med school, and other paths</li>
+            <li>Lunch and networking with physician mentors</li>
+          </ul>
+        </div>
+        <div class="reveal">
+          <div class="gallery-photo-grid">
+            <div class="gallery-photo"><img src="/images/kids applying.jpg" alt="Students at a workshop table" /></div>
+            <div class="gallery-photo"><img src="/images/doctor panel.jpg" alt="Physician panel discussion" /></div>
+            <div class="gallery-photo"><img src="/images/kids discussion.jpg" alt="Group discussion" /></div>
+            <div class="gallery-photo"><img src="/images/kids celebrate.jpg" alt="Students celebrating at TWS" /></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       EVENT SNAPSHOT
+  ══════════════════════════════════════════ -->
+  <section id="program">
+    <div class="container">
+      <div class="program-grid">
+
+        <div class="reveal">
+          <div class="section-label">Event Details</div>
+          <h2 class="section-heading">Event Snapshot</h2>
+          <p style="font-size:.9rem;color:var(--muted);line-height:1.7;margin-bottom:1.5rem">
+            The next TWS event is planned for March 2027. Date and schedule details will be confirmed and sent by email to all accepted applicants.
+          </p>
+          <div class="card" style="margin-bottom:1.25rem">
+            <div class="event-meta">
+              <div class="event-item"><div class="event-item-label">Date</div><div class="event-item-value">March 2027<br><span style="font-size:.75rem;font-weight:500;color:var(--muted)">Exact date TBC</span></div></div>
+              <div class="event-item"><div class="event-item-label">Time</div><div class="event-item-value">Approx. 9:00 AM &ndash; 3:00 PM</div></div>
+              <div class="event-item"><div class="event-item-label">Venue</div><div class="event-item-value">Akbar Restaurant<br>21 Cortlandt St, Edison, NJ 08837</div></div>
+              <div class="event-item"><div class="event-item-label">Cost</div><div class="event-item-value">Free for all students</div></div>
+            </div>
+            <p style="font-size:.8rem;color:var(--muted);margin-bottom:1.25rem">Lunch and materials are provided. You'll receive an email with what to bring and where to check in.</p>
+            <div class="schedule-grid">
+              <div class="schedule-slot"><div class="schedule-time">9:00 &ndash; 10:15</div><div class="schedule-title">Welcome &amp; Intro</div><div class="schedule-body">Meet mentors, hear short stories, and settle in.</div></div>
+              <div class="schedule-slot"><div class="schedule-time">10:30 &ndash; 12:30</div><div class="schedule-title">Hands-On Stations</div><div class="schedule-body">Rotate through skills, tools, and simple cases.</div></div>
+              <div class="schedule-slot"><div class="schedule-time">1:15 &ndash; 3:00</div><div class="schedule-title">Panels &amp; Next Steps</div><div class="schedule-body">Ask questions and learn what to do after the event.</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <h3 style="font-family:var(--font-display);font-size:1.15rem;font-weight:800;color:var(--navy);margin-bottom:1.25rem">How to apply &mdash; 3 quick steps</h3>
+          <div class="steps" style="margin-bottom:1.75rem">
+            <div class="step-row"><div class="step-num">1</div><div><div class="step-title">Fill out the online form</div><div class="step-body">Basic info and a short question about why you're interested. Takes about 5 minutes.</div></div></div>
+            <div class="step-row"><div class="step-num">2</div><div><div class="step-title">Wait for email</div><div class="step-body">JWPA reviews applications and emails selected students and parents/guardians.</div></div></div>
+            <div class="step-row"><div class="step-num">3</div><div><div class="step-title">Confirm &amp; show up</div><div class="step-body">Sign the forms, mark your calendar, and come ready to explore.</div></div></div>
+          </div>
+          <div class="card" style="margin-bottom:1rem">
+            <h4 style="font-weight:700;color:var(--navy);margin-bottom:.4rem">For Parents &amp; Guardians</h4>
+            <p style="font-size:.83rem;color:var(--muted);line-height:1.65">You'll receive all details by email &mdash; parking, check-in, and contacts. A parent/guardian consent form is required for every student.</p>
+          </div>
+          <div class="card">
+            <h4 style="font-weight:700;color:var(--navy);margin-bottom:.4rem">Accessibility &amp; Special Needs</h4>
+            <p style="font-size:.83rem;color:var(--muted);line-height:1.65">If your student has medical, dietary, or accessibility needs, please note it in the application or email us. We'll do our best to make the day comfortable and inclusive.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       AGENDA PDF
+  ══════════════════════════════════════════ -->
+  <section id="agenda">
+    <div class="container">
+      <div class="section-label reveal">Program Agenda</div>
+      <h2 class="section-heading reveal">Event Agenda</h2>
+      <p class="section-sub reveal">View the full program schedule, station rotation, panelists, and what to expect on event day.</p>
+      <div class="card reveal" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;padding:1.5rem 2rem">
+        <div>
+          <div style="font-weight:700;color:var(--navy);margin-bottom:.2rem">TWS Program PDF</div>
+          <div style="font-size:.83rem;color:var(--muted)">Inaugural Event, March 21, 2026 &middot; Available for reference. 2027 agenda coming soon.</div>
+        </div>
+        <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+          <a href="/docs/TWS-Program.pdf" target="_blank" class="btn btn-primary btn-md">View Program PDF</a>
+          <a href="/docs/TWS-Program.pdf" download class="btn btn-outline btn-md">Download</a>
+        </div>
+      </div>
+      <p style="font-size:.78rem;color:var(--muted);margin-top:.6rem">Tip: On mobile, tap "View Program PDF" to open in your browser's PDF viewer.</p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       ADVISORY BOARD
+  ══════════════════════════════════════════ -->
+  <section id="advisory">
+    <div class="container">
+      <div class="section-label reveal">Leadership</div>
+      <h2 class="section-heading reveal">Advisory Board</h2>
+      <p class="section-sub reveal">Teens With Stethoscopes is guided by physicians and leaders who care deeply about mentoring the next generation of healthcare professionals.</p>
+      <div class="board-grid">
+        <div class="board-card reveal" style="border-top:3px solid var(--crimson)">
+          <div class="board-photo"><img src="/images/Dr. Sudha Nahar.JPG" alt="Dr. Sudha Nahar" /></div>
+          <div class="board-name">Dr. Sudha Nahar</div>
+          <div class="board-role">Gastroenterologist &middot; Allied Digestive Health<br>Founder &middot; JWPA &amp; TWS</div>
+          <div class="board-tagline">Focus: digestive health, endoscopy awareness, and GI prevention.</div>
+        </div>
+        <div class="board-card reveal">
+          <div class="board-photo"><img src="/images/Dr. Sameera Maganti.png" alt="Dr. Sameera Maganti" /></div>
+          <div class="board-name">Dr. Sameera Maganti</div>
+          <div class="board-role">Internist &middot; RWJUH<br>Co-Chair &middot; TWS</div>
+          <div class="board-tagline">Focus: adult medicine, chronic care management, and whole-patient health.</div>
+        </div>
+        <div class="board-card reveal">
+          <div class="board-photo"><img src="/images/Dr. Gloria Bachman.png" alt="Dr. Gloria A. Bachmann" /></div>
+          <div class="board-name">Dr. Gloria A. Bachmann</div>
+          <div class="board-role">OB-GYN &middot; RWJUH<br>Member &middot; JWPA</div>
+          <div class="board-tagline">Focus: reproductive health, women's wellness, and preventive care.</div>
+        </div>
+        <div class="board-card reveal">
+          <div class="board-photo"><img src="/images/Dr. Christopher Gilligan.jpg" alt="Dr. Christopher Gilligan" /></div>
+          <div class="board-name">Dr. Christopher Gilligan</div>
+          <div class="board-role">CMO &middot; RWJUH<br>Co-Chair &middot; TWS</div>
+          <div class="board-tagline">Focus: pain health, targeted interventions, and functional restoration.</div>
+        </div>
+        <div class="board-card reveal">
+          <div class="board-photo"><img src="/images/Dr. Rachna Kulkarni.jpeg" alt="Dr. Rachna Kulkarni" /></div>
+          <div class="board-name">Dr. Rachna Kulkarni</div>
+          <div class="board-role">Cardiologist &middot; RWJUH<br>Member &middot; JWPA</div>
+          <div class="board-tagline">Focus: heart health, cardiovascular diagnostics, and disease prevention.</div>
+        </div>
+        <div class="board-card reveal">
+          <div class="board-photo"><img src="/images/Rashmi Acharya.png" alt="Dr. Rashmi Acharya" /></div>
+          <div class="board-name">Dr. Rashmi Acharya</div>
+          <div class="board-role">OB-GYN &middot; IU Health<br>Member &middot; JWPA</div>
+          <div class="board-tagline">Focus: women's health, reproductive care and maternal wellness.</div>
+        </div>
+        <div class="board-card reveal">
+          <div class="board-photo"><img src="/images/Dr. Nidhi Goel.png" alt="Dr. Nidhi Goel" /></div>
+          <div class="board-name">Dr. Nidhi Goel</div>
+          <div class="board-role">Psychiatrist &middot; HMH<br>Member &middot; JWPA</div>
+          <div class="board-tagline">Focus: mental health, behavioral science, and emotional well-being.</div>
+        </div>
+        <div class="board-card reveal">
+          <div class="board-photo"><img src="/images/Dr. Sunita Kanumury.jpg" alt="Dr. Sunita Kanumury" /></div>
+          <div class="board-name">Dr. Sunita Kanumury</div>
+          <div class="board-role">Allergist-Immunologist &middot; Atlantic Health<br>Member &middot; JWPA</div>
+          <div class="board-tagline">Focus: allergies, immune health and pediatric prevention.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       VOLUNTEERS
+  ══════════════════════════════════════════ -->
+  <section id="volunteers">
+    <div class="container">
+      <div class="section-label reveal">Team</div>
+      <h2 class="section-heading reveal">Volunteers</h2>
+      <p class="section-sub reveal">The physicians, educators, and healthcare professionals who show up to make TWS possible for every student.</p>
+      <div class="board-grid">
+        <div class="board-card reveal">
+          <div class="board-photo"><img src="/images/Dr. Smita Lodha.jpeg" alt="Dr. Smita Lodha" /></div>
+          <div class="board-name">Dr. Smita Lodha</div>
+          <div class="board-role">Family Medicine &middot; Queens Medical Services<br>Member &middot; JWPA</div>
+          <div class="board-tagline">Focus: adult medicine, chronic care management, and whole-patient health.</div>
+        </div>
+        <div class="board-card reveal">
+          <div class="board-photo"><img src="/images/Dr. Esther Connor.jpg" alt="Dr. Esther Connor" /></div>
+          <div class="board-name">Dr. Esther Connor</div>
+          <div class="board-role">Gastroenterologist &middot; MNGI<br>Member &middot; TWS</div>
+          <div class="board-tagline">Focus: digestive health, endoscopy awareness, and GI prevention.</div>
+        </div>
+        <div class="board-card reveal">
+          <div class="board-photo"><img src="/images/Dr. Ritu Nahar.png" alt="Dr. Ritu Nahar" /></div>
+          <div class="board-name">Dr. Ritu Nahar</div>
+          <div class="board-role">Gastroenterologist &middot; Allied Digestive Health<br>Member &middot; JWPA</div>
+          <div class="board-tagline">Focus: digestive disorders, GI screening and subspecialty pathways.</div>
+        </div>
+        <div class="board-card reveal">
+          <div class="board-photo"><img src="/images/Leenam Dalal.JPG" alt="Leenam Dalal" /></div>
+          <div class="board-name">Leenam Dalal</div>
+          <div class="board-role">Teacher &middot; BigDaa<br>Member &middot; TWS</div>
+          <div class="board-tagline">Focus: student learning, educational guidance, and academic growth.</div>
+        </div>
+        <div class="board-card reveal">
+          <div class="board-photo"><img src="/images/Diana Quintanilla.png" alt="Diana Quintanilla" /></div>
+          <div class="board-name">Diana Quintanilla</div>
+          <div class="board-role">Medical Assistant &middot; Allied Digestive Health<br>Member &middot; JWPA</div>
+          <div class="board-tagline">Focus: patient support, clinical coordination, and compassionate care.</div>
+        </div>
+        <div class="board-card reveal">
+          <div class="board-photo"><img src="/images/profile-picture-circle-hd.png.webp" alt="Julisa Gutierrez" /></div>
+          <div class="board-name">Julisa Gutierrez</div>
+          <div class="board-role">Medical Assistant &middot; Allied Digestive Health<br>Member &middot; JWPA</div>
+          <div class="board-tagline">Focus: patient communication, hands-on assistance, and workflow efficiency.</div>
+        </div>
+        <div class="board-card reveal">
+          <div class="board-photo"><img src="/images/profile-picture-circle-hd.png.webp" alt="Nohely Alvarez" /></div>
+          <div class="board-name">Nohely Alvarez</div>
+          <div class="board-role">Medical Assistant &middot; Allied Digestive Health<br>Member &middot; JWPA</div>
+          <div class="board-tagline">Focus: clinical preparation, patient comfort, and reliable follow-up.</div>
+        </div>
+        <div class="board-card reveal">
+          <div class="board-photo"><img src="/images/Nachia Larson Headshot 2025.jpg" alt="Nachia Larson" /></div>
+          <div class="board-name">Nachia Larson</div>
+          <div class="board-role">DEI Program Manager &middot; MNGI<br>Member &middot; HHCPC</div>
+          <div class="board-tagline">Focus: program organization, operational planning, and community engagement.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       SPONSORS
+  ══════════════════════════════════════════ -->
+  <section id="sponsors">
+    <div class="container">
+      <div class="section-label reveal">Partners</div>
+      <h2 class="section-heading reveal">Sponsors &amp; Partners</h2>
+      <p class="section-sub reveal">These organizations help make Teens With Stethoscopes free and accessible for every student.</p>
+      <div class="sponsors-bar reveal">
+        <div style="font-size:.875rem;font-weight:700;color:var(--navy)">Our current partners and supporting organizations</div>
+        <div class="sponsors-row">
+          <div class="sponsor-logo"><img src="/images/JWPA LOGO.png" alt="JWPA" /></div>
+          <div class="sponsor-logo"><img src="/images/rwj_logo.jpg" alt="Robert Wood Johnson University Hospital" /></div>
+          <div class="sponsor-logo"><img src="/images/ADH Logo (1).png" alt="Allied Digestive Health" /></div>
+          <div class="sponsor-logo" style="border-style:dashed"><span class="sponsor-ph">Your Organization Here</span></div>
+        </div>
+        <div style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border);font-size:.85rem;color:var(--muted)">
+          Interested in partnering or sponsoring? Email
+          <a href="mailto:teenswithstethoscopes@gmail.com" style="color:var(--crimson);font-weight:600">teenswithstethoscopes@gmail.com</a>
+          or visit our <a href="sponsorship.html" style="color:var(--crimson);font-weight:600">Sponsorship page &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       DONATE
+  ══════════════════════════════════════════ -->
+  <section id="donate">
+    <div class="container">
+      <div class="section-label reveal">Support TWS</div>
+      <h2 class="section-heading reveal">Donate</h2>
+      <p class="section-sub reveal">Teens With Stethoscopes is a program of <strong>JWPA</strong>. Your donation helps keep the event free and accessible for every student.</p>
+      <div class="donate-grid reveal">
+        <div class="donate-left">
+          <div class="card">
+            <h3 style="font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:.75rem">Support the next generation</h3>
+            <p style="font-size:.9rem;color:var(--muted);line-height:1.75;margin-bottom:.875rem">Donations help cover supplies, lunch, printed materials, and hands-on learning stations. Thank you for helping students explore healthcare in a welcoming environment.</p>
+            <p style="font-size:.9rem;color:var(--muted);line-height:1.75;margin-bottom:.875rem">Your support helps us keep the day calm, organized, and truly hands-on — so students can learn, ask questions, and leave with a clearer sense of what careers in healthcare look like.</p>
+            <p style="font-size:.9rem;color:var(--muted);line-height:1.75">You may see <strong>JWPA</strong> during checkout. That's correct — JWPA is the parent organization that runs Teens With Stethoscopes.</p>
+          </div>
+          <div class="card">
+            <div class="donate-kicker">More Ways to Help</div>
+            <h3 style="font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:.75rem">Sponsor, partner, or volunteer</h3>
+            <p style="font-size:.88rem;color:var(--muted);line-height:1.65;margin-bottom:1rem">Want to sponsor a station, donate supplies, or volunteer as a mentor? We'd love to collaborate with physicians, healthcare professionals, and community partners.</p>
+            <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1rem">
+              <a href="mailto:teenswithstethoscopes@gmail.com?subject=Sponsorship+-+Teens+With+Stethoscopes" class="btn-soft">Email about sponsorship</a>
+              <a href="#sponsors" class="btn-soft">See current partners</a>
+            </div>
+            <p style="font-size:.82rem;color:var(--muted);line-height:1.65">If donating on behalf of a company, include your organization name and what you'd like to support — lunch, materials, or a hands-on station.</p>
+          </div>
+        </div>
+        <div class="card donate-right">
+          <stripe-buy-button
+            buy-button-id="buy_btn_1ShgEHBoMx8j7KbnBVdkOO9y"
+            publishable-key="pk_live_51Sf6MEBoMx8j7KbnHHIGBj92rD5sAM3WO2dEfzJ5HaGhAhL0bc6Pudj8jChPWi8vIkTHBqSRsYRQpgnsoCBSMrXx00YUVZESjW">
+          </stripe-buy-button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       FAQ
+  ══════════════════════════════════════════ -->
+  <section id="faq">
+    <div class="container">
+      <div class="section-label reveal">FAQ</div>
+      <h2 class="section-heading reveal">Questions students and parents often ask</h2>
+      <p class="section-sub reveal">
+        Start here. You can also reach out to
+        <a href="mailto:teenswithstethoscopes@gmail.com" style="color:var(--crimson);font-weight:600">teenswithstethoscopes@gmail.com</a>
+        for more details.
+      </p>
+      <div class="faq-grid">
+        <div class="faq-item reveal"><div class="faq-q">Do I need a certain GPA?</div><div class="faq-a">No. We care more about curiosity and effort in your application than perfect grades. Every student who is genuinely interested is encouraged to apply.</div></div>
+        <div class="faq-item reveal"><div class="faq-q">Can I come by myself?</div><div class="faq-a">Yes. A parent/guardian must complete consent forms, but you'll be with trained staff and physician volunteers throughout the entire day.</div></div>
+        <div class="faq-item reveal"><div class="faq-q">What should I wear or bring?</div><div class="faq-a">Comfortable clothes and closed-toe shoes are recommended. We'll email specific details and any forms before the event. Lunch and materials are provided.</div></div>
+        <div class="faq-item reveal"><div class="faq-q">What about transportation?</div><div class="faq-a">Families are responsible for getting students to and from the venue. Parking and drop-off details are shared in your confirmation email.</div></div>
+        <div class="faq-item reveal"><div class="faq-q">Is TWS really free?</div><div class="faq-a">Yes — completely free. Dr. Sudha Nahar founded TWS to remove every financial barrier to physician mentorship. No application fee, no program fee, no cost to families.</div></div>
+        <div class="faq-item reveal"><div class="faq-q">What happens after TWS day?</div><div class="faq-a">Students leave with physician mentor contacts, the JWPA Pre-Med Roadmap, and next-step guidance. Many mentorship relationships formed at TWS continue long after the event.</div></div>
+      </div>
+      <div style="margin-top:1.5rem;background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem" class="reveal">
+        <strong style="font-size:.875rem;color:var(--navy)">Safety &amp; Support:</strong>
+        <span style="font-size:.875rem;color:var(--muted)"> The event is supervised by licensed physicians, volunteers, and staff. All activities are age-appropriate and focused on education and exploration.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       CTA BANNER
+  ══════════════════════════════════════════ -->
+  <section id="cta">
+    <div class="container">
+      <div class="cta-banner reveal">
+        <div>
+          <div class="cta-banner-title">Ready to see if healthcare is for you?</div>
+          <p class="cta-banner-desc">Apply today. If you're even a little curious, this day is designed for you. Short application. No experience required.</p>
+        </div>
+        <div class="cta-banner-actions">
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSd3rig62ll7VI7LdfZ4FO-eevjgTbOHhm4bueHqYVDrVfYIBg/viewform" target="_blank" class="btn-white">Apply Now</a>
+          <a href="mailto:teenswithstethoscopes@gmail.com" class="btn btn-ghost btn-lg">Email the JWPA Team</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ FOOTER ══ -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand-name">JWPA</div>
+          <div class="footer-brand-sub">Jersey Women Physician Alliance</div>
+          <p class="footer-brand-desc">A physician-led nonprofit founded by Dr. Sudha Nahar, advancing women in medicine and future healthcare professionals across New Jersey.</p>
+          <div style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,.08)">
+            <div style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.4rem">TWS Contact</div>
+            <a href="mailto:teenswithstethoscopes@gmail.com" style="font-size:.83rem;color:rgba(255,255,255,.7)">teenswithstethoscopes@gmail.com</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>TWS Program</h4>
+          <ul>
+            <li><a href="#about">About TWS</a></li>
+            <li><a href="#program">Event Details</a></li>
+            <li><a href="#agenda">Agenda PDF</a></li>
+            <li><a href="#advisory">Advisory Board</a></li>
+            <li><a href="#sponsors">Sponsors</a></li>
+            <li><a href="#donate">Donate</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSd3rig62ll7VI7LdfZ4FO-eevjgTbOHhm4bueHqYVDrVfYIBg/viewform" target="_blank" style="color:rgba(255,255,255,.8);font-weight:600">Apply Now &rarr;</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>JWPA</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About JWPA</a></li>
+            <li><a href="leadership.html">Leadership Team</a></li>
+            <li><a href="programs.html">All Programs</a></li>
+            <li><a href="calendar.html">Events</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="donate.html">Donate</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Newsletter</h4>
+          <div class="footer-nl">
+            <input type="email" id="footerNl" placeholder="Email address" />
+            <button class="btn btn-primary btn-sm" onclick="submitFooterNl()">Go</button>
+          </div>
+          <p class="footer-nl-note">Get JWPA and TWS updates monthly. Free. Unsubscribe anytime.</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="year"></span> Jersey Women Physician Alliance. Teens With Stethoscopes is a program of JWPA, founded by Dr. Sudha Nahar.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast">
+    <div class="toast-icon"><svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+    <span id="toastMsg">Done!</span>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+
+    document.querySelectorAll('.nav-item[id]').forEach(item => {
+      item.querySelector('.nav-link').addEventListener('click', e => {
+        e.stopPropagation();
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.nav-item[id]').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.nav-item[id]').forEach(i => i.classList.remove('open'));
+    });
+
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 4000);
+    }
+
+    function submitFooterNl() {
+      const e = document.getElementById('footerNl').value.trim();
+      if (!e || !e.includes('@')) { showToast('Please enter a valid email.'); return; }
+      window.location.href = 'mailto:newsletter@jwpa.org?subject=Newsletter+Subscription&body=Please+add+me+to+the+JWPA+newsletter.+Email:+' + encodeURIComponent(e);
+      showToast('Request sent!');
+    }
+  </script>
+</body>
+</html>

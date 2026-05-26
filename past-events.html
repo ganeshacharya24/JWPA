@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Past Events — JWPA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --crimson:       #7f181b;
+      --crimson-dark:  #5e1114;
+      --crimson-light: #a52024;
+      --crimson-mist:  #fdf2f2;
+      --navy:          #0f172a;
+      --slate:         #334155;
+      --muted:         #64748b;
+      --muted-light:   #94a3b8;
+      --border:        #e2e8f0;
+      --border-light:  #f1f5f9;
+      --bg:            #f8fafc;
+      --white:         #ffffff;
+      --font-display:  'Playfair Display', Georgia, serif;
+      --font-body:     'Outfit', system-ui, sans-serif;
+      --container:     1160px;
+      --radius-sm:     8px;
+      --radius:        12px;
+      --radius-lg:     20px;
+      --shadow-sm:     0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+      --shadow:        0 4px 16px rgba(15,23,42,.07), 0 1px 4px rgba(15,23,42,.04);
+      --shadow-md:     0 12px 32px rgba(15,23,42,.10), 0 2px 8px rgba(15,23,42,.05);
+      --shadow-lg:     0 24px 48px rgba(15,23,42,.13), 0 4px 12px rgba(15,23,42,.06);
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 15px; line-height: 1.65;
+      color: var(--slate); background: var(--white);
+      -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    :focus-visible { outline: 3px solid rgba(127,24,27,.3); outline-offset: 3px; border-radius: 4px; }
+    .container { max-width: var(--container); margin: 0 auto; padding: 0 2rem; }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: .45rem; font-family: var(--font-body); font-weight: 600;
+      border: none; border-radius: var(--radius-sm); cursor: pointer;
+      line-height: 1; white-space: nowrap; transition: all .2s ease;
+    }
+    .btn-sm  { padding: .5rem 1.1rem;  font-size: .8rem; }
+    .btn-md  { padding: .7rem 1.5rem;  font-size: .875rem; }
+    .btn-lg  { padding: .875rem 2rem;  font-size: .9rem; }
+    .btn-primary { background: var(--crimson); color: var(--white); box-shadow: 0 2px 8px rgba(127,24,27,.3); }
+    .btn-primary:hover { background: var(--crimson-dark); transform: translateY(-1px); }
+    .btn-outline { background: var(--white); color: var(--navy); border: 1.5px solid var(--border); }
+    .btn-outline:hover { border-color: var(--muted-light); background: var(--bg); transform: translateY(-1px); }
+    .btn-ghost { background: rgba(255,255,255,.12); color: var(--white); border: 1.5px solid rgba(255,255,255,.25); }
+    .btn-ghost:hover { background: rgba(255,255,255,.2); }
+    .btn-white { background: var(--white); color: var(--crimson); font-weight: 700; padding: .7rem 1.75rem; font-size: .875rem; border-radius: var(--radius-sm); display: inline-flex; align-items: center; transition: all .2s; }
+    .btn-white:hover { background: var(--bg); transform: translateY(-1px); }
+
+    /* ── Type ── */
+    .section-label {
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-size: .68rem; font-weight: 700; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--crimson); margin-bottom: 1rem;
+    }
+    .section-label::before {
+      content: ''; display: block; width: 22px; height: 2px;
+      background: var(--crimson); border-radius: 2px; flex-shrink: 0;
+    }
+    .section-heading {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3vw, 2.25rem);
+      font-weight: 800; color: var(--navy);
+      letter-spacing: -.02em; line-height: 1.15; margin-bottom: .75rem;
+    }
+
+    /* ══════════════════════════════════════════
+       NAVIGATION
+    ══════════════════════════════════════════ */
+    #navbar {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; height: 66px;
+      max-width: var(--container); margin: 0 auto; padding: 0 2rem; gap: 2rem;
+    }
+    .nav-brand { display: flex; flex-direction: column; line-height: 1.2; flex-shrink: 0; }
+    .nav-brand-name { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; color: var(--navy); }
+    .nav-brand-sub { font-size: .58rem; font-weight: 600; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+    .nav-links { display: flex; align-items: center; gap: .15rem; list-style: none; flex: 1; }
+    .nav-item { position: relative; }
+    .nav-link {
+      display: inline-flex; align-items: center; gap: .3rem; padding: .45rem .8rem;
+      border-radius: 6px; font-size: .775rem; font-weight: 600; color: var(--muted);
+      letter-spacing: .03em; text-transform: uppercase; transition: all .18s;
+      cursor: pointer; user-select: none;
+    }
+    .nav-link:hover, .nav-item:hover .nav-link, .nav-item.open .nav-link { color: var(--navy); background: var(--bg); }
+    .nav-link.active { color: var(--crimson); }
+    .nav-chevron { width: 11px; height: 11px; transition: transform .2s; flex-shrink: 0; }
+    .nav-item:hover .nav-chevron, .nav-item.open .nav-chevron { transform: rotate(180deg); }
+    .dropdown {
+      display: none; position: absolute; top: calc(100% + 6px); left: 0;
+      min-width: 210px; background: var(--white); border: 1.5px solid var(--border);
+      border-radius: var(--radius); box-shadow: var(--shadow-md);
+      padding: .5rem; z-index: 300; animation: dropFade .15s ease;
+    }
+    @keyframes dropFade { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+    .nav-item:hover .dropdown, .nav-item.open .dropdown { display: block; }
+    .dropdown a { display: block; padding: .625rem 1rem; font-size: .85rem; font-weight: 500; color: var(--slate); border-radius: 8px; transition: all .15s; white-space: nowrap; }
+    .dropdown a:hover { background: var(--bg); color: var(--crimson); }
+    .dropdown-divider { height: 1px; background: var(--border-light); margin: .4rem .5rem; }
+    .nav-actions { display: flex; align-items: center; gap: .65rem; flex-shrink: 0; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: .5rem; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--navy); border-radius: 2px; }
+    .mobile-menu {
+      display: none; position: fixed; top: 66px; left: 0; right: 0;
+      background: var(--white); border-top: 1px solid var(--border);
+      box-shadow: var(--shadow-lg); padding: 1rem 2rem 2rem;
+      z-index: 199; max-height: calc(100vh - 66px); overflow-y: auto;
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu a { display: block; padding: .7rem 0; font-size: .95rem; font-weight: 600; color: var(--slate); border-bottom: 1px solid var(--border-light); }
+    .mobile-menu a:hover { color: var(--crimson); }
+    .mobile-group-label { font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted-light); padding: .875rem 0 .35rem; }
+    .mobile-sub a { padding: .5rem 1rem; font-size: .875rem; font-weight: 500; color: var(--muted); }
+
+    /* ══════════════════════════════════════════
+       PAGE HERO
+    ══════════════════════════════════════════ */
+    #page-hero {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 0 3.5rem;
+      position: relative; overflow: hidden;
+    }
+    #page-hero::before {
+      content: '';
+      position: absolute; top: -120px; right: -80px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(127,24,27,.045) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-label {
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-size: .68rem; font-weight: 700; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--crimson); margin-bottom: 1rem;
+    }
+    .hero-label::before {
+      content: ''; display: block; width: 22px; height: 2px;
+      background: var(--crimson); border-radius: 2px;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800; color: var(--navy);
+      letter-spacing: -.02em; line-height: 1.1; margin-bottom: .875rem;
+    }
+    .hero-desc {
+      font-size: 1rem; color: var(--muted);
+      line-height: 1.75; max-width: 560px; margin-bottom: 2rem;
+    }
+    .hero-actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+
+    /* ══════════════════════════════════════════
+       FEATURED PAST EVENT — TWS Inaugural
+    ══════════════════════════════════════════ */
+    #featured {
+      padding: 5rem 0 4rem;
+      background: var(--white);
+    }
+
+    .featured-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Left: content */
+    .featured-body {
+      padding: 3rem 3.5rem;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .featured-date-tag {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--crimson-mist);
+      border: 1.5px solid rgba(127,24,27,.15);
+      border-radius: 20px;
+      padding: .3rem .875rem;
+      font-size: .65rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--crimson); margin-bottom: 1.1rem;
+      width: fit-content;
+    }
+    .featured-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3vw, 2.25rem);
+      font-weight: 800; color: var(--navy);
+      letter-spacing: -.02em; line-height: 1.15;
+      margin-bottom: .875rem;
+    }
+    .featured-desc {
+      font-size: .975rem; color: var(--muted);
+      line-height: 1.8; margin-bottom: 1.75rem;
+    }
+
+    /* Stats row */
+    .featured-stats {
+      display: flex; gap: 2rem;
+      padding: 1.25rem 0;
+      border-top: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-light);
+      margin-bottom: 1.75rem;
+    }
+    .featured-stat-num {
+      font-family: var(--font-display);
+      font-size: 1.5rem; font-weight: 800;
+      color: var(--navy); line-height: 1; margin-bottom: .2rem;
+    }
+    .featured-stat-label {
+      font-size: .68rem; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--muted-light);
+    }
+
+    .featured-actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+
+    /* Right: photo grid */
+    .featured-photos {
+      background: var(--bg);
+      border-left: 1.5px solid var(--border);
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      overflow: hidden;
+    }
+    .featured-photo {
+      background: var(--border-light);
+      position: relative;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .featured-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+    .featured-photo-placeholder {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: .4rem; color: var(--muted-light);
+    }
+    .featured-photo-placeholder svg { width: 24px; height: 24px; }
+    .featured-photo-placeholder span { font-size: .62rem; font-weight: 600; text-align: center; padding: 0 .75rem; }
+
+    /* First photo spans both rows */
+    .featured-photo:first-child {
+      grid-row: span 2;
+    }
+
+    /* ══════════════════════════════════════════
+       ALL PAST EVENTS
+    ══════════════════════════════════════════ */
+    #all-past {
+      padding: 4rem 0 5rem;
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+
+    /* Year group label */
+    .year-group { margin-bottom: 3rem; }
+    .year-group:last-child { margin-bottom: 0; }
+
+    .year-label {
+      font-family: var(--font-display);
+      font-size: 1.1rem; font-weight: 800;
+      color: var(--navy);
+      padding-bottom: .875rem;
+      margin-bottom: 1.25rem;
+      border-bottom: 2px solid var(--border);
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .year-label::after {
+      content: '';
+      flex: 1; height: 0;
+    }
+    .year-count {
+      font-size: .68rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--muted-light);
+      font-family: var(--font-body);
+    }
+
+    /* Past event cards */
+    .past-events-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .past-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: box-shadow .25s, transform .25s, border-color .25s;
+      box-shadow: var(--shadow-sm);
+    }
+    .past-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+      border-color: rgba(127,24,27,.15);
+    }
+
+    /* Photo area */
+    .past-card-photo {
+      height: 160px;
+      background: var(--border-light);
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .past-card-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      position: absolute; inset: 0;
+    }
+    .past-card-photo-placeholder {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: .5rem; color: var(--muted-light);
+      position: relative; z-index: 1;
+    }
+    .past-card-photo-placeholder svg { width: 28px; height: 28px; }
+    .past-card-photo-placeholder span { font-size: .65rem; font-weight: 600; text-align: center; padding: 0 1rem; }
+
+    /* Coloured bar showing event type */
+    .past-card-bar { height: 3px; }
+    .bar-tws      { background: var(--crimson); }
+    .bar-gala     { background: var(--navy); }
+    .bar-community{ background: #0891b2; }
+    .bar-workshop { background: #7c3aed; }
+
+    .past-card-body { padding: 1.25rem 1.35rem; }
+    .past-card-date {
+      font-size: .65rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--muted-light); margin-bottom: .35rem;
+    }
+    .past-card-title {
+      font-size: .95rem; font-weight: 700;
+      color: var(--navy); line-height: 1.3; margin-bottom: .5rem;
+    }
+    .past-card-desc {
+      font-size: .8rem; color: var(--muted); line-height: 1.6;
+    }
+
+    /* ══════════════════════════════════════════
+       SUBMIT YOUR EVENT PHOTOS CTA
+    ══════════════════════════════════════════ */
+    #photo-cta {
+      padding: 3.5rem 0;
+      background: var(--white);
+      border-top: 1px solid var(--border);
+    }
+    .photo-cta-card {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem 2.5rem;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      gap: 2rem; flex-wrap: wrap;
+      box-shadow: var(--shadow-sm);
+    }
+    .photo-cta-icon {
+      width: 48px; height: 48px;
+      background: var(--crimson-mist);
+      border-radius: 11px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--crimson); flex-shrink: 0;
+    }
+    .photo-cta-icon svg { width: 22px; height: 22px; }
+    .photo-cta-text { flex: 1; }
+    .photo-cta-title { font-size: .975rem; font-weight: 700; color: var(--navy); margin-bottom: .2rem; }
+    .photo-cta-desc { font-size: .825rem; color: var(--muted); }
+    .photo-cta-actions { display: flex; gap: .65rem; flex-wrap: wrap; flex-shrink: 0; }
+
+    /* ══════════════════════════════════════════
+       CTA BAND
+    ══════════════════════════════════════════ */
+    #cta {
+      background: var(--crimson); padding: 2.5rem 0;
+      position: relative; overflow: hidden;
+    }
+    #cta::before {
+      content: ''; position: absolute; top: -60px; right: -60px;
+      width: 280px; height: 280px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.1); pointer-events: none;
+    }
+    .cta-inner {
+      position: relative; z-index: 1;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+    }
+    .cta-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--white); margin-bottom: .2rem; }
+    .cta-sub { font-size: .825rem; color: rgba(255,255,255,.65); }
+    .cta-actions { display: flex; gap: .65rem; flex-shrink: 0; }
+
+    /* ══════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════ */
+    footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,.06); padding: 4rem 0 2rem; color: rgba(255,255,255,.55); }
+    .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.3fr; gap: 2.5rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,.07); margin-bottom: 1.75rem; }
+    .footer-brand-name { font-family: var(--font-display); font-size: 1.2rem; font-weight: 800; color: var(--white); margin-bottom: .4rem; }
+    .footer-brand-sub { font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; color: rgba(255,255,255,.3); margin-bottom: .875rem; }
+    .footer-brand-desc { font-size: .82rem; line-height: 1.7; max-width: 240px; }
+    .footer-col h4 { font-size: .65rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.9); margin-bottom: 1.1rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+    .footer-col a { font-size: .83rem; transition: color .15s; }
+    .footer-col a:hover { color: var(--white); }
+    .footer-nl { display: flex; gap: .5rem; margin-bottom: .6rem; }
+    .footer-nl input { flex: 1; min-width: 0; padding: .625rem .875rem; border: 1px solid rgba(255,255,255,.12); border-radius: 7px; background: rgba(255,255,255,.06); font-family: var(--font-body); font-size: .82rem; color: var(--white); }
+    .footer-nl input::placeholder { color: rgba(255,255,255,.25); }
+    .footer-nl input:focus { outline: none; border-color: rgba(255,255,255,.3); }
+    .footer-nl-note { font-size: .7rem; color: rgba(255,255,255,.3); line-height: 1.55; }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom p { font-size: .78rem; }
+
+    /* ── Toast ── */
+    .toast { position: fixed; bottom: 1.75rem; right: 1.75rem; background: var(--navy); color: var(--white); padding: .875rem 1.25rem; border-radius: 10px; box-shadow: var(--shadow-lg); font-size: .83rem; font-weight: 600; display: flex; align-items: center; gap: .65rem; z-index: 999; transform: translateY(80px); opacity: 0; transition: all .35s cubic-bezier(.34,1.56,.64,1); max-width: 320px; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast-icon { width: 22px; height: 22px; background: var(--crimson); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .toast-icon svg { width: 11px; height: 11px; color: var(--white); }
+
+    /* ── Reveal ── */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .55s ease, transform .55s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* ── Responsive ── */
+    @media (max-width: 980px) {
+      .featured-card      { grid-template-columns: 1fr; }
+      .featured-photos    { display: none; }
+      .featured-body      { padding: 2rem; }
+      .past-events-grid   { grid-template-columns: 1fr 1fr; }
+      .photo-cta-card     { flex-direction: column; align-items: flex-start; }
+      .footer-grid        { grid-template-columns: 1fr 1fr; }
+      .cta-inner          { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 640px) {
+      .nav-links, .nav-actions { display: none; }
+      .hamburger          { display: flex; }
+      .past-events-grid   { grid-template-columns: 1fr; }
+      .footer-grid        { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════ NAV ══ -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <span class="nav-brand-name">JWPA</span>
+        <span class="nav-brand-sub">Jersey Women Physician Alliance</span>
+      </a>
+      <ul class="nav-links">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item" id="navAbout">
+          <span class="nav-link" tabindex="0">About Us
+            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+          <div class="dropdown">
+            <a href="about.html">About JWPA</a>
+            <a href="mission.html">Mission Statement</a>
+            <a href="founder.html">The Founder</a>
+            <div class="dropdown-divider"></div>
+            <a href="leadership.html">Leadership Team</a>
+            <a href="partners.html">Partners</a>
+          </div>
+        </li>
+        <li class="nav-item" id="navPrograms">
+          <span class="nav-link" tabindex="0">Programs
+            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+          <div class="dropdown">
+            <a href="programs.html">All Programs</a>
+            <div class="dropdown-divider"></div>
+            <a href="tws.html">Teens With Stethoscopes</a>
+            <a href="mentorship.html">Mentorship Circles</a>
+          </div>
+        </li>
+        <li class="nav-item" id="navEvents">
+          <span class="nav-link active" tabindex="0">Events
+            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+          <div class="dropdown">
+            <a href="calendar.html">Calendar</a>
+            <a href="past-events.html">Past Events</a>
+            <div class="dropdown-divider"></div>
+            <a href="volunteer.html">Volunteer</a>
+            <a href="sponsorship.html">Sponsorship</a>
+          </div>
+        </li>
+        <li class="nav-item" id="navMedia">
+          <span class="nav-link" tabindex="0">Media
+            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+          <div class="dropdown">
+            <a href="physician-of-the-month.html">Physician of the Month</a>
+            <a href="news.html">News</a>
+            <a href="press.html">Press</a>
+            <div class="dropdown-divider"></div>
+            <a href="resources.html">Resources &amp; Downloads</a>
+            <a href="photo-gallery.html">Photo Gallery</a>
+          </div>
+        </li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="contact.html" class="btn btn-primary btn-sm">Join JWPA</a>
+        <a href="donate.html"  class="btn btn-outline btn-sm">Donate</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <div class="mobile-group-label">About Us</div>
+    <div class="mobile-sub">
+      <a href="about.html">About JWPA</a>
+      <a href="mission.html">Mission Statement</a>
+      <a href="founder.html">The Founder</a>
+      <a href="leadership.html">Leadership Team</a>
+      <a href="partners.html">Partners</a>
+    </div>
+    <div class="mobile-group-label">Programs</div>
+    <div class="mobile-sub">
+      <a href="programs.html">All Programs</a>
+      <a href="tws.html">Teens With Stethoscopes</a>
+      <a href="mentorship.html">Mentorship Circles</a>
+    </div>
+    <div class="mobile-group-label">Events</div>
+    <div class="mobile-sub">
+      <a href="calendar.html">Calendar</a>
+      <a href="past-events.html">Past Events</a>
+      <a href="volunteer.html">Volunteer</a>
+      <a href="sponsorship.html">Sponsorship</a>
+    </div>
+    <div class="mobile-group-label">Media</div>
+    <div class="mobile-sub">
+      <a href="physician-of-the-month.html">Physician of the Month</a>
+      <a href="news.html">News</a>
+      <a href="press.html">Press</a>
+      <a href="resources.html">Resources &amp; Downloads</a>
+      <a href="photo-gallery.html">Photo Gallery</a>
+    </div>
+    <a href="contact.html">Contact</a>
+    <a href="donate.html" style="color:var(--crimson)">Donate</a>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       PAGE HERO
+  ══════════════════════════════════════════ -->
+  <section id="page-hero">
+    <div class="container">
+      <div class="hero-label reveal">Events · Archive</div>
+      <h1 class="hero-title reveal">Past Events</h1>
+      <p class="hero-desc reveal">
+        A look back at JWPA gatherings, programs, and milestones.
+        Every event is a chapter in the story of this community.
+      </p>
+      <div class="hero-actions reveal">
+        <a href="calendar.html" class="btn btn-primary btn-lg">View Upcoming Events</a>
+        <a href="photo-gallery.html" class="btn btn-outline btn-lg">Photo Gallery</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       FEATURED: TWS INAUGURAL
+  ══════════════════════════════════════════ -->
+  <section id="featured">
+    <div class="container">
+      <div class="section-label reveal">Most Recent</div>
+      <h2 class="section-heading reveal" style="margin-bottom:1.75rem">Featured past event</h2>
+
+      <div class="featured-card reveal">
+
+        <!-- Left: content -->
+        <div class="featured-body">
+          <div class="featured-date-tag">March 21, 2026 · Edison, NJ</div>
+          <div class="featured-title">TWS Inaugural Event 2026</div>
+          <p class="featured-desc">
+            The first-ever Teens With Stethoscopes event — bringing together students,
+            physicians, and community leaders for an unforgettable day of discovery.
+            A milestone moment for JWPA and for every student who walked through
+            the door wondering if medicine could be for them.
+          </p>
+
+          <div class="featured-stats">
+            <div>
+              <div class="featured-stat-num">1<span style="font-size:1rem;color:var(--crimson)">st</span></div>
+              <div class="featured-stat-label">Inaugural Event</div>
+            </div>
+            <div>
+              <div class="featured-stat-num">NJ</div>
+              <div class="featured-stat-label">Students Served</div>
+            </div>
+            <div>
+              <div class="featured-stat-num">TWS</div>
+              <div class="featured-stat-label">Program Launch</div>
+            </div>
+          </div>
+
+          <div class="featured-actions">
+            <a href="tws.html" class="btn btn-primary btn-md">Learn About TWS</a>
+            <a href="photo-gallery.html" class="btn btn-outline btn-md">View Photos</a>
+          </div>
+        </div>
+
+        <!-- Right: photo grid — replace each src with real event photos -->
+        <div class="featured-photos">
+
+          <!-- Large photo — replace src -->
+          <div class="featured-photo">
+            <img src="TWS-2026-PHOTO-1.jpg" alt="TWS Inaugural Event 2026" onerror="this.style.display='none'" />
+            <div class="featured-photo-placeholder">
+              <svg fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24">
+                <rect x="3" y="3" width="18" height="18" rx="3"/>
+                <path d="M3 15l4-4 3 3 4-5 4 6"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+              </svg>
+              <span>TWS-2026-PHOTO-1.jpg</span>
+            </div>
+          </div>
+
+          <!-- Small photo top right -->
+          <div class="featured-photo">
+            <img src="TWS-2026-PHOTO-2.jpg" alt="TWS Inaugural Event 2026" onerror="this.style.display='none'" />
+            <div class="featured-photo-placeholder">
+              <svg fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24">
+                <rect x="3" y="3" width="18" height="18" rx="3"/>
+                <path d="M3 15l4-4 3 3 4-5 4 6"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+              </svg>
+              <span>TWS-2026-PHOTO-2.jpg</span>
+            </div>
+          </div>
+
+          <!-- Small photo bottom right -->
+          <div class="featured-photo">
+            <img src="TWS-2026-PHOTO-3.jpg" alt="TWS Inaugural Event 2026" onerror="this.style.display='none'" />
+            <div class="featured-photo-placeholder">
+              <svg fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24">
+                <rect x="3" y="3" width="18" height="18" rx="3"/>
+                <path d="M3 15l4-4 3 3 4-5 4 6"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+              </svg>
+              <span>TWS-2026-PHOTO-3.jpg</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       ALL PAST EVENTS — by year
+  ══════════════════════════════════════════ -->
+  <section id="all-past">
+    <div class="container">
+      <div class="section-label reveal">Full Archive</div>
+      <h2 class="section-heading reveal" style="margin-bottom:2.5rem">All past events</h2>
+
+      <!--
+        HOW TO ADD AN EVENT:
+        Copy one .past-card div, paste it inside the correct .year-group,
+        update the photo src, bar color class, date, title, and description.
+        Bar color classes: bar-tws (crimson), bar-gala (navy),
+        bar-community (teal), bar-workshop (purple)
+      -->
+
+      <!-- 2026 -->
+      <div class="year-group">
+        <div class="year-label reveal">
+          2026
+          <span class="year-count">1 event</span>
+        </div>
+        <div class="past-events-grid">
+
+          <div class="past-card reveal">
+            <div class="past-card-photo">
+              <img src="TWS-2026-PHOTO-1.jpg" alt="TWS Inaugural 2026" onerror="this.style.display='none'" />
+              <div class="past-card-photo-placeholder">
+                <svg fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24">
+                  <rect x="3" y="3" width="18" height="18" rx="3"/>
+                  <path d="M3 15l4-4 3 3 4-5 4 6"/><circle cx="8.5" cy="8.5" r="1.5"/>
+                </svg>
+                <span>Add event photo</span>
+              </div>
+            </div>
+            <div class="past-card-bar bar-tws"></div>
+            <div class="past-card-body">
+              <div class="past-card-date">March 21, 2026 · Flagship Program</div>
+              <div class="past-card-title">TWS Inaugural Event 2026</div>
+              <p class="past-card-desc">The first-ever Teens With Stethoscopes event — bringing together students, physicians, and community leaders for an unforgettable day of discovery.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 2025 — placeholder slots for you to fill in -->
+      <div class="year-group">
+        <div class="year-label reveal">
+          2025
+          <span class="year-count">Add events below</span>
+        </div>
+        <div class="past-events-grid">
+
+          <div class="past-card reveal">
+            <div class="past-card-photo">
+              <img src="EVENT-PHOTO.jpg" alt="" onerror="this.style.display='none'" />
+              <div class="past-card-photo-placeholder">
+                <svg fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24">
+                  <rect x="3" y="3" width="18" height="18" rx="3"/>
+                  <path d="M3 15l4-4 3 3 4-5 4 6"/><circle cx="8.5" cy="8.5" r="1.5"/>
+                </svg>
+                <span>Add event photo</span>
+              </div>
+            </div>
+            <div class="past-card-bar bar-gala"></div>
+            <div class="past-card-body">
+              <div class="past-card-date">Month Year · Event Type</div>
+              <div class="past-card-title">Event Name</div>
+              <p class="past-card-desc">A short description of what happened at this event and who attended.</p>
+            </div>
+          </div>
+
+          <div class="past-card reveal">
+            <div class="past-card-photo">
+              <img src="EVENT-PHOTO.jpg" alt="" onerror="this.style.display='none'" />
+              <div class="past-card-photo-placeholder">
+                <svg fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24">
+                  <rect x="3" y="3" width="18" height="18" rx="3"/>
+                  <path d="M3 15l4-4 3 3 4-5 4 6"/><circle cx="8.5" cy="8.5" r="1.5"/>
+                </svg>
+                <span>Add event photo</span>
+              </div>
+            </div>
+            <div class="past-card-bar bar-community"></div>
+            <div class="past-card-body">
+              <div class="past-card-date">Month Year · Event Type</div>
+              <div class="past-card-title">Event Name</div>
+              <p class="past-card-desc">A short description of what happened at this event and who attended.</p>
+            </div>
+          </div>
+
+          <div class="past-card reveal">
+            <div class="past-card-photo">
+              <img src="EVENT-PHOTO.jpg" alt="" onerror="this.style.display='none'" />
+              <div class="past-card-photo-placeholder">
+                <svg fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24">
+                  <rect x="3" y="3" width="18" height="18" rx="3"/>
+                  <path d="M3 15l4-4 3 3 4-5 4 6"/><circle cx="8.5" cy="8.5" r="1.5"/>
+                </svg>
+                <span>Add event photo</span>
+              </div>
+            </div>
+            <div class="past-card-bar bar-workshop"></div>
+            <div class="past-card-body">
+              <div class="past-card-date">Month Year · Event Type</div>
+              <div class="past-card-title">Event Name</div>
+              <p class="past-card-desc">A short description of what happened at this event and who attended.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       SUBMIT PHOTOS CTA
+  ══════════════════════════════════════════ -->
+  <section id="photo-cta">
+    <div class="container">
+      <div class="photo-cta-card reveal">
+        <div class="photo-cta-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+        </div>
+        <div class="photo-cta-text">
+          <div class="photo-cta-title">Were you at a JWPA event? Share your photos.</div>
+          <p class="photo-cta-desc">Send your event photos to info@jwpa.org and we'll add them to our gallery and past events archive.</p>
+        </div>
+        <div class="photo-cta-actions">
+          <a href="mailto:info@jwpa.org?subject=Event+Photos" class="btn btn-primary btn-md">Send Photos</a>
+          <a href="photo-gallery.html" class="btn btn-outline btn-md">View Gallery</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       CTA BAND
+  ══════════════════════════════════════════ -->
+  <div id="cta">
+    <div class="container">
+      <div class="cta-inner reveal">
+        <div>
+          <div class="cta-title">Don't miss the next event</div>
+          <p class="cta-sub">The next JWPA Gala is October 10, 2025 at Akbar Restaurant, Edison, NJ.</p>
+        </div>
+        <div class="cta-actions">
+          <a href="calendar.html" class="btn-white">View Calendar</a>
+          <a href="mailto:info@jwpa.org?subject=JWPA+Gala+2025+Registration" class="btn btn-ghost btn-md">Register for the Gala</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ FOOTER ══ -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand-name">JWPA</div>
+          <div class="footer-brand-sub">Jersey Women Physician Alliance</div>
+          <p class="footer-brand-desc">A physician-led nonprofit advancing women in medicine across New Jersey through mentorship, advocacy, and community outreach.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Organization</h4>
+          <ul>
+            <li><a href="about.html">About JWPA</a></li>
+            <li><a href="mission.html">Mission Statement</a></li>
+            <li><a href="founder.html">The Founder</a></li>
+            <li><a href="leadership.html">Leadership Team</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Get Involved</h4>
+          <ul>
+            <li><a href="contact.html">Join JWPA</a></li>
+            <li><a href="donate.html">Donate</a></li>
+            <li><a href="volunteer.html">Volunteer</a></li>
+            <li><a href="sponsorship.html">Sponsorship</a></li>
+            <li><a href="newsletter.html">Newsletter</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Stay Updated</h4>
+          <div class="footer-nl">
+            <input type="email" id="footerNl" placeholder="Your email address" />
+            <button class="btn btn-primary btn-sm" onclick="submitFooterNl()">Go</button>
+          </div>
+          <p class="footer-nl-note">Join our newsletter for events, programs, and opportunities.</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 JWPA. All rights reserved.</p>
+        <p>Jersey Women Physician Alliance &middot; New Jersey, USA</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast">
+    <div class="toast-icon"><svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+    <span id="toastMsg">Done!</span>
+  </div>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    document.querySelectorAll('.nav-item[id]').forEach(item => {
+      item.querySelector('.nav-link').addEventListener('click', e => {
+        e.stopPropagation();
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.nav-item[id]').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.nav-item[id]').forEach(i => i.classList.remove('open'));
+    });
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.07 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3800);
+    }
+    function submitFooterNl() {
+      const email = document.getElementById('footerNl').value.trim();
+      if (!email || !email.includes('@')) { showToast('Please enter a valid email address.'); return; }
+      window.location.href = 'mailto:newsletter@jwpa.org?subject=Newsletter+Subscription&body=Please+add+me+to+the+JWPA+newsletter.+Email:+' + encodeURIComponent(email);
+      showToast('Request sent!');
+    }
+  </script>
+</body>
+</html>

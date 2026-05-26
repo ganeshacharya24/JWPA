@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Events Calendar — JWPA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --crimson:       #7f181b;
+      --crimson-dark:  #5e1114;
+      --crimson-light: #a52024;
+      --crimson-mist:  #fdf2f2;
+      --navy:          #0f172a;
+      --slate:         #334155;
+      --muted:         #64748b;
+      --muted-light:   #94a3b8;
+      --border:        #e2e8f0;
+      --border-light:  #f1f5f9;
+      --bg:            #f8fafc;
+      --white:         #ffffff;
+      --font-display:  'Playfair Display', Georgia, serif;
+      --font-body:     'Outfit', system-ui, sans-serif;
+      --container:     1160px;
+      --radius-sm:     8px;
+      --radius:        12px;
+      --radius-lg:     20px;
+      --shadow-sm:     0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+      --shadow:        0 4px 16px rgba(15,23,42,.07), 0 1px 4px rgba(15,23,42,.04);
+      --shadow-md:     0 12px 32px rgba(15,23,42,.10), 0 2px 8px rgba(15,23,42,.05);
+      --shadow-lg:     0 24px 48px rgba(15,23,42,.13), 0 4px 12px rgba(15,23,42,.06);
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 15px; line-height: 1.65;
+      color: var(--slate); background: var(--white);
+      -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    :focus-visible { outline: 3px solid rgba(127,24,27,.3); outline-offset: 3px; border-radius: 4px; }
+    .container { max-width: var(--container); margin: 0 auto; padding: 0 2rem; }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: .45rem; font-family: var(--font-body); font-weight: 600;
+      border: none; border-radius: var(--radius-sm); cursor: pointer;
+      line-height: 1; white-space: nowrap; transition: all .2s ease;
+    }
+    .btn-sm  { padding: .5rem 1.1rem;  font-size: .8rem; }
+    .btn-md  { padding: .7rem 1.5rem;  font-size: .875rem; }
+    .btn-lg  { padding: .875rem 2rem;  font-size: .9rem; }
+    .btn-primary { background: var(--crimson); color: var(--white); box-shadow: 0 2px 8px rgba(127,24,27,.3); }
+    .btn-primary:hover { background: var(--crimson-dark); transform: translateY(-1px); }
+    .btn-outline { background: var(--white); color: var(--navy); border: 1.5px solid var(--border); }
+    .btn-outline:hover { border-color: var(--muted-light); background: var(--bg); transform: translateY(-1px); }
+    .btn-ghost { background: rgba(255,255,255,.12); color: var(--white); border: 1.5px solid rgba(255,255,255,.25); }
+    .btn-ghost:hover { background: rgba(255,255,255,.2); }
+
+    /* ── Type ── */
+    .section-label {
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-size: .68rem; font-weight: 700; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--crimson); margin-bottom: 1rem;
+    }
+    .section-label::before {
+      content: ''; display: block; width: 22px; height: 2px;
+      background: var(--crimson); border-radius: 2px; flex-shrink: 0;
+    }
+    .section-heading {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3vw, 2.25rem);
+      font-weight: 800; color: var(--navy);
+      letter-spacing: -.02em; line-height: 1.15; margin-bottom: .75rem;
+    }
+
+    /* ══════════════════════════════════════════
+       NAVIGATION
+    ══════════════════════════════════════════ */
+    #navbar {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; height: 66px;
+      max-width: var(--container); margin: 0 auto; padding: 0 2rem; gap: 2rem;
+    }
+    .nav-brand { display: flex; flex-direction: column; line-height: 1.2; flex-shrink: 0; }
+    .nav-brand-name { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; color: var(--navy); }
+    .nav-brand-sub { font-size: .58rem; font-weight: 600; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+    .nav-links { display: flex; align-items: center; gap: .15rem; list-style: none; flex: 1; }
+    .nav-item { position: relative; }
+    .nav-link {
+      display: inline-flex; align-items: center; gap: .3rem; padding: .45rem .8rem;
+      border-radius: 6px; font-size: .775rem; font-weight: 600; color: var(--muted);
+      letter-spacing: .03em; text-transform: uppercase; transition: all .18s;
+      cursor: pointer; user-select: none;
+    }
+    .nav-link:hover, .nav-item:hover .nav-link, .nav-item.open .nav-link { color: var(--navy); background: var(--bg); }
+    .nav-link.active { color: var(--crimson); }
+    .nav-chevron { width: 11px; height: 11px; transition: transform .2s; flex-shrink: 0; }
+    .nav-item:hover .nav-chevron, .nav-item.open .nav-chevron { transform: rotate(180deg); }
+    .dropdown {
+      display: none; position: absolute; top: calc(100% + 6px); left: 0;
+      min-width: 210px; background: var(--white); border: 1.5px solid var(--border);
+      border-radius: var(--radius); box-shadow: var(--shadow-md);
+      padding: .5rem; z-index: 300; animation: dropFade .15s ease;
+    }
+    @keyframes dropFade { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+    .nav-item:hover .dropdown, .nav-item.open .dropdown { display: block; }
+    .dropdown a { display: block; padding: .625rem 1rem; font-size: .85rem; font-weight: 500; color: var(--slate); border-radius: 8px; transition: all .15s; white-space: nowrap; }
+    .dropdown a:hover { background: var(--bg); color: var(--crimson); }
+    .dropdown-divider { height: 1px; background: var(--border-light); margin: .4rem .5rem; }
+    .nav-actions { display: flex; align-items: center; gap: .65rem; flex-shrink: 0; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: .5rem; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--navy); border-radius: 2px; }
+    .mobile-menu {
+      display: none; position: fixed; top: 66px; left: 0; right: 0;
+      background: var(--white); border-top: 1px solid var(--border);
+      box-shadow: var(--shadow-lg); padding: 1rem 2rem 2rem;
+      z-index: 199; max-height: calc(100vh - 66px); overflow-y: auto;
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu a { display: block; padding: .7rem 0; font-size: .95rem; font-weight: 600; color: var(--slate); border-bottom: 1px solid var(--border-light); }
+    .mobile-menu a:hover { color: var(--crimson); }
+    .mobile-group-label { font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted-light); padding: .875rem 0 .35rem; }
+    .mobile-sub a { padding: .5rem 1rem; font-size: .875rem; font-weight: 500; color: var(--muted); }
+
+    /* ══════════════════════════════════════════
+       PAGE HERO
+    ══════════════════════════════════════════ */
+    #page-hero {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 0 3.5rem;
+      position: relative; overflow: hidden;
+    }
+    #page-hero::before {
+      content: '';
+      position: absolute; top: -120px; right: -80px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(127,24,27,.045) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-label {
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-size: .68rem; font-weight: 700; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--crimson); margin-bottom: 1rem;
+    }
+    .hero-label::before {
+      content: ''; display: block; width: 22px; height: 2px;
+      background: var(--crimson); border-radius: 2px;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800; color: var(--navy);
+      letter-spacing: -.02em; line-height: 1.1; margin-bottom: .875rem;
+    }
+    .hero-desc {
+      font-size: 1rem; color: var(--muted);
+      line-height: 1.75; max-width: 560px; margin-bottom: 2rem;
+    }
+    .hero-actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+
+    /* ══════════════════════════════════════════
+       GALA FEATURE CARD — the confirmed event
+    ══════════════════════════════════════════ */
+    #gala-feature {
+      padding: 5rem 0 4rem;
+      background: var(--white);
+    }
+
+    .gala-card {
+      background: var(--navy);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+    }
+    .gala-card::before {
+      content: '';
+      position: absolute; bottom: -80px; right: -60px;
+      width: 360px; height: 360px;
+      background: radial-gradient(circle, rgba(127,24,27,.3), transparent 65%);
+      pointer-events: none;
+    }
+
+    /* Left: event details */
+    .gala-body {
+      padding: 3rem 3.5rem;
+      position: relative; z-index: 1;
+    }
+    .gala-eyebrow {
+      font-size: .63rem; font-weight: 700;
+      letter-spacing: .16em; text-transform: uppercase;
+      color: var(--crimson-light); margin-bottom: .75rem;
+    }
+    .gala-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      font-weight: 800; color: var(--white);
+      line-height: 1.1; letter-spacing: -.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Detail rows */
+    .gala-details { display: flex; flex-direction: column; gap: .875rem; margin-bottom: 2rem; }
+    .gala-detail {
+      display: flex; align-items: flex-start; gap: .875rem;
+    }
+    .gala-detail-icon {
+      width: 36px; height: 36px; flex-shrink: 0;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,.7);
+    }
+    .gala-detail-icon svg { width: 16px; height: 16px; }
+    .gala-detail-label {
+      font-size: .62rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(255,255,255,.35); margin-bottom: .2rem;
+    }
+    .gala-detail-value {
+      font-size: .9rem; font-weight: 600;
+      color: var(--white); line-height: 1.4;
+    }
+    .gala-detail-sub {
+      font-size: .78rem; color: rgba(255,255,255,.45); margin-top: .1rem;
+    }
+
+    .gala-actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+
+    /* Right: date display */
+    .gala-date-panel {
+      background: rgba(255,255,255,.04);
+      border-left: 1px solid rgba(255,255,255,.08);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 2.5rem;
+      position: relative; z-index: 1;
+      text-align: center;
+    }
+    .gala-date-month {
+      font-size: .75rem; font-weight: 700;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--crimson-light); margin-bottom: .5rem;
+    }
+    .gala-date-day {
+      font-family: var(--font-display);
+      font-size: 6rem; font-weight: 800;
+      color: var(--white); line-height: 1;
+      letter-spacing: -.04em; margin-bottom: .25rem;
+    }
+    .gala-date-year {
+      font-size: .9rem; font-weight: 600;
+      color: rgba(255,255,255,.35); letter-spacing: .08em;
+      margin-bottom: 1.75rem;
+    }
+    .gala-date-divider {
+      width: 32px; height: 1px;
+      background: rgba(255,255,255,.15);
+      margin: 0 auto 1.75rem;
+    }
+    .gala-countdown-label {
+      font-size: .62rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: rgba(255,255,255,.3); margin-bottom: .75rem;
+    }
+    /* Live countdown */
+    .gala-countdown {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem;
+    }
+    .countdown-unit {
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 8px; padding: .625rem .5rem;
+    }
+    .countdown-num {
+      font-family: var(--font-display);
+      font-size: 1.4rem; font-weight: 800;
+      color: var(--white); line-height: 1;
+      margin-bottom: .2rem;
+    }
+    .countdown-lbl {
+      font-size: .55rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(255,255,255,.3);
+    }
+
+    /* ══════════════════════════════════════════
+       ALL EVENTS LIST
+    ══════════════════════════════════════════ */
+    #events-list {
+      padding: 4rem 0 5rem;
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+
+    .events-header {
+      display: flex; align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;
+    }
+
+    /* Filter tabs */
+    .filter-tabs {
+      display: flex; gap: .35rem; flex-wrap: wrap;
+    }
+    .filter-tab {
+      padding: .4rem .9rem;
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      font-size: .75rem; font-weight: 600;
+      color: var(--muted); background: var(--white);
+      cursor: pointer; transition: all .18s;
+    }
+    .filter-tab:hover { border-color: var(--muted-light); color: var(--navy); }
+    .filter-tab.active {
+      background: var(--crimson); color: var(--white);
+      border-color: var(--crimson);
+    }
+
+    /* Event list rows */
+    .event-list { display: flex; flex-direction: column; gap: 1rem; }
+
+    .event-row {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      display: grid;
+      grid-template-columns: 90px 1fr auto;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.25rem 1.5rem;
+      transition: box-shadow .2s, transform .2s, border-color .2s;
+      box-shadow: var(--shadow-sm);
+    }
+    .event-row:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+      border-color: rgba(127,24,27,.15);
+    }
+
+    /* Date block */
+    .event-row-date {
+      text-align: center;
+      background: var(--crimson-mist);
+      border: 1.5px solid rgba(127,24,27,.12);
+      border-radius: var(--radius-sm);
+      padding: .625rem .5rem;
+    }
+    .event-row-month {
+      font-size: .6rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--crimson); margin-bottom: .1rem;
+    }
+    .event-row-day {
+      font-family: var(--font-display);
+      font-size: 1.75rem; font-weight: 800;
+      color: var(--navy); line-height: 1;
+    }
+    .event-row-year {
+      font-size: .65rem; color: var(--muted-light); margin-top: .1rem;
+    }
+
+    /* Middle: info */
+    .event-row-type {
+      font-size: .6rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--crimson); margin-bottom: .3rem;
+    }
+    .event-row-title {
+      font-size: .95rem; font-weight: 700;
+      color: var(--navy); margin-bottom: .35rem; line-height: 1.3;
+    }
+    .event-row-meta {
+      display: flex; align-items: center; flex-wrap: wrap; gap: 1rem;
+    }
+    .event-row-meta-item {
+      display: flex; align-items: center; gap: .35rem;
+      font-size: .75rem; color: var(--muted);
+    }
+    .event-row-meta-item svg { width: 12px; height: 12px; color: var(--crimson); flex-shrink: 0; }
+
+    /* Right: CTA */
+    .event-row-cta { flex-shrink: 0; }
+
+    /* ══════════════════════════════════════════
+       ADD TO CALENDAR STRIP
+    ══════════════════════════════════════════ */
+    #add-cal {
+      padding: 3.5rem 0;
+      background: var(--white);
+      border-top: 1px solid var(--border);
+    }
+    .add-cal-card {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem 2.5rem;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      gap: 2rem; flex-wrap: wrap;
+      box-shadow: var(--shadow-sm);
+    }
+    .add-cal-icon {
+      width: 48px; height: 48px;
+      background: var(--crimson-mist);
+      border-radius: 11px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--crimson); flex-shrink: 0;
+    }
+    .add-cal-icon svg { width: 22px; height: 22px; }
+    .add-cal-text { flex: 1; }
+    .add-cal-title { font-size: .975rem; font-weight: 700; color: var(--navy); margin-bottom: .2rem; }
+    .add-cal-desc { font-size: .825rem; color: var(--muted); }
+    .add-cal-actions { display: flex; gap: .65rem; flex-wrap: wrap; flex-shrink: 0; }
+
+    /* ══════════════════════════════════════════
+       CTA BAND
+    ══════════════════════════════════════════ */
+    #cta {
+      background: var(--crimson); padding: 2.5rem 0;
+      position: relative; overflow: hidden;
+    }
+    #cta::before {
+      content: ''; position: absolute; top: -60px; right: -60px;
+      width: 280px; height: 280px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.1); pointer-events: none;
+    }
+    .cta-inner {
+      position: relative; z-index: 1;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+    }
+    .cta-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--white); margin-bottom: .2rem; }
+    .cta-sub { font-size: .825rem; color: rgba(255,255,255,.65); }
+    .cta-actions { display: flex; gap: .65rem; flex-shrink: 0; }
+    .btn-white { background: var(--white); color: var(--crimson); font-weight: 700; padding: .7rem 1.75rem; font-size: .875rem; border-radius: var(--radius-sm); display: inline-flex; align-items: center; transition: all .2s; }
+    .btn-white:hover { background: var(--bg); transform: translateY(-1px); }
+
+    /* ══════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════ */
+    footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,.06); padding: 4rem 0 2rem; color: rgba(255,255,255,.55); }
+    .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.3fr; gap: 2.5rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,.07); margin-bottom: 1.75rem; }
+    .footer-brand-name { font-family: var(--font-display); font-size: 1.2rem; font-weight: 800; color: var(--white); margin-bottom: .4rem; }
+    .footer-brand-sub { font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; color: rgba(255,255,255,.3); margin-bottom: .875rem; }
+    .footer-brand-desc { font-size: .82rem; line-height: 1.7; max-width: 240px; }
+    .footer-col h4 { font-size: .65rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.9); margin-bottom: 1.1rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+    .footer-col a { font-size: .83rem; transition: color .15s; }
+    .footer-col a:hover { color: var(--white); }
+    .footer-nl { display: flex; gap: .5rem; margin-bottom: .6rem; }
+    .footer-nl input { flex: 1; min-width: 0; padding: .625rem .875rem; border: 1px solid rgba(255,255,255,.12); border-radius: 7px; background: rgba(255,255,255,.06); font-family: var(--font-body); font-size: .82rem; color: var(--white); }
+    .footer-nl input::placeholder { color: rgba(255,255,255,.25); }
+    .footer-nl input:focus { outline: none; border-color: rgba(255,255,255,.3); }
+    .footer-nl-note { font-size: .7rem; color: rgba(255,255,255,.3); line-height: 1.55; }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom p { font-size: .78rem; }
+
+    /* ── Toast ── */
+    .toast { position: fixed; bottom: 1.75rem; right: 1.75rem; background: var(--navy); color: var(--white); padding: .875rem 1.25rem; border-radius: 10px; box-shadow: var(--shadow-lg); font-size: .83rem; font-weight: 600; display: flex; align-items: center; gap: .65rem; z-index: 999; transform: translateY(80px); opacity: 0; transition: all .35s cubic-bezier(.34,1.56,.64,1); max-width: 320px; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast-icon { width: 22px; height: 22px; background: var(--crimson); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .toast-icon svg { width: 11px; height: 11px; color: var(--white); }
+
+    /* ── Reveal ── */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .55s ease, transform .55s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* ── Responsive ── */
+    @media (max-width: 980px) {
+      .gala-card        { grid-template-columns: 1fr; }
+      .gala-date-panel  { border-left: none; border-top: 1px solid rgba(255,255,255,.08); padding: 2rem; flex-direction: row; gap: 2rem; text-align: left; }
+      .gala-date-day    { font-size: 4rem; }
+      .gala-body        { padding: 2rem; }
+      .event-row        { grid-template-columns: 70px 1fr; gap: 1rem; }
+      .event-row-cta    { grid-column: 2; }
+      .add-cal-card     { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
+      .footer-grid      { grid-template-columns: 1fr 1fr; }
+      .cta-inner        { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 640px) {
+      .nav-links, .nav-actions { display: none; }
+      .hamburger        { display: flex; }
+      .gala-countdown   { grid-template-columns: repeat(3, 1fr); }
+      .event-row        { grid-template-columns: 1fr; gap: .75rem; }
+      .event-row-cta    { grid-column: 1; }
+      .footer-grid      { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════ NAV ══ -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <span class="nav-brand-name">JWPA</span>
+        <span class="nav-brand-sub">Jersey Women Physician Alliance</span>
+      </a>
+      <ul class="nav-links">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item" id="navAbout">
+          <span class="nav-link" tabindex="0">About Us
+            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+          <div class="dropdown">
+            <a href="about.html">About JWPA</a>
+            <a href="mission.html">Mission Statement</a>
+            <a href="founder.html">The Founder</a>
+            <div class="dropdown-divider"></div>
+            <a href="leadership.html">Leadership Team</a>
+            <a href="partners.html">Partners</a>
+          </div>
+        </li>
+        <li class="nav-item" id="navPrograms">
+          <span class="nav-link" tabindex="0">Programs
+            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+          <div class="dropdown">
+            <a href="programs.html">All Programs</a>
+            <div class="dropdown-divider"></div>
+            <a href="tws.html">Teens With Stethoscopes</a>
+            <a href="mentorship.html">Mentorship Circles</a>
+          </div>
+        </li>
+        <li class="nav-item" id="navEvents">
+          <span class="nav-link active" tabindex="0">Events
+            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+          <div class="dropdown">
+            <a href="calendar.html">Calendar</a>
+            <a href="past-events.html">Past Events</a>
+            <div class="dropdown-divider"></div>
+            <a href="volunteer.html">Volunteer</a>
+            <a href="sponsorship.html">Sponsorship</a>
+          </div>
+        </li>
+        <li class="nav-item" id="navMedia">
+          <span class="nav-link" tabindex="0">Media
+            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+          <div class="dropdown">
+            <a href="physician-of-the-month.html">Physician of the Month</a>
+            <a href="news.html">News</a>
+            <a href="press.html">Press</a>
+            <div class="dropdown-divider"></div>
+            <a href="resources.html">Resources &amp; Downloads</a>
+            <a href="photo-gallery.html">Photo Gallery</a>
+          </div>
+        </li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="contact.html" class="btn btn-primary btn-sm">Join JWPA</a>
+        <a href="donate.html"  class="btn btn-outline btn-sm">Donate</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <div class="mobile-group-label">About Us</div>
+    <div class="mobile-sub">
+      <a href="about.html">About JWPA</a>
+      <a href="mission.html">Mission Statement</a>
+      <a href="founder.html">The Founder</a>
+      <a href="leadership.html">Leadership Team</a>
+      <a href="partners.html">Partners</a>
+    </div>
+    <div class="mobile-group-label">Programs</div>
+    <div class="mobile-sub">
+      <a href="programs.html">All Programs</a>
+      <a href="tws.html">Teens With Stethoscopes</a>
+      <a href="mentorship.html">Mentorship Circles</a>
+    </div>
+    <div class="mobile-group-label">Events</div>
+    <div class="mobile-sub">
+      <a href="calendar.html">Calendar</a>
+      <a href="past-events.html">Past Events</a>
+      <a href="volunteer.html">Volunteer</a>
+      <a href="sponsorship.html">Sponsorship</a>
+    </div>
+    <div class="mobile-group-label">Media</div>
+    <div class="mobile-sub">
+      <a href="physician-of-the-month.html">Physician of the Month</a>
+      <a href="news.html">News</a>
+      <a href="press.html">Press</a>
+      <a href="resources.html">Resources &amp; Downloads</a>
+      <a href="photo-gallery.html">Photo Gallery</a>
+    </div>
+    <a href="contact.html">Contact</a>
+    <a href="donate.html" style="color:var(--crimson)">Donate</a>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       PAGE HERO
+  ══════════════════════════════════════════ -->
+  <section id="page-hero">
+    <div class="container">
+      <div class="hero-label reveal">Events</div>
+      <h1 class="hero-title reveal">Upcoming Events</h1>
+      <p class="hero-desc reveal">
+        JWPA gatherings, galas, and programs across New Jersey.
+        All events are open to JWPA members unless otherwise noted.
+      </p>
+      <div class="hero-actions reveal">
+        <a href="mailto:info@jwpa.org?subject=Event+Inquiry" class="btn btn-primary btn-lg">Register for an Event</a>
+        <a href="past-events.html" class="btn btn-outline btn-lg">Past Events</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       GALA FEATURE — confirmed event
+  ══════════════════════════════════════════ -->
+  <section id="gala-feature">
+    <div class="container">
+      <div class="section-label reveal">Featured Event</div>
+      <h2 class="section-heading reveal" style="margin-bottom:1.75rem">Next up</h2>
+
+      <div class="gala-card reveal">
+
+        <!-- Left: event info -->
+        <div class="gala-body">
+          <div class="gala-eyebrow">Annual Gala · JWPA 2025</div>
+          <div class="gala-title">JWPA Annual Celebration &amp; Awards Dinner</div>
+
+          <div class="gala-details">
+            <div class="gala-detail">
+              <div class="gala-detail-icon">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <rect x="3" y="4" width="18" height="18" rx="2"/>
+                  <path d="M16 2v4M8 2v4M3 10h18"/>
+                </svg>
+              </div>
+              <div>
+                <div class="gala-detail-label">Date</div>
+                <div class="gala-detail-value">Friday, October 10, 2025</div>
+              </div>
+            </div>
+            <div class="gala-detail">
+              <div class="gala-detail-icon">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M12 6v6l4 2"/>
+                </svg>
+              </div>
+              <div>
+                <div class="gala-detail-label">Time</div>
+                <div class="gala-detail-value">Evening — time TBC</div>
+                <div class="gala-detail-sub">Check back for confirmed start time</div>
+              </div>
+            </div>
+            <div class="gala-detail">
+              <div class="gala-detail-icon">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+              </div>
+              <div>
+                <div class="gala-detail-label">Venue</div>
+                <div class="gala-detail-value">Akbar Restaurant</div>
+                <div class="gala-detail-sub">21 Cortlandt Street, Edison, NJ 08837</div>
+              </div>
+            </div>
+            <div class="gala-detail">
+              <div class="gala-detail-icon">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+              <div>
+                <div class="gala-detail-label">Open To</div>
+                <div class="gala-detail-value">JWPA Members &amp; Guests</div>
+                <div class="gala-detail-sub">Partners and sponsors welcome</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="gala-actions">
+            <a href="mailto:info@jwpa.org?subject=JWPA+Gala+2025+Registration" class="btn btn-primary btn-lg">
+              Register Now
+            </a>
+            <a href="https://www.google.com/maps/search/?api=1&query=21+Cortlandt+Street+Edison+NJ+08837"
+               target="_blank" rel="noopener"
+               class="btn btn-ghost btn-lg">
+              Get Directions
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: date display + countdown -->
+        <div class="gala-date-panel">
+          <div class="gala-date-month">October</div>
+          <div class="gala-date-day">10</div>
+          <div class="gala-date-year">2025</div>
+          <div class="gala-date-divider"></div>
+          <div class="gala-countdown-label">Days Until the Gala</div>
+          <div class="gala-countdown">
+            <div class="countdown-unit">
+              <div class="countdown-num" id="cdDays">—</div>
+              <div class="countdown-lbl">Days</div>
+            </div>
+            <div class="countdown-unit">
+              <div class="countdown-num" id="cdHours">—</div>
+              <div class="countdown-lbl">Hours</div>
+            </div>
+            <div class="countdown-unit">
+              <div class="countdown-num" id="cdMins">—</div>
+              <div class="countdown-lbl">Mins</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       ALL UPCOMING EVENTS LIST
+  ══════════════════════════════════════════ -->
+  <section id="events-list">
+    <div class="container">
+
+      <div class="events-header">
+        <div>
+          <div class="section-label reveal">Full Schedule</div>
+          <h2 class="section-heading reveal" style="margin-bottom:0">All upcoming events</h2>
+        </div>
+        <div class="filter-tabs reveal">
+          <button class="filter-tab active" onclick="filterEvents('all', this)">All</button>
+          <button class="filter-tab" onclick="filterEvents('gala', this)">Gala</button>
+          <button class="filter-tab" onclick="filterEvents('tws', this)">TWS</button>
+          <button class="filter-tab" onclick="filterEvents('community', this)">Community</button>
+        </div>
+      </div>
+
+      <div class="event-list" id="eventList">
+
+        <!-- Event 1: Gala -->
+        <div class="event-row reveal" data-type="gala">
+          <div class="event-row-date">
+            <div class="event-row-month">Oct</div>
+            <div class="event-row-day">10</div>
+            <div class="event-row-year">2025</div>
+          </div>
+          <div>
+            <div class="event-row-type">Annual Gala</div>
+            <div class="event-row-title">JWPA Annual Celebration &amp; Awards Dinner</div>
+            <div class="event-row-meta">
+              <span class="event-row-meta-item">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                Akbar Restaurant, Edison, NJ
+              </span>
+              <span class="event-row-meta-item">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                Time TBC
+              </span>
+              <span class="event-row-meta-item">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Members &amp; Guests
+              </span>
+            </div>
+          </div>
+          <div class="event-row-cta">
+            <a href="mailto:info@jwpa.org?subject=JWPA+Gala+2025+Registration" class="btn btn-primary btn-sm">Register</a>
+          </div>
+        </div>
+
+        <!-- Event 2: TWS -->
+        <div class="event-row reveal" data-type="tws">
+          <div class="event-row-date">
+            <div class="event-row-month">2026</div>
+            <div class="event-row-day" style="font-size:1.1rem;margin-top:.2rem">TWS</div>
+            <div class="event-row-year">Date TBC</div>
+          </div>
+          <div>
+            <div class="event-row-type">Flagship Program</div>
+            <div class="event-row-title">Teens With Stethoscopes 2026</div>
+            <div class="event-row-meta">
+              <span class="event-row-meta-item">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                Location TBC · New Jersey
+              </span>
+              <span class="event-row-meta-item">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                Full day — 9:00 AM – 4:00 PM
+              </span>
+              <span class="event-row-meta-item">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                Open to NJ High School Students · Free
+              </span>
+            </div>
+          </div>
+          <div class="event-row-cta">
+            <a href="tws.html" class="btn btn-outline btn-sm">Learn More</a>
+          </div>
+        </div>
+
+        <!-- Event 3: Community -->
+        <div class="event-row reveal" data-type="community">
+          <div class="event-row-date">
+            <div class="event-row-month">2026</div>
+            <div class="event-row-day" style="font-size:1.1rem;margin-top:.2rem">TBC</div>
+            <div class="event-row-year">Coming Soon</div>
+          </div>
+          <div>
+            <div class="event-row-type">Community</div>
+            <div class="event-row-title">JWPA Member Networking Evening</div>
+            <div class="event-row-meta">
+              <span class="event-row-meta-item">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                New Jersey · Location TBC
+              </span>
+              <span class="event-row-meta-item">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                JWPA Members
+              </span>
+            </div>
+          </div>
+          <div class="event-row-cta">
+            <a href="mailto:info@jwpa.org?subject=Event+Interest" class="btn btn-outline btn-sm">Express Interest</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       ADD TO CALENDAR
+  ══════════════════════════════════════════ -->
+  <section id="add-cal">
+    <div class="container">
+      <div class="add-cal-card reveal">
+        <div class="add-cal-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
+            <rect x="3" y="4" width="18" height="18" rx="2"/>
+            <path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01"/>
+          </svg>
+        </div>
+        <div class="add-cal-text">
+          <div class="add-cal-title">Add the Gala to your calendar</div>
+          <p class="add-cal-desc">Save October 10, 2025 — Akbar Restaurant, Edison, NJ — so you don't miss it.</p>
+        </div>
+        <div class="add-cal-actions">
+          <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=JWPA+Annual+Gala+2025&dates=20251010/20251011&details=JWPA+Annual+Celebration+%26+Awards+Dinner&location=21+Cortlandt+Street+Edison+NJ+08837"
+             target="_blank" rel="noopener"
+             class="btn btn-outline btn-md">
+            Google Calendar
+          </a>
+          <a href="data:text/calendar;charset=utf8,BEGIN:VCALENDAR%0AVERSION:2.0%0ABEGIN:VEVENT%0ADTSTART:20251010T180000%0ADTEND:20251010T220000%0ASUMMARY:JWPA+Annual+Gala+2025%0ADESCRIPTION:JWPA+Annual+Celebration+%26+Awards+Dinner%0ALOCATION:21+Cortlandt+Street+Edison+NJ+08837%0AEND:VEVENT%0AEND:VCALENDAR"
+             download="JWPA-Gala-2025.ics"
+             class="btn btn-outline btn-md">
+            Download .ics
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       CTA BAND
+  ══════════════════════════════════════════ -->
+  <div id="cta">
+    <div class="container">
+      <div class="cta-inner reveal">
+        <div>
+          <div class="cta-title">Questions about an event?</div>
+          <p class="cta-sub">Email info@jwpa.org and our team will get back to you within 2 business days.</p>
+        </div>
+        <div class="cta-actions">
+          <a href="mailto:info@jwpa.org?subject=Event+Inquiry" class="btn-white">Email Us</a>
+          <a href="contact.html" class="btn btn-ghost btn-md">Contact Page</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ FOOTER ══ -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand-name">JWPA</div>
+          <div class="footer-brand-sub">Jersey Women Physician Alliance</div>
+          <p class="footer-brand-desc">A physician-led nonprofit advancing women in medicine across New Jersey through mentorship, advocacy, and community outreach.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Organization</h4>
+          <ul>
+            <li><a href="about.html">About JWPA</a></li>
+            <li><a href="mission.html">Mission Statement</a></li>
+            <li><a href="founder.html">The Founder</a></li>
+            <li><a href="leadership.html">Leadership Team</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Get Involved</h4>
+          <ul>
+            <li><a href="contact.html">Join JWPA</a></li>
+            <li><a href="donate.html">Donate</a></li>
+            <li><a href="volunteer.html">Volunteer</a></li>
+            <li><a href="sponsorship.html">Sponsorship</a></li>
+            <li><a href="newsletter.html">Newsletter</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Stay Updated</h4>
+          <div class="footer-nl">
+            <input type="email" id="footerNl" placeholder="Your email address" />
+            <button class="btn btn-primary btn-sm" onclick="submitFooterNl()">Go</button>
+          </div>
+          <p class="footer-nl-note">Join our newsletter for events, programs, and opportunities.</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 JWPA. All rights reserved.</p>
+        <p>Jersey Women Physician Alliance &middot; New Jersey, USA</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast">
+    <div class="toast-icon"><svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+    <span id="toastMsg">Done!</span>
+  </div>
+
+  <script>
+    // ── Nav ──
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    document.querySelectorAll('.nav-item[id]').forEach(item => {
+      item.querySelector('.nav-link').addEventListener('click', e => {
+        e.stopPropagation();
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.nav-item[id]').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.nav-item[id]').forEach(i => i.classList.remove('open'));
+    });
+
+    // ── Reveal ──
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.07 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ── Live countdown to October 10, 2025 ──
+    function updateCountdown() {
+      const gala  = new Date('2025-10-10T18:00:00');
+      const now   = new Date();
+      const diff  = gala - now;
+
+      if (diff <= 0) {
+        document.getElementById('cdDays').textContent  = '0';
+        document.getElementById('cdHours').textContent = '0';
+        document.getElementById('cdMins').textContent  = '0';
+        return;
+      }
+
+      const days  = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const mins  = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+      document.getElementById('cdDays').textContent  = days;
+      document.getElementById('cdHours').textContent = hours;
+      document.getElementById('cdMins').textContent  = mins;
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 60000);
+
+    // ── Event filter tabs ──
+    function filterEvents(type, btn) {
+      // Update active tab
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Show/hide rows
+      document.querySelectorAll('#eventList .event-row').forEach(row => {
+        if (type === 'all' || row.dataset.type === type) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    }
+
+    // ── Toast ──
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3800);
+    }
+
+    // ── Footer newsletter ──
+    function submitFooterNl() {
+      const email = document.getElementById('footerNl').value.trim();
+      if (!email || !email.includes('@')) { showToast('Please enter a valid email address.'); return; }
+      window.location.href = 'mailto:newsletter@jwpa.org?subject=Newsletter+Subscription&body=Please+add+me+to+the+JWPA+newsletter.+Email:+' + encodeURIComponent(email);
+      showToast('Request sent!');
+    }
+  </script>
+</body>
+</html>

@@ -1435,6 +1435,106 @@
       .tws-body                 { padding: 1.75rem; }
       .potm-name                { font-size: 1.6rem; }
     }
+
+    /* ─────────────────────────────────────────
+       TESTIMONIALS
+    ───────────────────────────────────────── */
+    #testimonials {
+      background: var(--navy);
+      padding: 5rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    #testimonials::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(127,24,27,.2) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .testimonials-label {
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-size: .68rem; font-weight: 700; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--crimson-light); margin-bottom: 1rem;
+    }
+    .testimonials-label::before {
+      content: ''; display: block; width: 22px; height: 2px;
+      background: var(--crimson-light); border-radius: 2px;
+    }
+    .testimonials-heading {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3vw, 2.25rem);
+      font-weight: 800; color: var(--white);
+      letter-spacing: -.02em; line-height: 1.15;
+      margin-bottom: .5rem;
+    }
+    .testimonials-sub {
+      font-size: .9rem; color: rgba(255,255,255,.45);
+      margin-bottom: 3rem; max-width: 520px;
+    }
+
+    /* Scrolling track */
+    .testimonials-track-wrap {
+      overflow: hidden;
+      position: relative;
+    }
+    /* Fade edges */
+    .testimonials-track-wrap::before,
+    .testimonials-track-wrap::after {
+      content: '';
+      position: absolute; top: 0; bottom: 0;
+      width: 80px; z-index: 2; pointer-events: none;
+    }
+    .testimonials-track-wrap::before {
+      left: 0;
+      background: linear-gradient(to right, var(--navy), transparent);
+    }
+    .testimonials-track-wrap::after {
+      right: 0;
+      background: linear-gradient(to left, var(--navy), transparent);
+    }
+
+    .testimonials-track {
+      display: flex;
+      gap: 1.25rem;
+      width: max-content;
+      animation: scrollLeft 55s linear infinite;
+    }
+    .testimonials-track:hover { animation-play-state: paused; }
+
+    @keyframes scrollLeft {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .testimonial-card {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: var(--radius);
+      padding: 1.5rem 1.75rem;
+      width: 320px;
+      flex-shrink: 0;
+      transition: background .2s, border-color .2s;
+    }
+    .testimonial-card:hover {
+      background: rgba(255,255,255,.1);
+      border-color: rgba(255,255,255,.2);
+    }
+    .testimonial-quote {
+      font-size: .875rem;
+      color: rgba(255,255,255,.8);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+      font-style: italic;
+    }
+    .testimonial-quote::before { content: '\201C'; color: var(--crimson-light); font-size: 1.2rem; }
+    .testimonial-quote::after  { content: '\201D'; color: var(--crimson-light); font-size: 1.2rem; }
+    .testimonial-author {
+      font-size: .78rem;
+      font-weight: 700;
+      color: rgba(255,255,255,.45);
+      letter-spacing: .04em;
+    }
+
   </style>
 </head>
 <body>
@@ -1585,13 +1685,13 @@
                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
                 <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
               </svg>
-              600+ Members
+              600+ members
             </div>
             <div class="hero-trust-item">
               <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                 <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
               </svg>
-              17+ Years
+              15+ Years Established
             </div>
             <div class="hero-trust-item">
               <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -1608,7 +1708,7 @@
 
             <img
               src="/images/NJWPA_GROUP_PICTURE.JPG"
-              alt="JWPA women physicians community"
+              alt="JWPA Women Physician Alliance group photo"
               onerror="this.style.display='none'"
             />
 
@@ -1619,7 +1719,7 @@
                 <path d="M3 15l4-4 3 3 4-5 4 6"/>
                 <circle cx="8.5" cy="8.5" r="1.5"/>
               </svg>
-              <span><br>with your group or event photo</span>
+              <span>Replace src="/images/NJWPA_GROUP_PICTURE.JPG"<br>with your group or event photo</span>
             </div>
 
             <!-- Caption overlaid at the bottom of the image -->
@@ -1647,8 +1747,8 @@
       </div>
       <div class="stat-item">
         <div class="stat-num">17<sup>+</sup></div>
-        <div class="stat-label">Years</div>
-        <div class="stat-sub">Serving NJ since 2008</div>
+        <div class="stat-label">Years as Organization</div>
+        <div class="stat-sub">Community since 2008</div>
       </div>
       <div class="stat-item">
         <div class="stat-num">NJ</div>
@@ -1675,7 +1775,7 @@
           <div class="section-label reveal">About JWPA</div>
           <h2 class="section-heading reveal">Built by physicians,<br>for physicians</h2>
           <p class="reveal">
-            Founded in 2008, the Jersey Women Physician Alliance supports women physicians across New Jersey through mentorship, education, and advocacy. We create opportunities to connect across specialties, build leadership skills, and expand community impact statewide.
+            What began in 2008 as an informal community of women physicians has grown into a statewide organization — formally established as a nonprofit in 2018. JWPA supports women physicians through mentorship, education, and advocacy across New Jersey.
           </p>
           <p class="reveal">
             From newly practicing physicians to those with decades of experience, JWPA is a home for every stage of a woman physician's career.
@@ -1763,7 +1863,7 @@
             </svg>
           </div>
           <h3>Mentorship Circles</h3>
-          <p>Connect women physicians across specialties and career stages through structured mentorship and peer community — exclusively for JWPA members.</p>
+          <p>A space for women physicians to connect, support early-career physicians, and answer questions — a developing program bringing together JWPA members across specialties.</p>
         </div>
         <div class="what-card reveal">
           <div class="what-card-icon">
@@ -1818,7 +1918,7 @@
               <path d="M3 15l4-4 3 3 4-5 4 6"/>
               <circle cx="8.5" cy="8.5" r="1.5"/>
             </svg>
-            <span></span>
+            
           </div>
         </div>
 
@@ -1826,6 +1926,144 @@
 
     </div>
   </section>
+
+  <!-- ══════════════════════════════════════════
+       TESTIMONIALS
+  ══════════════════════════════════════════ -->
+  <section id="testimonials">
+    <div class="container" style="position:relative;z-index:1">
+      <div class="testimonials-label reveal">In Their Words</div>
+      <h2 class="testimonials-heading reveal">What members are saying</h2>
+      <p class="testimonials-sub reveal">Voices from the women physicians who make JWPA what it is.</p>
+    </div>
+
+    <div class="testimonials-track-wrap">
+      <div class="testimonials-track">
+
+        <!-- Row 1 — these repeat to create seamless scroll -->
+        <div class="testimonial-card">
+          <div class="testimonial-quote">Thank you for hosting yet another amazing event. You are truly an inspiration!! Raising two beautiful and such caring children and being a great Dr all along is not easy and very commendable. Thank you again for such a wonderful evening!</div>
+          <div class="testimonial-author">Jyoti Sinha</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">Thank you for hosting such an event. I met so many known that I had not met for a long time. Thank you for being a great host. You are truly warm at heart. Saying thank you does not justify your efforts. Blessings from my heart.</div>
+          <div class="testimonial-author">Neha Bangia</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">I wanted to say my thanks to you for the wonderful get together this past weekend. It was a pleasure to meet with you and your family. We all met so many other female physicians and made great connections! Thanks for your efforts.</div>
+          <div class="testimonial-author">Loveleen Sidhu</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">What a WONDERFUL EVENING! Thank you so much for all that you do in bringing us all together.</div>
+          <div class="testimonial-author">Dr. Gloria Bachman</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">Thank you Sudha for the invite. Wonderful gathering, you did a great job. It was truly amazing to meet such a talented &amp; inspiring group of women physicians!</div>
+          <div class="testimonial-author">Rekha Gohel</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">Beautiful picture and gathering. Keep up the great work for women's services.</div>
+          <div class="testimonial-author">Marge Romano</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">Incredibly professional work! Congratulations!</div>
+          <div class="testimonial-author">Andra Harangozo</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">Thank you again Sudha. It was such a blessing.</div>
+          <div class="testimonial-author">Sydelle Ross</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">Thank you for organizing such a successful party, everybody enjoying it. We also reported our fun time in our whole group which we have about 287 doctors.</div>
+          <div class="testimonial-author">Jenny Liu</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">Such an amazing event again! Thank you for always including me! It was so so well done! The agenda, speakers, dancers, food, ambience — all just done so well. It shows how much these events are needed for us to get together and bond with each other.</div>
+          <div class="testimonial-author">Kusum Punjabi</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">Thank you Dr. Nahar &amp; family, &amp; all others involved in organizing the event. It was a well organized fun evening with performances from our multitalented colleagues. Many more physicians joined the group following the event.</div>
+          <div class="testimonial-author">Bindu Khanna</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">This event just keeps getting better every year — your family are amazing hosts! Special shoutout to the entire organizing team and Bhavi and Amina for the wonderful event.</div>
+          <div class="testimonial-author">Kiran Tadi</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">A big thank you for opening your home and your heart! We had such an amazing time and met so many amazing fellow women physicians!</div>
+          <div class="testimonial-author">Reema Patel</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">My first time but filled with warmth and camaraderie. Blessed to be in this group.</div>
+          <div class="testimonial-author">Dr. Manjari</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">Feels like I found my tribe. Felt unstuck being part of this amazing group.</div>
+          <div class="testimonial-author">Suma Manava</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">It was my first time attending this event. Really enjoyed meeting all of you. This is an amazing group of camaraderie and sisterly love. Kudos to Dr. Nahar, her family, and all the organizers.</div>
+          <div class="testimonial-author">Sunitha Ponepalle</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">You and your entire family are super hosts. Everything was so meticulously arranged.</div>
+          <div class="testimonial-author">Rupa Punchal</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">Thank you for your leadership initiative and for hosting such a great networking event!</div>
+          <div class="testimonial-author">Divya Gupta</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">Had an amazing evening! Great thanks to the supporting team!</div>
+          <div class="testimonial-author">Shabnam Khety</div>
+        </div>
+
+        <!-- Duplicate set for seamless infinite scroll -->
+        <div class="testimonial-card">
+          <div class="testimonial-quote">Thank you for hosting yet another amazing event. You are truly an inspiration!! Raising two beautiful and such caring children and being a great Dr all along is not easy and very commendable. Thank you again for such a wonderful evening!</div>
+          <div class="testimonial-author">Jyoti Sinha</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">Thank you for hosting such an event. I met so many known that I had not met for a long time. Thank you for being a great host. You are truly warm at heart. Saying thank you does not justify your efforts. Blessings from my heart.</div>
+          <div class="testimonial-author">Neha Bangia</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">I wanted to say my thanks to you for the wonderful get together this past weekend. It was a pleasure to meet with you and your family. We all met so many other female physicians and made great connections!</div>
+          <div class="testimonial-author">Loveleen Sidhu</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">What a WONDERFUL EVENING! Thank you so much for all that you do in bringing us all together.</div>
+          <div class="testimonial-author">Dr. Gloria Bachman</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">Thank you Sudha for the invite. Wonderful gathering, you did a great job. It was truly amazing to meet such a talented &amp; inspiring group of women physicians!</div>
+          <div class="testimonial-author">Rekha Gohel</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">This event just keeps getting better every year — your family are amazing hosts!</div>
+          <div class="testimonial-author">Kiran Tadi</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">Feels like I found my tribe. Felt unstuck being part of this amazing group.</div>
+          <div class="testimonial-author">Suma Manava</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">A big thank you for opening your home and your heart! We had such an amazing time and met so many amazing fellow women physicians!</div>
+          <div class="testimonial-author">Reema Patel</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">You and your entire family are super hosts. Everything was so meticulously arranged.</div>
+          <div class="testimonial-author">Rupa Punchal</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">Such an amazing event again! The agenda, speakers, dancers, food, ambience — all just done so well.</div>
+          <div class="testimonial-author">Kusum Punjabi</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
 
   <!-- ══════════════════════════════════════════
        PHYSICIAN OF THE MONTH
@@ -1904,9 +2142,9 @@
             </div>
           </div>
           <div class="event-card-body">
-            <div class="event-type-tag">Annual Gala</div>
-            <div class="event-card-title">JWPA Annual Celebration &amp; Awards Dinner</div>
-            <p class="event-card-desc">An evening celebrating JWPA members, partners, and the physicians shaping women's leadership in NJ medicine. JWPA Members &amp; Guests welcome. Partners and sponsors encouraged to attend.</p>
+            <div class="event-type-tag">Annual Event</div>
+            <div class="event-card-title">JWPA Annual Women Physician Meetup &amp; Celebration</div>
+            <p class="event-card-desc">An evening celebrating JWPA members and the physicians shaping women's leadership in NJ medicine. Open to JWPA members and women physician guests only. Spouses not included for this event.</p>
             <div class="event-card-meta">
               <div class="event-meta-row">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -1919,7 +2157,7 @@
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                   <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
                 </svg>
-                Evening — time TBC
+                6:00 PM
               </div>
             </div>
           </div>
@@ -1931,7 +2169,7 @@
         <!-- Event 2 -->
         <div class="event-card reveal">
           <div class="event-date-tab">
-            <div class="event-date-tab-day">TBC</div>
+            <div class="event-date-tab-day">TBD</div>
             <div class="event-date-tab-right">
               <div class="event-date-tab-month">Dec</div>
               <div class="event-date-tab-year">2026</div>
@@ -1965,7 +2203,7 @@
         <!-- Event 3 — TWS -->
         <div class="event-card reveal">
           <div class="event-date-tab">
-            <div class="event-date-tab-day">TBC</div>
+            <div class="event-date-tab-day">TBD</div>
             <div class="event-date-tab-right">
               <div class="event-date-tab-month">Mar</div>
               <div class="event-date-tab-year">2027</div>
@@ -1973,8 +2211,8 @@
           </div>
           <div class="event-card-body">
             <div class="event-type-tag">Flagship Program</div>
-            <div class="event-card-title">Teens With Stethoscopes 2027</div>
-            <p class="event-card-desc">Our annual one-day immersive program for NJ high school students — hands-on clinical stations, physician panels, and guided mentorship at Akbar Restaurant, Edison, NJ.</p>
+            <div class="event-card-title">Teens With Stethoscopes — 2027</div>
+            <p class="event-card-desc">Our flagship one-day immersive program for NJ high school students — hands-on clinical stations, physician panels, and guided mentorship. Date and venue TBD for 2027.</p>
             <div class="event-card-meta">
               <div class="event-meta-row">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -2022,27 +2260,23 @@
       -->
       <div class="partners-row reveal">
 
-        <!-- Partner 1 — RWJBarnabas / RWJUH -->
         <div class="partner-tile">
           <img src="/images/rwj_logo.jpg" alt="RWJBarnabas Health / Robert Wood Johnson University Hospital"
-               onerror="this.parentElement.innerHTML='<span style='font-size:.72rem;font-weight:700;color:var(--muted);text-align:center;line-height:1.5'>RWJBarnabas Health /<br>Robert Wood Johnson<br>University Hospital</span>'" />
+               onerror="this.style.display='none'" />
         </div>
 
-        <!-- Partner 2 — Allied Digestive Health -->
         <div class="partner-tile">
           <img src="/images/ADH Logo (1).png" alt="Allied Digestive Health"
-               onerror="this.parentElement.innerHTML='<span style='font-size:.72rem;font-weight:700;color:var(--muted);text-align:center;line-height:1.5'>Allied Digestive Health</span>'" />
+               onerror="this.style.display='none'" />
         </div>
 
-        <!-- Partner 3 — add your own -->
         <div class="partner-tile">
-          <img src="/images/TWS Logo.png" alt="Partner Organization"
-               onerror="this.parentElement.innerHTML='<span style='font-size:.72rem;font-weight:700;color:var(--muted);text-align:center;line-height:1.5'>Add Partner Logo</span>'" />
+          <img src="/images/TWS Logo.png" alt="Teens With Stethoscopes"
+               onerror="this.style.display='none'" />
         </div>
 
-        <!-- Become a partner tile -->
         <div class="partner-tile add-partner" onclick="window.location.href='partners.html'">
-          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" color="var(--muted-light)">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
             <rect x="3" y="3" width="18" height="18" rx="3"/><path d="M12 8v8M8 12h8"/>
           </svg>
           <span>Become a partner</span>
@@ -2193,15 +2427,15 @@
     // ── Footer newsletter ──
     
     function openGalaModal() {
-      const m = document.getElementById('gala-modal');
+      const m = document.getElementById('annual event-modal');
       m.style.display = 'flex';
       document.body.style.overflow = 'hidden';
     }
     function closeGalaModal() {
-      document.getElementById('gala-modal').style.display = 'none';
+      document.getElementById('annual event-modal').style.display = 'none';
       document.body.style.overflow = '';
     }
-    document.getElementById('gala-modal').addEventListener('click', function(e) {
+    document.getElementById('annual event-modal').addEventListener('click', function(e) {
       if (e.target === this) closeGalaModal();
     });
     document.addEventListener('keydown', e => {
@@ -2218,16 +2452,16 @@
         showToast('Please fill in your name and email.');
         return;
       }
-      const subject = encodeURIComponent('JWPA Gala Registration — October 10, 2026');
+      const subject = encodeURIComponent('JWPA JWPA Annual Event Registration — October 10, 2026');
       const body = encodeURIComponent(
-        'GALA REGISTRATION\n' +
+        'ANNUAL EVENT REGISTRATION\n' +
         '─────────────────────────────\n' +
         'Name:       ' + first + ' ' + last + '\n' +
         'Email:      ' + email + '\n' +
         'Attending:  ' + role + '\n' +
         'Guests:     ' + guests + '\n' +
         'Notes:      ' + (notes || '—') + '\n\n' +
-        'Event: JWPA Annual Celebration & Awards Dinner\n' +
+        'Event: JWPA Annual Women Physician Meetup & Celebration\n' +
         'Date:  Friday, October 10, 2026\n' +
         'Venue: Akbar Restaurant, 21 Cortlandt St, Edison, NJ 08837'
       );
@@ -2237,54 +2471,6 @@
     }
 
 
-    /* ── Partner logo upload ── */
-    function triggerUpload(slot) {
-      document.getElementById('pfile-' + slot).click();
-    }
-
-    function loadLogo(slot, input) {
-      if (!input.files || !input.files[0]) return;
-      const file = input.files[0];
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const dataUrl = e.target.result;
-        renderLogo(slot, dataUrl);
-        // Save so it persists on refresh
-        try { localStorage.setItem('jwpa_partner_' + slot, dataUrl); } catch(_) {}
-        showToast('Logo uploaded successfully!');
-      };
-      reader.readAsDataURL(file);
-      input.value = ''; // reset so same file can be re-uploaded
-    }
-
-    function renderLogo(slot, src) {
-      const tile = document.getElementById('ptile-' + slot);
-      if (!tile) return;
-      // Remove upload prompt, keep overlay
-      const prompt = tile.querySelector('.upload-prompt');
-      if (prompt) prompt.remove();
-      // Remove old img if any
-      const oldImg = tile.querySelector('img');
-      if (oldImg) oldImg.remove();
-      // Insert logo image
-      const img = document.createElement('img');
-      img.src = src;
-      img.alt = 'Partner logo';
-      img.style.maxHeight = '60px';
-      img.style.maxWidth = '100%';
-      img.style.objectFit = 'contain';
-      tile.insertBefore(img, tile.querySelector('.upload-overlay'));
-    }
-
-    // Restore logos saved in localStorage on page load
-    (function restoreLogos() {
-      for (let i = 0; i < 4; i++) {
-        try {
-          const saved = localStorage.getItem('jwpa_partner_' + i);
-          if (saved) renderLogo(i, saved);
-        } catch(_) {}
-      }
-    })();
 
     function submitFooterNl() {
       const email = document.getElementById('footerNl').value.trim();
@@ -2301,15 +2487,15 @@
 
 
   <!-- ══════════════════════════════════════════
-       GALA REGISTRATION MODAL
+       ANNUAL EVENT REGISTRATION MODAL
   ══════════════════════════════════════════ -->
-  <div id="gala-modal" style="display:none;position:fixed;inset:0;z-index:500;background:rgba(10,14,26,.88);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:1.5rem">
+  <div id="annual event-modal" style="display:none;position:fixed;inset:0;z-index:500;background:rgba(10,14,26,.88);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:1.5rem">
     <div style="background:var(--white);border-radius:var(--radius-lg);max-width:520px;width:100%;box-shadow:var(--shadow-lg);overflow:hidden;animation:dropFade .2s ease">
 
       <!-- Header -->
       <div style="background:var(--navy);padding:1.75rem 2rem;position:relative">
-        <div style="font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:.4rem">Annual Gala · JWPA 2026</div>
-        <div style="font-family:var(--font-display);font-size:1.3rem;font-weight:800;color:var(--white);line-height:1.2;margin-bottom:.75rem">JWPA Annual Celebration<br>&amp; Awards Dinner</div>
+        <div style="font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:.4rem">Annual Event · JWPA 2026</div>
+        <div style="font-family:var(--font-display);font-size:1.3rem;font-weight:800;color:var(--white);line-height:1.2;margin-bottom:.75rem">JWPA Annual Women Physician Meetup<br>&amp; Celebration</div>
         <div style="display:flex;flex-wrap:wrap;gap:1rem">
           <div style="display:flex;align-items:center;gap:.4rem;font-size:.78rem;color:rgba(255,255,255,.65)">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
@@ -2317,7 +2503,7 @@
           </div>
           <div style="display:flex;align-items:center;gap:.4rem;font-size:.78rem;color:rgba(255,255,255,.65)">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-            Evening — time TBC
+            6:00 PM
           </div>
           <div style="display:flex;align-items:center;gap:.4rem;font-size:.78rem;color:rgba(255,255,255,.65)">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -2331,7 +2517,7 @@
 
       <!-- Form -->
       <div style="padding:1.75rem 2rem">
-        <p style="font-size:.82rem;color:var(--muted);margin-bottom:1.25rem;line-height:1.6">Complete the form below and we'll be in touch to confirm your registration. Open to JWPA Members &amp; Guests. Partners and sponsors welcome.</p>
+        <p style="font-size:.82rem;color:var(--muted);margin-bottom:1.25rem;line-height:1.6">Complete the form below and we'll be in touch to confirm your registration. Open to JWPA members and women physician guests only. Spouses are not included for the October 10, 2026 event.</p>
 
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem">
           <div style="display:flex;flex-direction:column;gap:.25rem">
@@ -2355,9 +2541,7 @@
             <select id="gRole" style="padding:.6rem .85rem;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.875rem;color:var(--navy);width:100%;outline:none;appearance:none;background:var(--white)" onfocus="this.style.borderColor='var(--crimson)'" onblur="this.style.borderColor='var(--border)'">
               <option value="">Select…</option>
               <option>JWPA Member</option>
-              <option>Guest of a Member</option>
-              <option>Partner Organization</option>
-              <option>Sponsor</option>
+              <option>Women Physician Guest</option>
               <option>Other</option>
             </select>
           </div>

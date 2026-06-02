@@ -281,6 +281,7 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 1.25rem;
+      align-items: stretch;
     }
 
     .board-card {
@@ -289,6 +290,8 @@
       border-radius: var(--radius);
       overflow: hidden;
       transition: box-shadow .25s, transform .25s, border-color .25s;
+      display: flex;
+      flex-direction: column;
     }
     .board-card:hover {
       box-shadow: var(--shadow-md);
@@ -296,9 +299,10 @@
       border-color: rgba(127,24,27,.15);
     }
 
-    /* Photo area */
+    /* Photo area — fixed height so all cards align */
     .board-photo {
-      height: 170px;
+      height: 180px;
+      flex-shrink: 0;
       background: var(--border-light);
       position: relative; overflow: hidden;
       display: flex; align-items: center; justify-content: center;
@@ -319,6 +323,7 @@
       font-size: 1.15rem; font-weight: 800;
       color: var(--white);
       position: relative; z-index: 1;
+      flex-shrink: 0;
     }
     /* Placeholder hint shown when no image */
     .board-photo-hint {
@@ -326,6 +331,14 @@
       text-align: center;
       font-size: .6rem; font-weight: 600;
       color: var(--muted-light);
+    }
+    /* Info section fills remaining space so all cards are same height */
+    .board-info {
+      padding: 1.1rem 1.25rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
     }
 
     .board-info { padding: 1.1rem 1.25rem; }
@@ -344,29 +357,29 @@
        LEADERSHIP INQUIRY CTA
     ══════════════════════════════════════════ */
     #nominate {
-      padding: 0 0 5rem;
+      padding: 3rem 0 5rem;
       background: var(--bg);
     }
     .nominate-card {
       background: var(--white);
       border: 1.5px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 2.5rem 3rem;
+      border-radius: var(--radius);
+      padding: 1.5rem 2rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 2.5rem;
-      box-shadow: var(--shadow);
+      gap: 2rem;
+      box-shadow: var(--shadow-sm);
       flex-wrap: wrap;
     }
     .nominate-title {
       font-family: var(--font-display);
-      font-size: 1.25rem; font-weight: 800;
-      color: var(--navy); margin-bottom: .35rem;
+      font-size: 1rem; font-weight: 800;
+      color: var(--navy); margin-bottom: .25rem;
     }
     .nominate-desc {
-      font-size: .875rem; color: var(--muted);
-      line-height: 1.6; max-width: 500px;
+      font-size: .82rem; color: var(--muted);
+      line-height: 1.6; max-width: 440px;
     }
 
     /* ══════════════════════════════════════════
@@ -558,21 +571,18 @@
             alt="Dr. Sudha Nahar"
             onerror="this.style.display='none'"
           />
-          <div class="founder-card-photo-placeholder" style="display:none">
-            <div class="founder-initials">SN</div>
-            <span class="founder-photo-hint">Replace src with Dr. Nahar's photo</span>
-          </div>
+          <div class="founder-card-photo-placeholder" style="display:none"></div>
         </div>
 
         <!-- Content -->
         <div class="founder-card-body">
-          <div class="founder-card-badge">Founder &amp; President · Est. 2008</div>
+          <div class="founder-card-badge">Founder &amp; President · Est. 2018</div>
           <div class="founder-card-name">Dr. Sudha Nahar, MD</div>
           <div class="founder-card-title">
             Gastroenterologist &nbsp;&middot;&nbsp; Gyan Gastroenterology LLC &nbsp;&middot;&nbsp; New Brunswick, NJ
           </div>
           <p class="founder-card-bio">
-            Dr. Nahar founded JWPA in November 2008 with a singular belief: women in
+            Dr. Nahar founded JWPA in November 2018 with a singular belief: women in
             medicine are stronger together. A board-certified gastroenterologist and
             Board Member of the Medical Executive Committee at Robert Wood Johnson
             University Hospital, she brings both clinical expertise and institutional
@@ -589,135 +599,271 @@
   </section>
 
   <!-- ══════════════════════════════════════════
-       TEAM MEMBERS
+       BOARD TRUSTEES
   ══════════════════════════════════════════ -->
-  <section id="board">
+  <section id="board" style="padding:5rem 0;background:var(--bg);border-top:1px solid var(--border)">
     <div class="container">
-
-      <div class="section-label reveal">Team Members</div>
-      <h2 class="section-heading reveal" style="margin-bottom:.5rem">The team</h2>
+      <div class="section-label reveal">Board Trustees</div>
+      <h2 class="section-heading reveal" style="margin-bottom:.5rem">Board of Trustees</h2>
       <p style="font-size:.925rem;color:var(--muted);line-height:1.7;margin-bottom:2rem;max-width:560px" class="reveal">
-        JWPA's team members are women physicians and healthcare professionals
-        who volunteer their time to advance the organization's mission.
+        JWPA's trustees provide governance, strategic direction, and institutional accountability.
       </p>
-
-      <!--
-        HOW TO ADD A TEAM MEMBER:
-        1. Copy one .board-card div below
-        2. Replace the initials in .board-initials
-        3. Add: <img src="photo.jpg" alt="Name" onerror="this.style.display='none'" />
-           inside .board-photo (before .board-initials)
-        4. Update .board-name and .board-specialty
-      -->
       <div class="board-grid">
+        <div class="board-card reveal">
+          <div class="board-photo">
+            <img src="/images/Dr. Gloria Bachman.png" alt="Dr. Gloria Bachmann" onerror="this.style.display='none'" />
+            <div class="board-initials" style="">GB</div>
+          </div>
+          <div class="board-info">
+            <div class="board-role" style="">Board Trustee</div>
+            <div class="board-name">Dr. Gloria Bachmann</div>
+            <div class="board-specialty">OB-GYN · RWJUH</div>
+          </div>
+        </div>
+        <div class="board-card reveal">
+          <div class="board-photo">
+            
+            <div class="board-initials" style="">AH</div>
+          </div>
+          <div class="board-info">
+            <div class="board-role" style="">Board Trustee</div>
+            <div class="board-name">Dr. Andrea Harangozo</div>
+            <div class="board-specialty">Physician · New Jersey</div>
+          </div>
+        </div>
+        <div class="board-card reveal">
+          <div class="board-photo">
+            <img src="/images/Dr. Rachna Kulkarni.jpeg" alt="Dr. Rachna Kulkarni" onerror="this.style.display='none'" />
+            <div class="board-initials" style="">RK</div>
+          </div>
+          <div class="board-info">
+            <div class="board-role" style="">Board Trustee</div>
+            <div class="board-name">Dr. Rachna Kulkarni</div>
+            <div class="board-specialty">Cardiologist · RWJUH</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       ADVISORY BOARD
+  ══════════════════════════════════════════ -->
+  <section style="padding:5rem 0;background:var(--white);border-top:1px solid var(--border)">
+    <div class="container">
+      <div class="section-label reveal">Advisory Board</div>
+      <h2 class="section-heading reveal" style="margin-bottom:.5rem">Advisory Board</h2>
+      <p style="font-size:.925rem;color:var(--muted);line-height:1.7;margin-bottom:2rem;max-width:560px" class="reveal">
+        Women physicians who guide JWPA's programs, mentorship circles, and community outreach across New Jersey.
+      </p>
+      <div class="board-grid">
+        <div class="board-card reveal">
+          <div class="board-photo">
+            <img src="/images/Dr. Bhavi Patel.png" alt="Dr. Bhavi Patel" onerror="this.style.display='none'" />
+            <div class="board-initials" style="">BP</div>
+          </div>
+          <div class="board-info">
+            <div class="board-role" style="">Advisory Board</div>
+            <div class="board-name">Dr. Bhavi Patel</div>
+            <div class="board-specialty">Physician · New Jersey</div>
+          </div>
+        </div>
+        <div class="board-card reveal">
+          <div class="board-photo">
+            
+            <div class="board-initials" style="">KP</div>
+          </div>
+          <div class="board-info">
+            <div class="board-role" style="">Advisory Board</div>
+            <div class="board-name">Dr. Kusum Punjabi</div>
+            <div class="board-specialty">Physician · New Jersey</div>
+          </div>
+        </div>
+        <div class="board-card reveal">
+          <div class="board-photo">
+            
+            <div class="board-initials" style="">SG</div>
+          </div>
+          <div class="board-info">
+            <div class="board-role" style="">Advisory Board</div>
+            <div class="board-name">Dr. Subhashini Gowda</div>
+            <div class="board-specialty">Physician · New Jersey</div>
+          </div>
+        </div>
+        <div class="board-card reveal">
+          <div class="board-photo">
+            
+            <div class="board-initials" style="">RK</div>
+          </div>
+          <div class="board-info">
+            <div class="board-role" style="">Advisory Board</div>
+            <div class="board-name">Dr. Rizwana Khan</div>
+            <div class="board-specialty">Physician · New Jersey</div>
+          </div>
+        </div>
+        <div class="board-card reveal">
+          <div class="board-photo">
+            <img src="/images/Dr. Sameera Maganti.png" alt="Dr. Sameera Maganti" onerror="this.style.display='none'" />
+            <div class="board-initials" style="">SM</div>
+          </div>
+          <div class="board-info">
+            <div class="board-role" style="">Advisory Board</div>
+            <div class="board-name">Dr. Sameera Maganti</div>
+            <div class="board-specialty">Internist · RWJUH</div>
+          </div>
+        </div>
+        <div class="board-card reveal">
+          <div class="board-photo">
+            <img src="/images/Rashmi Acharya.png" alt="Dr. Rashmi Acharya" onerror="this.style.display='none'" />
+            <div class="board-initials" style="">RA</div>
+          </div>
+          <div class="board-info">
+            <div class="board-role" style="">Advisory Board</div>
+            <div class="board-name">Dr. Rashmi Acharya</div>
+            <div class="board-specialty">OB-GYN · IU Health</div>
+          </div>
+        </div>
+        <div class="board-card reveal">
+          <div class="board-photo">
+            
+            <div class="board-initials" style="">ND</div>
+          </div>
+          <div class="board-info">
+            <div class="board-role" style="">Advisory Board</div>
+            <div class="board-name">Dr. Narinder Dhillon</div>
+            <div class="board-specialty">Physician · New Jersey</div>
+          </div>
+        </div>
+        <div class="board-card reveal">
+          <div class="board-photo">
+            
+            <div class="board-initials" style="">JL</div>
+          </div>
+          <div class="board-info">
+            <div class="board-role" style="">Advisory Board</div>
+            <div class="board-name">Dr. Jenny Liu</div>
+            <div class="board-specialty">Internal Medicine · UniMed Center</div>
+          </div>
+        </div>
+        <div class="board-card reveal">
+          <div class="board-photo">
+            
+            <div class="board-initials" style="">AP</div>
+          </div>
+          <div class="board-info">
+            <div class="board-role" style="">Advisory Board</div>
+            <div class="board-name">Dr. Amandeep Pall</div>
+            <div class="board-specialty">Physician · New Jersey</div>
+          </div>
+        </div>
+        <div class="board-card reveal">
+          <div class="board-photo">
+            
+            <div class="board-initials" style="">NS</div>
+          </div>
+          <div class="board-info">
+            <div class="board-role" style="">Advisory Board</div>
+            <div class="board-name">Dr. Nilam Srivastava</div>
+            <div class="board-specialty">Physician · New Jersey</div>
+          </div>
+        </div>
+        <div class="board-card reveal">
+          <div class="board-photo">
+            
+            <div class="board-initials" style="">AP</div>
+          </div>
+          <div class="board-info">
+            <div class="board-role" style="">Advisory Board</div>
+            <div class="board-name">Dr. Archana Parmar</div>
+            <div class="board-specialty">Physician · New Jersey</div>
+          </div>
+        </div>
+        <div class="board-card reveal">
+          <div class="board-photo">
+            
+            <div class="board-initials" style="">JH</div>
+          </div>
+          <div class="board-info">
+            <div class="board-role" style="">Advisory Board</div>
+            <div class="board-name">Dr. Juana Hutchinson</div>
+            <div class="board-specialty">Physician · New Jersey</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       VOLUNTEERS
+  ══════════════════════════════════════════ -->
+  <section style="padding:4rem 0;background:var(--bg);border-top:1px solid var(--border)">
+    <div class="container">
+      <div class="section-label reveal">Volunteers</div>
+      <h2 class="section-heading reveal" style="margin-bottom:.5rem">Volunteers</h2>
+      <p style="font-size:.925rem;color:var(--muted);line-height:1.7;margin-bottom:2rem;max-width:560px" class="reveal">
+        The people who show up to make JWPA events and programs run smoothly.
+      </p>
+            <div class="board-grid">
 
         <div class="board-card reveal">
           <div class="board-photo">
-            <img src="/images/Dr. Gloria Bachman.png" alt="" onerror="this.style.display='none'" />
-            <div class="board-initials" style="display:none">GB</div>
-            <span class="board-photo-hint" style="display:none">Add photo</span>
+            <img src="/images/Diana Quintanilla.png" alt="Diana Quintanilla" onerror="this.style.display='none'" />
+            <div class="board-initials">DQ</div>
           </div>
           <div class="board-info">
-            <div class="board-role">Member</div>
-            <div class="board-name">Gloria Bachman, MD</div>
-            <div class="board-specialty">Obstetrician-Gynecologist · Robert Wood Johnson Medical School (RWJMS)</div>
+            <div class="board-role">Volunteer</div>
+            <div class="board-name">Diana Quintanilla</div>
+            <div class="board-specialty">Medical Assistant &middot; Allied Digestive Health</div>
           </div>
         </div>
 
         <div class="board-card reveal">
           <div class="board-photo">
-            <img src="/images/Dr. Bhavan Patel Profile.JPG" alt="" onerror="this.style.display='none'" />
-            <div class="board-initials" style="display:none">BP</div>
-            <span class="board-photo-hint" style="display:none">Add photo</span>
+            <div class="board-initials">NA</div>
           </div>
           <div class="board-info">
-            <div class="board-role">Member</div>
-            <div class="board-name">Bhavana Patel, MD</div>
-            <div class="board-specialty">Pediatrics · Inspira Medical Center Vineland</div>
+            <div class="board-role">Volunteer</div>
+            <div class="board-name">Nohely Alvarez</div>
+            <div class="board-specialty">Medical Assistant &middot; Allied Digestive Health</div>
           </div>
         </div>
 
         <div class="board-card reveal">
           <div class="board-photo">
-            <img src="/images/Dr. Ritu Nahar.png" alt="" onerror="this.style.display='none'" />
-            <div class="board-initials" style="display:none">RN</div>
-            <span class="board-photo-hint" style="display:none">Add photo</span>
+            <img src="/images/Dr. Ritu Nahar.png" alt="Dr. Ritu Nahar" onerror="this.style.display='none'" />
+            <div class="board-initials">RN</div>
           </div>
           <div class="board-info">
-            <div class="board-role">Member</div>
-            <div class="board-name">Ritu Nahar, MD</div>
-            <div class="board-specialty">Gastroenterologist · Allied Digestive Health</div>
+            <div class="board-role">Volunteer</div>
+            <div class="board-name">Dr. Ritu Nahar</div>
+            <div class="board-specialty">Gastroenterologist &middot; Allied Digestive Health</div>
           </div>
         </div>
 
         <div class="board-card reveal">
           <div class="board-photo">
-            <img src="/images/Dr. Nidhi Goel.png" alt="" onerror="this.style.display='none'" />
-            <div class="board-initials" style="display:none">NG</div>
-            <span class="board-photo-hint" style="display:none">Add photo</span>
+            <div class="board-initials">RN</div>
           </div>
           <div class="board-info">
-            <div class="board-role">Member</div>
-            <div class="board-name">Nidhi Goel, MD</div>
-            <div class="board-specialty">Psychiatrist · HealMed Solutions, Inc.</div>
+            <div class="board-role">Volunteer</div>
+            <div class="board-name">Rupal Nahar</div>
+            <div class="board-specialty">Volunteer &middot; JWPA</div>
           </div>
         </div>
 
         <div class="board-card reveal">
           <div class="board-photo">
-            <img src="/images/Dr. Rashmi Acharya.jpg" alt="" onerror="this.style.display='none'" />
-            <div class="board-initials" style="display:none">RA</div>
-            <span class="board-photo-hint" style="display:none">Add photo</span>
+            <div class="board-initials">GA</div>
           </div>
           <div class="board-info">
-            <div class="board-role">Member</div>
-            <div class="board-name">Rashmi Acharya, MD</div>
-            <div class="board-specialty">Obstetrician-Gynecologist · Hackensack Meridian Health</div>
-          </div>
-        </div>
-
-        <div class="board-card reveal">
-          <div class="board-photo">
-            <img src="/images/Dr. Priyanka Sanjay, M.D..jpg" alt="" onerror="this.style.display='none'" />
-            <div class="board-initials" style="display:none">PS</div>
-            <span class="board-photo-hint" style="display:none">Add photo</span>
-          </div>
-          <div class="board-info">
-            <div class="board-role">Member</div>
-            <div class="board-name">Priyanka Sanjay, MD</div>
-            <div class="board-specialty">​Internal Medicine · Novamedcare</div>
-          </div>
-        </div>
-
-        <div class="board-card reveal">
-          <div class="board-photo">
-            <img src="/images/Dr. Rachna Kulkarni.jpeg" alt="" onerror="this.style.display='none'" />
-            <div class="board-initials" style="display:none">RK</div>
-            <span class="board-photo-hint" style="display:none">Add photo</span>
-          </div>
-          <div class="board-info">
-            <div class="board-role">Member</div>
-            <div class="board-name">Rachna Kulkarni, MD</div>
-            <div class="board-specialty">Cardiologist · Robert Wood Johnson University Hospital (RWJUH)</div>
-          </div>
-        </div>
-
-        <div class="board-card reveal">
-          <div class="board-photo">
-            <img src="/images/Dr. Smita Lodha.jpeg" alt="" onerror="this.style.display='none'" />
-            <div class="board-initials" style="display:none">SL</div>
-            <span class="board-photo-hint" style="display:none">Add photo</span>
-          </div>
-          <div class="board-info">
-            <div class="board-role">Member</div>
-            <div class="board-name">Smita Lodha, MD</div>
-            <div class="board-specialty">Family Medicine · Queens Medical Services</div>
+            <div class="board-role">Volunteer</div>
+            <div class="board-name">Ganesh Acharya</div>
+            <div class="board-specialty">Clinical Operations PM &middot; Aegis Health Services</div>
           </div>
         </div>
 
       </div>
-    </div>
-  </section>
+      </div>
 
   <!-- ══════════════════════════════════════════
        NOMINATION CTA

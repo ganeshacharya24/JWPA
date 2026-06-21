@@ -474,6 +474,100 @@
       .archive-grid { grid-template-columns: 1fr 1fr; }
       .footer-grid  { grid-template-columns: 1fr; }
     }
+    @media (max-width: 980px) {
+      [style*="grid-template-columns:220px"] { grid-template-columns: 1fr !important; }
+    }
+
+    /* ── Year filter tabs ── */
+    .year-tab {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .55rem 1.4rem; border-radius: 20px;
+      font-family: var(--font-body); font-size: .85rem; font-weight: 700;
+      cursor: pointer; transition: all .2s;
+      border: 2px solid var(--border);
+      background: var(--white); color: var(--muted);
+    }
+    .year-tab:hover { border-color: var(--crimson); color: var(--crimson); }
+    .year-tab.active { background: var(--crimson); color: var(--white); border-color: var(--crimson); }
+    .year-tab-count {
+      background: rgba(255,255,255,.25);
+      font-size: .7rem; font-weight: 800;
+      padding: .1rem .45rem; border-radius: 10px; min-width: 20px; text-align: center;
+    }
+    .year-tab:not(.active) .year-tab-count {
+      background: var(--border-light); color: var(--muted);
+    }
+
+    /* ── Browse grid ── */
+    .potm-grid-browse {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .potm-browse-card {
+      background: var(--white); border: 1.5px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      cursor: pointer; transition: box-shadow .2s, transform .2s, border-color .2s;
+      box-shadow: var(--shadow-sm);
+    }
+    .potm-browse-card:hover {
+      box-shadow: var(--shadow-md); transform: translateY(-3px);
+      border-color: rgba(127,24,27,.25);
+    }
+    .potm-browse-card-photo {
+      height: 180px; background: var(--border-light);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .potm-browse-card-photo img {
+      width: 100%; height: 100%; object-fit: cover; object-position: top center;
+    }
+    .potm-browse-card-initials {
+      font-family: var(--font-display); font-size: 2.5rem;
+      font-weight: 800; color: var(--white);
+      width: 80px; height: 80px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .potm-browse-month-badge {
+      position: absolute; top: .75rem; left: .75rem;
+      background: var(--crimson); color: var(--white);
+      font-size: .58rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: .3rem .65rem; border-radius: 20px;
+    }
+    .potm-browse-card-body { padding: 1rem 1.25rem 1.25rem; }
+    .potm-browse-specialty {
+      font-size: .6rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--crimson); margin-bottom: .25rem;
+    }
+    .potm-browse-name {
+      font-family: var(--font-display); font-size: 1rem;
+      font-weight: 800; color: var(--navy);
+      line-height: 1.2; margin-bottom: .2rem;
+    }
+    .potm-browse-location {
+      font-size: .75rem; color: var(--muted); margin-bottom: .75rem;
+    }
+    .potm-browse-cta {
+      font-size: .75rem; font-weight: 700; color: var(--crimson);
+      display: flex; align-items: center; gap: .3rem;
+    }
+    .potm-browse-placeholder {
+      opacity: .45; pointer-events: none;
+    }
+    .potm-browse-placeholder .potm-browse-card-photo {
+      background: var(--border-light);
+    }
+
+    @media (max-width: 760px) {
+      .potm-grid-browse { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .potm-grid-browse { grid-template-columns: 1fr; }
+    }
+
   </style>
 </head>
 <body>
@@ -620,8 +714,8 @@
                 Replace src="YOUR-POTM-PHOTO.jpg" with the physician's headshot.
                 The placeholder disappears automatically once a valid image loads.
               -->
-              <img src="/images/Dr. Priyanka Sanjay, M.D..jpg" alt="Physician of the Month" onerror="this.style.display='none'" />
-              <div class="potm-photo-placeholder" style="display:none;">
+              <img src="YOUR-POTM-PHOTO.jpg" alt="Physician of the Month" onerror="this.style.display='none'" />
+              <div class="potm-photo-placeholder">
                 <svg fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24">
                   <circle cx="12" cy="8" r="4"/>
                   <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
@@ -736,96 +830,54 @@
   </section>
 
   <!-- ══════════════════════════════════════════
-       ARCHIVE
+       PAST SPOTLIGHTS — YEAR CARDS
   ══════════════════════════════════════════ -->
-  <section id="archive">
+  <section id="archive" style="padding:5rem 0;background:var(--bg);border-top:1px solid var(--border)">
     <div class="container">
       <div class="section-label reveal">Previous Spotlights</div>
-      <h2 class="section-heading reveal" style="margin-bottom:1.75rem">Past honorees</h2>
+      <h2 class="section-heading reveal">Past Honorees</h2>
+      <p class="reveal" style="font-size:.95rem;color:var(--muted);line-height:1.75;margin-bottom:2.5rem;max-width:580px">
+        Browse all Physicians of the Month by year. Click a year to see every honoree and their full profile.
+      </p>
 
-      <!--
-        HOW TO ADD A PAST POTM:
-        Copy one .archive-card div, update the initials in .archive-avatar,
-        the month, name, and specialty. To add a photo, put an <img> tag
-        inside .archive-avatar and remove the initials text.
-      -->
-      <div class="archive-grid">
+      <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:700px">
 
-        <div class="archive-card reveal">
-          <div class="archive-avatar">AB</div>
-          <div>
-            <div class="archive-month">April 2026</div>
-            <div class="archive-name">Dr. [Name]</div>
-            <div class="archive-specialty">[Specialty]</div>
+        <!-- 2026 Card -->
+        <a href="potm-2026.html" style="text-decoration:none">
+          <div style="background:var(--navy);border-radius:var(--radius-lg);padding:2.5rem 2rem;display:flex;flex-direction:column;justify-content:space-between;min-height:200px;box-shadow:var(--shadow-md);position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s;cursor:pointer" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 20px 40px rgba(15,23,42,.18)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='var(--shadow-md)'">
+            <div style="position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(127,24,27,.3);pointer-events:none"></div>
+            <div>
+              <div style="font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:.5rem">Physicians of the Month</div>
+              <div style="font-family:var(--font-display);font-size:3.5rem;font-weight:800;color:var(--white);line-height:1;margin-bottom:.5rem">2026</div>
+              <div style="font-size:.82rem;color:rgba(255,255,255,.55)">5 honorees · Jan – May</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:.5rem;font-size:.8rem;font-weight:700;color:rgba(255,255,255,.7);margin-top:1.5rem">
+              View all 2026 honorees
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
           </div>
-        </div>
+        </a>
 
-        <div class="archive-card reveal">
-          <div class="archive-avatar">CD</div>
-          <div>
-            <div class="archive-month">March 2026</div>
-            <div class="archive-name">Dr. [Name]</div>
-            <div class="archive-specialty">[Specialty]</div>
+        <!-- 2025 Card -->
+        <a href="potm-2025.html" style="text-decoration:none">
+          <div style="background:var(--crimson);border-radius:var(--radius-lg);padding:2.5rem 2rem;display:flex;flex-direction:column;justify-content:space-between;min-height:200px;box-shadow:var(--shadow-md);position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s;cursor:pointer" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 20px 40px rgba(127,24,27,.3)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='var(--shadow-md)'">
+            <div style="position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.1);pointer-events:none"></div>
+            <div>
+              <div style="font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:.5rem">Physicians of the Month</div>
+              <div style="font-family:var(--font-display);font-size:3.5rem;font-weight:800;color:var(--white);line-height:1;margin-bottom:.5rem">2025</div>
+              <div style="font-size:.82rem;color:rgba(255,255,255,.65)">Program launched Aug 2025</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:.5rem;font-size:.8rem;font-weight:700;color:rgba(255,255,255,.8);margin-top:1.5rem">
+              View 2025 honorees
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
           </div>
-        </div>
-
-        <div class="archive-card reveal">
-          <div class="archive-avatar">EF</div>
-          <div>
-            <div class="archive-month">February 2026</div>
-            <div class="archive-name">Dr. [Name]</div>
-            <div class="archive-specialty">[Specialty]</div>
-          </div>
-        </div>
-
-        <div class="archive-card reveal">
-          <div class="archive-avatar">GH</div>
-          <div>
-            <div class="archive-month">January 2026</div>
-            <div class="archive-name">Dr. [Name]</div>
-            <div class="archive-specialty">[Specialty]</div>
-          </div>
-        </div>
-
-        <div class="archive-card reveal">
-          <div class="archive-avatar">IJ</div>
-          <div>
-            <div class="archive-month">December 2025</div>
-            <div class="archive-name">Dr. [Name]</div>
-            <div class="archive-specialty">[Specialty]</div>
-          </div>
-        </div>
-
-        <div class="archive-card reveal">
-          <div class="archive-avatar">KL</div>
-          <div>
-            <div class="archive-month">November 2025</div>
-            <div class="archive-name">Dr. [Name]</div>
-            <div class="archive-specialty">[Specialty]</div>
-          </div>
-        </div>
-
-        <div class="archive-card reveal">
-          <div class="archive-avatar">MN</div>
-          <div>
-            <div class="archive-month">October 2025</div>
-            <div class="archive-name">Dr. [Name]</div>
-            <div class="archive-specialty">[Specialty]</div>
-          </div>
-        </div>
-
-        <div class="archive-card reveal">
-          <div class="archive-avatar">OP</div>
-          <div>
-            <div class="archive-month">September 2025</div>
-            <div class="archive-name">Dr. [Name]</div>
-            <div class="archive-specialty">[Specialty]</div>
-          </div>
-        </div>
+        </a>
 
       </div>
     </div>
   </section>
+
 
   <!-- ══════════════════════════════════════════
        NOMINATION CTA
@@ -958,7 +1010,7 @@
         return;
       }
 
-      const subject = encodeURIComponent('POTM Nomination — ' + name);
+      const subject = encodeURIComponent('POTM Nomination -- ' + name);
       const body = encodeURIComponent(
         'PHYSICIAN OF THE MONTH NOMINATION\n' +
         '─────────────────────────────────\n\n' +
@@ -968,17 +1020,20 @@
         'NOMINEE\n' +
         'Name:        ' + name + '\n' +
         'Specialty:   ' + specialty + '\n' +
-        'Institution: ' + (inst || '—') + '\n' +
-        'Location:    ' + (city || '—') + '\n' +
-        'Email:       ' + (nomEmail || '—') + '\n\n' +
+        'Institution: ' + (inst || '--') + '\n' +
+        'Location:    ' + (city || '--') + '\n' +
+        'Email:       ' + (nomEmail || '--') + '\n\n' +
         'WHY THEY DESERVE THE SPOTLIGHT\n' +
         reason
       );
 
       window.location.href = 'mailto:info@jwpa.org?subject=' + subject + '&body=' + body;
       closeNomModal();
-      showToast('Nomination submitted — thank you!');
+      showToast('Nomination submitted -- thank you!');
     }
+
+
+
 
     function submitFooterNl() {
       const email = document.getElementById('footerNl').value.trim();

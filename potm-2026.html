@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2026 Physicians of the Month — JWPA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    :root{
+      --crimson:#7f181b;--crimson-dark:#5e1114;--crimson-mist:#fdf2f2;
+      --navy:#0f172a;--slate:#334155;--muted:#64748b;--muted-light:#94a3b8;
+      --border:#e2e8f0;--border-light:#f1f5f9;--bg:#f8fafc;--white:#ffffff;
+      --font-display:'Playfair Display',Georgia,serif;
+      --font-body:'Outfit',system-ui,sans-serif;
+      --container:1160px;
+      --radius-sm:8px;--radius:12px;--radius-lg:20px;
+      --shadow-sm:0 1px 3px rgba(0,0,0,.06);
+      --shadow:0 4px 16px rgba(15,23,42,.07);
+      --shadow-md:0 12px 32px rgba(15,23,42,.10);
+      --shadow-lg:0 24px 48px rgba(15,23,42,.13);
+    }
+    html{background:#0f172a}
+    body{font-family:var(--font-body);font-size:15px;line-height:1.65;color:var(--slate);background:var(--white);-webkit-font-smoothing:antialiased;overflow-x:hidden;margin:0;padding:0}
+    a{text-decoration:none;color:inherit}
+    .container{max-width:var(--container);margin:0 auto;padding:0 2rem}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;font-family:var(--font-body);font-weight:600;border:none;border-radius:var(--radius-sm);cursor:pointer;line-height:1;white-space:nowrap;transition:all .2s}
+    .btn-sm{padding:.5rem 1.1rem;font-size:.8rem}
+    .btn-md{padding:.7rem 1.5rem;font-size:.875rem}
+    .btn-primary{background:var(--crimson);color:var(--white)}
+    .btn-primary:hover{background:var(--crimson-dark);transform:translateY(-1px)}
+    .btn-outline{background:var(--white);color:var(--navy);border:1.5px solid var(--border)}
+    .btn-outline:hover{border-color:var(--muted-light);background:var(--bg)}
+
+    /* NAV */
+    #navbar{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+    .nav-inner{display:flex;align-items:center;height:66px;max-width:var(--container);margin:0 auto;padding:0 2rem;gap:2rem}
+    .nav-brand{display:flex;flex-direction:column;line-height:1.2;flex-shrink:0}
+    .nav-brand-name{font-family:var(--font-display);font-size:1.3rem;font-weight:800;color:var(--navy)}
+    .nav-brand-sub{font-size:.58rem;font-weight:600;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+    .nav-actions{display:flex;align-items:center;gap:.65rem;flex-shrink:0}
+    .back-link{display:inline-flex;align-items:center;gap:.4rem;font-size:.82rem;font-weight:600;color:var(--muted);padding:.4rem .75rem;border-radius:6px;transition:all .18s}
+    .back-link:hover{color:var(--navy);background:var(--bg)}
+
+    /* PAGE HERO */
+    #page-hero{background:var(--navy);padding:3.5rem 0;position:relative;overflow:hidden}
+    #page-hero::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(127,24,27,.3) 0%,transparent 60%);pointer-events:none}
+    .hero-year{font-family:var(--font-display);font-size:clamp(4rem,10vw,7rem);font-weight:800;color:rgba(255,255,255,.08);line-height:1;position:absolute;right:2rem;bottom:-1rem;letter-spacing:-.04em;pointer-events:none}
+
+    /* PHYSICIAN GRID */
+    #physicians{padding:4rem 0 5rem}
+    .potm-card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+
+    /* Individual card */
+    .potm-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);transition:box-shadow .2s,transform .2s,border-color .2s;cursor:pointer}
+    .potm-card:hover{box-shadow:var(--shadow-md);transform:translateY(-4px);border-color:rgba(127,24,27,.2)}
+    .potm-card-photo{height:220px;background:var(--border-light);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+    .potm-card-photo img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;position:absolute;inset:0}
+    .potm-card-initials{font-family:var(--font-display);font-size:3rem;font-weight:800;color:var(--white);position:relative;z-index:1}
+    .potm-month-badge{position:absolute;top:.875rem;left:.875rem;background:var(--crimson);color:var(--white);font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .75rem;border-radius:20px;z-index:2}
+    .potm-current-badge{position:absolute;top:.875rem;right:.875rem;background:rgba(255,255,255,.95);color:var(--crimson);font-size:.55rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .65rem;border-radius:20px;z-index:2}
+    .potm-card-body{padding:1.25rem 1.5rem 1.5rem}
+    .potm-card-specialty{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--crimson);margin-bottom:.3rem}
+    .potm-card-name{font-family:var(--font-display);font-size:1.1rem;font-weight:800;color:var(--navy);line-height:1.2;margin-bottom:.25rem}
+    .potm-card-location{font-size:.78rem;color:var(--muted);margin-bottom:.875rem}
+    .potm-card-cta{font-size:.78rem;font-weight:700;color:var(--crimson);display:flex;align-items:center;gap:.35rem}
+
+    /* SPOTLIGHT MODAL */
+    #spotlight-modal{display:none;position:fixed;inset:0;z-index:500;background:rgba(10,14,26,.9);backdrop-filter:blur(8px);overflow-y:auto;padding:2rem}
+    .spotlight-inner{max-width:900px;width:100%;margin:auto;position:relative;animation:fadeUp .25s ease}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .spotlight-close{position:absolute;top:-1rem;right:0;z-index:10;background:rgba(255,255,255,.15);border:none;border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--white);transition:background .2s}
+    .spotlight-close:hover{background:rgba(255,255,255,.25)}
+    .spotlight-body{background:var(--white);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg)}
+    .spotlight-grid{display:grid;grid-template-columns:300px 1fr;min-height:450px}
+    .spotlight-photo{position:relative;background:var(--border-light);display:flex;align-items:center;justify-content:center}
+    .spotlight-photo img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;position:absolute;inset:0}
+    .spotlight-photo-initials{font-family:var(--font-display);font-size:4rem;font-weight:800;color:var(--white);position:relative;z-index:1}
+    .spotlight-content{padding:2.25rem 2.5rem;overflow-y:auto;max-height:80vh}
+    .spotlight-month-tag{display:inline-block;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .875rem;border-radius:20px;margin-bottom:.875rem}
+    .spotlight-specialty{font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--crimson);margin-bottom:.3rem}
+    .spotlight-name{font-family:var(--font-display);font-size:clamp(1.4rem,3vw,2rem);font-weight:800;color:var(--navy);letter-spacing:-.02em;line-height:1.1;margin-bottom:.3rem}
+    .spotlight-inst{font-size:.85rem;color:var(--muted);margin-bottom:.2rem;line-height:1.5}
+    .spotlight-quote{border-left:3px solid var(--crimson);padding:.875rem 1rem;background:var(--crimson-mist);border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:1.25rem 0}
+    .spotlight-quote p{font-family:var(--font-display);font-size:.925rem;font-style:italic;color:var(--slate);line-height:1.75}
+    .spotlight-quote cite{display:block;margin-top:.4rem;font-size:.7rem;font-weight:700;color:var(--muted-light);font-style:normal;text-transform:uppercase;letter-spacing:.06em}
+    .spotlight-section-label{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;margin-top:1.25rem}
+    .spotlight-bio{font-size:.875rem;color:var(--muted);line-height:1.85;margin-bottom:.75rem}
+    .spotlight-highlights{padding-left:1.1rem;display:flex;flex-direction:column;gap:.3rem}
+    .spotlight-highlights li{font-size:.83rem;color:var(--slate);line-height:1.6}
+    .spotlight-memberships{font-size:.82rem;color:var(--slate);padding:.75rem 1rem;background:var(--bg);border-radius:var(--radius-sm);margin-top:.5rem}
+
+    /* FOOTER */
+    footer{background:var(--navy);padding:3rem 0 0;color:rgba(255,255,255,.55)}
+    .footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:2.5rem;padding-bottom:2.5rem;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:1.5rem}
+    .footer-brand-name{font-family:var(--font-display);font-size:1.1rem;font-weight:800;color:var(--white);margin-bottom:.3rem}
+    .footer-brand-sub{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.3);margin-bottom:.75rem}
+    .footer-brand-desc{font-size:.82rem;line-height:1.7;max-width:240px}
+    .footer-col h4{font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.9);margin-bottom:1rem}
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+    .footer-col a{font-size:.83rem;transition:color .15s}
+    .footer-col a:hover{color:var(--white)}
+    .footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding-bottom:2rem}
+    .footer-bottom p{font-size:.78rem}
+
+    .reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
+    .reveal.in{opacity:1;transform:translateY(0)}
+
+    @media(max-width:900px){.potm-card-grid{grid-template-columns:1fr 1fr}.spotlight-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:640px){.potm-card-grid{grid-template-columns:1fr}.spotlight-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <span class="nav-brand-name">JWPA</span>
+        <span class="nav-brand-sub">Jersey Women Physician Alliance</span>
+      </a>
+      <div style="flex:1;display:flex;align-items:center;gap:.5rem">
+        <a href="physician-of-the-month.html" class="back-link">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Physician of the Month
+        </a>
+        <span style="color:var(--border);font-size:.9rem">/</span>
+        <span style="font-size:.82rem;font-weight:600;color:var(--navy)">2026</span>
+      </div>
+      <div class="nav-actions">
+        <a href="contact.html" class="btn btn-primary btn-sm">Join JWPA</a>
+        <a href="donate.html" class="btn btn-outline btn-sm">Donate</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section id="page-hero">
+    <div class="container" style="position:relative;z-index:1">
+      <div style="font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem">
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <a href="physician-of-the-month.html" style="color:rgba(255,255,255,.45);transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.75)'" onmouseout="this.style.color='rgba(255,255,255,.45)'">Physician of the Month</a>
+      </div>
+      <h1 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:800;color:var(--white);letter-spacing:-.02em;line-height:1.1;margin-bottom:.5rem">2026 Honorees</h1>
+      <p style="font-size:.95rem;color:rgba(255,255,255,.55);max-width:520px">Five exceptional women physicians celebrated by JWPA — January through May 2026. Click any card to read their full profile.</p>
+    </div>
+    <div class="hero-year">2026</div>
+  </section>
+
+  <!-- PHYSICIANS GRID -->
+  <section id="physicians">
+    <div class="container">
+      <div class="potm-card-grid">
+
+        <!-- May 2026 — Dr. Priyanka Sanjay -->
+        <div class="potm-card reveal" onclick="openSpotlight('may2026')">
+          <div class="potm-card-photo">
+            <img src="/images/Dr. Priyanka Sanjay, M.D..jpg" alt="Dr. Priyanka Sanjay" />
+            <div class="potm-card-initials" style="background:#7f181b">PS</div>
+            <div class="potm-month-badge">May 2026</div>
+            <div class="potm-current-badge">Current</div>
+          </div>
+          <div class="potm-card-body">
+            <div class="potm-card-specialty">Internal Medicine · Piscataway, NJ</div>
+            <div class="potm-card-name">Dr. Priyanka Sanjay, M.D.</div>
+            <div class="potm-card-location">Novamedcare Inc · ABIM Certified</div>
+            <div class="potm-card-cta">Read full profile <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </div>
+        </div>
+
+        <!-- April 2026 — Dr. Payal Parikh -->
+        <div class="potm-card reveal" onclick="openSpotlight('apr2026')">
+          <div class="potm-card-photo" style="background:#7f181b">
+            <div class="potm-card-initials">PP</div>
+            <div class="potm-month-badge">April 2026</div>
+          </div>
+          <div class="potm-card-body">
+            <div class="potm-card-specialty">Hospital Medicine · New Brunswick, NJ</div>
+            <div class="potm-card-name">Dr. Payal Parikh, MD, FACP, FHM</div>
+            <div class="potm-card-location">Robert Wood Johnson University Hospital</div>
+            <div class="potm-card-cta">Read full profile <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </div>
+        </div>
+
+        <!-- March 2026 — Dr. Deval Gadhvi -->
+        <div class="potm-card reveal" onclick="openSpotlight('mar2026')">
+          <div class="potm-card-photo" style="background:#0f172a">
+            <div class="potm-card-initials">DG</div>
+            <div class="potm-month-badge">March 2026</div>
+          </div>
+          <div class="potm-card-body">
+            <div class="potm-card-specialty">Internal Medicine · Jersey City, NJ</div>
+            <div class="potm-card-name">Dr. Deval Gadhvi, MD</div>
+            <div class="potm-card-location">26 Journal Square · Hudson County</div>
+            <div class="potm-card-cta">Read full profile <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </div>
+        </div>
+
+        <!-- February 2026 — Dr. Preeti Saran -->
+        <div class="potm-card reveal" onclick="openSpotlight('feb2026')">
+          <div class="potm-card-photo" style="background:#7f181b">
+            <div class="potm-card-initials">PS</div>
+            <div class="potm-month-badge">February 2026</div>
+          </div>
+          <div class="potm-card-body">
+            <div class="potm-card-specialty">Internal Medicine · Camden, NJ</div>
+            <div class="potm-card-name">Dr. Preeti Saran, MD, MPH, MBA</div>
+            <div class="potm-card-location">Virtua Health</div>
+            <div class="potm-card-cta">Read full profile <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </div>
+        </div>
+
+        <!-- January 2026 — Dr. Jenny Liu -->
+        <div class="potm-card reveal" onclick="openSpotlight('jan2026')">
+          <div class="potm-card-photo" style="background:#0f172a">
+            <div class="potm-card-initials">JL</div>
+            <div class="potm-month-badge">January 2026</div>
+          </div>
+          <div class="potm-card-body">
+            <div class="potm-card-specialty">Internal &amp; Obesity Medicine · Warren, NJ</div>
+            <div class="potm-card-name">Dr. Jenny Liu, MD, MS</div>
+            <div class="potm-card-location">UniMed Center · Founding President, NJCAPA</div>
+            <div class="potm-card-cta">Read full profile <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SPOTLIGHT MODAL -->
+  <div id="spotlight-modal" onclick="if(event.target===this)closeSpotlight()">
+    <div class="spotlight-inner">
+      <button class="spotlight-close" onclick="closeSpotlight()">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+      <div class="spotlight-body">
+        <div id="spotlight-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand-name">JWPA</div>
+          <div class="footer-brand-sub">Jersey Women Physician Alliance</div>
+          <p class="footer-brand-desc">A physician-led nonprofit advancing women in medicine across New Jersey through mentorship, advocacy, and community outreach.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Media</h4>
+          <ul>
+            <li><a href="physician-of-the-month.html">Physician of the Month</a></li>
+            <li><a href="potm-2026.html" style="color:rgba(255,255,255,.9);font-weight:600">2026 Honorees</a></li>
+            <li><a href="potm-2025.html">2025 Honorees</a></li>
+            <li><a href="news.html">News</a></li>
+            <li><a href="photo-gallery.html">Photo Gallery</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>JWPA</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About JWPA</a></li>
+            <li><a href="programs.html">Programs</a></li>
+            <li><a href="calendar.html">Events</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 JWPA. All rights reserved.</p>
+        <p>Jersey Women Physician Alliance &middot; New Jersey, USA</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Reveal
+    const obs = new IntersectionObserver((entries,o)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');o.unobserve(e.target)}})},{threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+    const DATA = {
+      may2026: {
+        month:'May 2026', current:true, bgColor:'#7f181b', initials:'PS',
+        photo:'/images/Dr. Priyanka Sanjay, M.D..jpg',
+        name:'Dr. Priyanka Sanjay, M.D.',
+        specialty:'Internal Medicine', location:'Piscataway, NJ',
+        inst:'Novamedcare Inc &middot; 216 Stelton Rd, Suite B3, Piscataway, NJ',
+        counties:'Middlesex, Mercer &amp; Somerset Counties',
+        certs:'Board-Certified Internist &middot; ABIM Certified',
+        memberSince:'2018&ndash;2019',
+        quote:`I'm grateful for the opportunity to serve my community while having the unwavering support of my family. Their encouragement allows me to embrace the daily lessons in humility that medicine provides and fuels my growth as both a person and a physician.`,
+        highlights:['Over 20 years of patient-centered medical care','Former state-level table tennis player with multiple awards','Recognized as &ldquo;Best Outgoing Sportsperson&rdquo; in her final year of medical school','Actively volunteers in community-focused initiatives throughout New Jersey'],
+        bio:`Dr. Priyanka Sanjay is a board-certified internist committed to guiding her patients toward better health and overall well-being. She proudly serves communities across Middlesex, Mercer, and Somerset counties. Beyond medicine, she enjoys spending time outdoors and traveling — exploring different cultures enriches her thoughtful, personalized approach to patient care.`,
+        memberships:'ABIM Certified &middot; JWPA Member since 2018&ndash;2019'
+      },
+      apr2026: {
+        month:'April 2026', current:false, bgColor:'#7f181b', initials:'PP', photo:null,
+        name:'Dr. Payal Parikh, MD, FACP, FHM',
+        specialty:'Hospital Medicine', location:'New Brunswick, NJ',
+        inst:'Robert Wood Johnson University Hospital &middot; 1 Robert Wood Johnson Place, New Brunswick, NJ 08901',
+        counties:'Middlesex, Union &amp; Somerset Counties',
+        certs:'Board-Certified Internal Medicine &middot; FACP &middot; FHM',
+        memberSince:null,
+        quote:`A certified Lean Six Sigma Black Belt, Dr. Parikh is passionate about using quality improvement and safety principles to drive meaningful change in healthcare delivery.`,
+        highlights:['Associate Professor of Medicine &amp; Chief, Hospital Medicine','Asst Dean &amp; Director of Transformation, Integration &amp; Process Improvement','Past Chair, Quality and Safety Special Interest Group — Society of Hospital Medicine','Alpha Omega Alpha (AOA) Honor Society Inductee','ELAM-ELH Fellowship Awardee','Gold Humanism Honor Society Inductee','Multiple teaching awards from residents and students','Health Systems Science Scholar — American Medical Association','Certified Lean Six Sigma Black Belt','Avid soccer coach — mentoring her daughter and teammates'],
+        bio:`Dr. Parikh specializes in inpatient hospital medicine, focusing on safe, high-quality patient care and improving transitions from inpatient to outpatient settings. She actively teaches medical students, residents, and junior faculty in quality improvement and patient safety.`,
+        memberships:'FACP &middot; FHM &middot; AMA &middot; JWPA &middot; NJ AAPI'
+      },
+      mar2026: {
+        month:'March 2026', current:false, bgColor:'#0f172a', initials:'DG', photo:null,
+        name:'Dr. Deval Gadhvi, MD',
+        specialty:'Internal Medicine &amp; Primary Care', location:'Jersey City, NJ',
+        inst:'26 Journal Square, Jersey City, NJ 07306 &middot; Hudson County',
+        counties:'Hudson County',
+        certs:'American Board of Internal Medicine &middot; ECFMG Certified',
+        memberSince:null,
+        quote:`Dr. Gadhvi embodies compassion, resilience, and leadership — making her a true role model in medicine and community service.`,
+        highlights:['MBBS — M.P. Shah Medical College, Gujarat, India','Internship at Northwestern University, Evanston, Illinois','Residency at Beth Israel Medical Center, New York City','Founder of &ldquo;Let\'s Save Maa&rdquo; — women\'s health advocacy organization','Founder of Women Physicians of New Jersey (WPONJ)','Breast cancer survivor — integrates holistic, whole-patient care','Launched breast cancer awareness initiative in Kutch, India with mobile mammogram bus','Areas: Internal Medicine, Medical Weight Loss, Chronic Disease Management, Travel Medicine, Women\'s Health'],
+        bio:`As a breast cancer survivor, Dr. Gadhvi's approach has evolved into a truly holistic model — integrating nutrition, exercise, stress management, and alternative therapies. She is deeply proud to be the daughter of hardworking parents, the wife of a humble partner, and the mother of two kind and loving children.`,
+        memberships:'AMA &middot; AAPI &middot; WPONJ (Founder) &middot; JWPA'
+      },
+      feb2026: {
+        month:'February 2026', current:false, bgColor:'#7f181b', initials:'PS', photo:null,
+        name:'Dr. Preeti Saran, MD, MPH, MBA',
+        specialty:'Internal Medicine', location:'Camden, NJ',
+        inst:'Virtua Health &middot; 1800 Davis Street, Camden, NJ 08104',
+        counties:'Camden &amp; surrounding townships',
+        certs:'Faculty Physician &middot; Population Health &amp; Obesity Medicine Advocate',
+        memberSince:null,
+        quote:`The greatest impact of medicine lies not only in caring for patients today, but in training compassionate physicians who will care for communities tomorrow.`,
+        highlights:['Faculty Physician, Internal Medicine Residency Program at Virtua Health','Recognized as Students\' Favorite Professor','NJ State AAPI Treasurer (2023&ndash;2024)','Immigrant from a rural farming community in India','Single mother — path shaped by resilience and service','Strong advocate for population health and obesity medicine','Builds high-performing teams that elevate care for underserved communities'],
+        bio:`Her journey spans from a rural farming community in India to faculty and leadership roles in the United States. As an immigrant and single mother, Dr. Saran's path has been defined by resilience and an unwavering commitment to service. She carries her origins with pride and opens doors for others who begin their stories where hers once did.`,
+        memberships:'AAFP &middot; OMA &middot; AAPL &middot; NJAAPI &middot; JWPA'
+      },
+      jan2026: {
+        month:'January 2026', current:false, bgColor:'#0f172a', initials:'JL', photo:null,
+        name:'Dr. Jenny Liu, MD, MS',
+        specialty:'Internal &amp; Obesity Medicine', location:'Warren &amp; East Brunswick, NJ',
+        inst:'UniMed Center &middot; 513 Warrenville Rd, Warren &amp; 190 Route 18, East Brunswick, NJ',
+        counties:'Middlesex &amp; Somerset Counties',
+        certs:'Board-Certified Internal Medicine &middot; Board-Certified Obesity Medicine &middot; Licensed Dietitian (MS Nutrition) &middot; Multilingual: English, Mandarin, Cantonese',
+        memberSince:null,
+        quote:`Dr. Liu is proud of building UniMed Center into a respected integrative medical practice — combining clinical excellence, nutrition, and aesthetics to treat the whole patient.`,
+        highlights:['Founder &amp; Medical Director, UniMed Center (est. 2007)','Founding President, NJCAPA — now 300+ physician members statewide','Led over $800,000 in COVID-19 relief efforts','Established free and low-cost clinics for underserved populations','Special Contribution Awards — two consecutive years from national organizations','Organizes large-scale community health fairs across New Jersey'],
+        bio:`Dr. Liu is deeply committed to community service and health equity. Through NJCAPA, she continues to foster professional collaboration and culturally sensitive care across New Jersey, bridging cultural and language gaps in healthcare for diverse patient populations.`,
+        memberships:'ANACP &middot; NJCAPA (Founding President) &middot; JWPA'
+      }
+    };
+
+    function openSpotlight(id) {
+      const p = DATA[id];
+      if (!p) return;
+      const photoSection = p.photo
+        ? `<img src="${p.photo}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block;position:absolute;inset:0" /><div class="spotlight-photo-initials" style="opacity:0">${p.initials}</div>`
+        : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:${p.bgColor}"><span class="spotlight-photo-initials">${p.initials}</span></div>`;
+      const tag = p.current
+        ? `<span class="spotlight-month-tag" style="background:var(--crimson-mist);color:var(--crimson);border:1.5px solid rgba(127,24,27,.2)">Current Honoree &middot; ${p.month}</span>`
+        : `<span class="spotlight-month-tag" style="background:var(--bg);color:var(--muted);border:1.5px solid var(--border)">${p.month}</span>`;
+      const highlights = p.highlights.map(h=>`<li class="spotlight-highlights" style="list-style:disc;font-size:.83rem;color:var(--slate);line-height:1.6;margin-left:1.1rem">${h}</li>`).join('');
+
+      document.getElementById('spotlight-content').innerHTML = `
+        <div class="spotlight-grid">
+          <div class="spotlight-photo" style="min-height:300px;position:relative">${photoSection}</div>
+          <div class="spotlight-content">
+            ${tag}
+            <div class="spotlight-specialty">${p.specialty} &middot; ${p.location}</div>
+            <div class="spotlight-name">${p.name}</div>
+            <div class="spotlight-inst">${p.inst}</div>
+            <div class="spotlight-inst" style="color:var(--muted-light)">${p.counties}</div>
+            <div class="spotlight-inst" style="font-size:.75rem;margin-bottom:0">${p.certs}</div>
+            <div class="spotlight-quote">
+              <p>"${p.quote}"</p>
+              ${p.memberSince ? `<cite>&mdash; ${p.name}, JWPA Member since ${p.memberSince}</cite>` : ''}
+            </div>
+            <div class="spotlight-section-label">Achievements &amp; Highlights</div>
+            <ul>${highlights}</ul>
+            <div class="spotlight-section-label" style="margin-top:1.25rem">About</div>
+            <p class="spotlight-bio">${p.bio}</p>
+            <div class="spotlight-section-label">Professional Memberships</div>
+            <div class="spotlight-memberships">${p.memberships}</div>
+            <div style="margin-top:1.5rem;display:flex;gap:.75rem;flex-wrap:wrap;padding-bottom:.5rem">
+              <a href="physician-of-the-month.html#nominate" class="btn btn-primary btn-md">Nominate a Physician</a>
+              <button onclick="closeSpotlight()" class="btn btn-outline btn-md">&larr; Back to 2026</button>
+            </div>
+          </div>
+        </div>`;
+
+      document.getElementById('spotlight-modal').style.display = 'block';
+      document.getElementById('spotlight-modal').scrollTop = 0;
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSpotlight() {
+      document.getElementById('spotlight-modal').style.display = 'none';
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSpotlight(); });
+  </script>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2025 Physicians of the Month — JWPA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;background:#0f172a}
+    :root{
+      --crimson:#7f181b;--crimson-dark:#5e1114;--crimson-mist:#fdf2f2;
+      --navy:#0f172a;--slate:#334155;--muted:#64748b;--muted-light:#94a3b8;
+      --border:#e2e8f0;--border-light:#f1f5f9;--bg:#f8fafc;--white:#ffffff;
+      --font-display:'Playfair Display',Georgia,serif;
+      --font-body:'Outfit',system-ui,sans-serif;
+      --container:1160px;
+      --radius-sm:8px;--radius:12px;--radius-lg:20px;
+      --shadow-sm:0 1px 3px rgba(0,0,0,.06);
+      --shadow:0 4px 16px rgba(15,23,42,.07);
+      --shadow-md:0 12px 32px rgba(15,23,42,.10);
+    }
+    body{font-family:var(--font-body);font-size:15px;line-height:1.65;color:var(--slate);background:var(--white);-webkit-font-smoothing:antialiased;overflow-x:hidden;margin:0;padding:0}
+    a{text-decoration:none;color:inherit}
+    .container{max-width:var(--container);margin:0 auto;padding:0 2rem}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;font-family:var(--font-body);font-weight:600;border:none;border-radius:var(--radius-sm);cursor:pointer;line-height:1;white-space:nowrap;transition:all .2s}
+    .btn-sm{padding:.5rem 1.1rem;font-size:.8rem}
+    .btn-primary{background:var(--crimson);color:var(--white)}
+    .btn-primary:hover{background:var(--crimson-dark)}
+    .btn-outline{background:var(--white);color:var(--navy);border:1.5px solid var(--border)}
+    .btn-outline:hover{border-color:var(--muted-light);background:var(--bg)}
+
+    #navbar{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+    .nav-inner{display:flex;align-items:center;height:66px;max-width:var(--container);margin:0 auto;padding:0 2rem;gap:2rem}
+    .nav-brand{display:flex;flex-direction:column;line-height:1.2;flex-shrink:0}
+    .nav-brand-name{font-family:var(--font-display);font-size:1.3rem;font-weight:800;color:var(--navy)}
+    .nav-brand-sub{font-size:.58rem;font-weight:600;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+    .nav-actions{display:flex;align-items:center;gap:.65rem;flex-shrink:0}
+    .back-link{display:inline-flex;align-items:center;gap:.4rem;font-size:.82rem;font-weight:600;color:var(--muted);padding:.4rem .75rem;border-radius:6px;transition:all .18s}
+    .back-link:hover{color:var(--navy);background:var(--bg)}
+
+    #page-hero{background:var(--crimson);padding:3.5rem 0;position:relative;overflow:hidden}
+    #page-hero::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,0,0,.2) 0%,transparent 60%);pointer-events:none}
+    .hero-year{font-family:var(--font-display);font-size:clamp(4rem,10vw,7rem);font-weight:800;color:rgba(255,255,255,.08);line-height:1;position:absolute;right:2rem;bottom:-1rem;letter-spacing:-.04em;pointer-events:none}
+
+    #physicians{padding:4rem 0 5rem}
+    .potm-card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+    .potm-placeholder-card{background:var(--white);border:1.5px dashed var(--border);border-radius:var(--radius-lg);overflow:hidden;opacity:.65}
+    .potm-placeholder-photo{height:200px;background:var(--border-light);display:flex;align-items:center;justify-content:center;position:relative}
+    .potm-placeholder-initials{font-size:2.5rem;color:var(--muted-light)}
+    .potm-placeholder-badge{position:absolute;top:.875rem;left:.875rem;background:var(--muted-light);color:var(--white);font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .75rem;border-radius:20px}
+    .potm-placeholder-body{padding:1.25rem 1.5rem 1.5rem}
+    .potm-placeholder-name{font-family:var(--font-display);font-size:1.05rem;font-weight:700;color:var(--muted-light);margin-bottom:.3rem}
+    .potm-placeholder-sub{font-size:.78rem;color:var(--muted-light)}
+
+    .coming-soon-banner{background:var(--crimson-mist);border:1.5px solid rgba(127,24,27,.15);border-radius:var(--radius-lg);padding:2rem 2.5rem;margin-bottom:3rem;display:flex;align-items:center;gap:1.5rem}
+    .coming-soon-icon{width:48px;height:48px;background:var(--crimson);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+    footer{background:var(--navy);padding:3rem 0 0;color:rgba(255,255,255,.55)}
+    .footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:2.5rem;padding-bottom:2.5rem;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:1.5rem}
+    .footer-brand-name{font-family:var(--font-display);font-size:1.1rem;font-weight:800;color:var(--white);margin-bottom:.3rem}
+    .footer-brand-sub{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.3);margin-bottom:.75rem}
+    .footer-brand-desc{font-size:.82rem;line-height:1.7;max-width:240px}
+    .footer-col h4{font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.9);margin-bottom:1rem}
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+    .footer-col a{font-size:.83rem;transition:color .15s}
+    .footer-col a:hover{color:var(--white)}
+    .footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding-bottom:2rem}
+    .footer-bottom p{font-size:.78rem}
+
+    .reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
+    .reveal.in{opacity:1;transform:translateY(0)}
+    @media(max-width:900px){.potm-card-grid{grid-template-columns:1fr 1fr}.footer-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:640px){.potm-card-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <span class="nav-brand-name">JWPA</span>
+        <span class="nav-brand-sub">Jersey Women Physician Alliance</span>
+      </a>
+      <div style="flex:1;display:flex;align-items:center;gap:.5rem">
+        <a href="physician-of-the-month.html" class="back-link">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Physician of the Month
+        </a>
+        <span style="color:var(--border);font-size:.9rem">/</span>
+        <span style="font-size:.82rem;font-weight:600;color:var(--navy)">2025</span>
+      </div>
+      <div class="nav-actions">
+        <a href="contact.html" class="btn btn-primary btn-sm">Join JWPA</a>
+        <a href="donate.html" class="btn btn-outline btn-sm">Donate</a>
+      </div>
+    </div>
+  </nav>
+
+  <section id="page-hero">
+    <div class="container" style="position:relative;z-index:1">
+      <div style="font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem">
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <a href="physician-of-the-month.html" style="color:rgba(255,255,255,.5);transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.8)'" onmouseout="this.style.color='rgba(255,255,255,.5)'">Physician of the Month</a>
+      </div>
+      <h1 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:800;color:var(--white);letter-spacing:-.02em;line-height:1.1;margin-bottom:.5rem">2025 Honorees</h1>
+      <p style="font-size:.95rem;color:rgba(255,255,255,.65);max-width:520px">The Physician of the Month program launched in August 2025. Profiles for 2025 honorees are being added — check back soon.</p>
+    </div>
+    <div class="hero-year">2025</div>
+  </section>
+
+  <section id="physicians">
+    <div class="container">
+
+      <div class="coming-soon-banner reveal">
+        <div class="coming-soon-icon">
+          <svg width="22" height="22" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <div>
+          <div style="font-size:.9rem;font-weight:700;color:var(--navy);margin-bottom:.2rem">Profiles coming soon</div>
+          <div style="font-size:.83rem;color:var(--muted);line-height:1.6">We are adding 2025 honoree profiles. If you have information about a past honoree, please <a href="mailto:info@jwpa.org" style="color:var(--crimson);font-weight:600">email us</a>.</div>
+        </div>
+      </div>
+
+      <div class="potm-card-grid">
+
+        <div class="potm-placeholder-card reveal">
+          <div class="potm-placeholder-photo">
+            <span class="potm-placeholder-initials">?</span>
+            <div class="potm-placeholder-badge">December 2025</div>
+          </div>
+          <div class="potm-placeholder-body">
+            <div class="potm-placeholder-name">Coming Soon</div>
+            <div class="potm-placeholder-sub">Details to be added</div>
+          </div>
+        </div>
+
+        <div class="potm-placeholder-card reveal">
+          <div class="potm-placeholder-photo">
+            <span class="potm-placeholder-initials">?</span>
+            <div class="potm-placeholder-badge">November 2025</div>
+          </div>
+          <div class="potm-placeholder-body">
+            <div class="potm-placeholder-name">Coming Soon</div>
+            <div class="potm-placeholder-sub">Details to be added</div>
+          </div>
+        </div>
+
+        <div class="potm-placeholder-card reveal">
+          <div class="potm-placeholder-photo">
+            <span class="potm-placeholder-initials">?</span>
+            <div class="potm-placeholder-badge">October 2025</div>
+          </div>
+          <div class="potm-placeholder-body">
+            <div class="potm-placeholder-name">Coming Soon</div>
+            <div class="potm-placeholder-sub">Details to be added</div>
+          </div>
+        </div>
+
+        <div class="potm-placeholder-card reveal">
+          <div class="potm-placeholder-photo">
+            <span class="potm-placeholder-initials">?</span>
+            <div class="potm-placeholder-badge">September 2025</div>
+          </div>
+          <div class="potm-placeholder-body">
+            <div class="potm-placeholder-name">Coming Soon</div>
+            <div class="potm-placeholder-sub">Details to be added</div>
+          </div>
+        </div>
+
+        <div class="potm-placeholder-card reveal">
+          <div class="potm-placeholder-photo">
+            <span class="potm-placeholder-initials">?</span>
+            <div class="potm-placeholder-badge">August 2025</div>
+          </div>
+          <div class="potm-placeholder-body">
+            <div class="potm-placeholder-name">Coming Soon</div>
+            <div class="potm-placeholder-sub">Program launched August 2025</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand-name">JWPA</div>
+          <div class="footer-brand-sub">Jersey Women Physician Alliance</div>
+          <p class="footer-brand-desc">A physician-led nonprofit advancing women in medicine across New Jersey through mentorship, advocacy, and community outreach.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Media</h4>
+          <ul>
+            <li><a href="physician-of-the-month.html">Physician of the Month</a></li>
+            <li><a href="potm-2026.html">2026 Honorees</a></li>
+            <li><a href="potm-2025.html" style="color:rgba(255,255,255,.9);font-weight:600">2025 Honorees</a></li>
+            <li><a href="news.html">News</a></li>
+            <li><a href="photo-gallery.html">Photo Gallery</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>JWPA</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About JWPA</a></li>
+            <li><a href="programs.html">Programs</a></li>
+            <li><a href="calendar.html">Events</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 JWPA. All rights reserved.</p>
+        <p>Jersey Women Physician Alliance &middot; New Jersey, USA</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const obs = new IntersectionObserver((entries,o)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');o.unobserve(e.target)}})},{threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+  </script>
+</body>
+</html>

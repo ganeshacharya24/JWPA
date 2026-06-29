@@ -145,7 +145,7 @@
         <a href="physician-of-the-month.html" style="color:rgba(255,255,255,.45);transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.75)'" onmouseout="this.style.color='rgba(255,255,255,.45)'">Physician of the Month</a>
       </div>
       <h1 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:800;color:var(--white);letter-spacing:-.02em;line-height:1.1;margin-bottom:.5rem">2026 Honorees</h1>
-      <p style="font-size:.95rem;color:rgba(255,255,255,.55);max-width:520px">Five exceptional women physicians celebrated by JWPA — January through May 2026. Click any card to read their full profile.</p>
+      <p style="font-size:.95rem;color:rgba(255,255,255,.55);max-width:520px">Six exceptional women physicians celebrated by JWPA — January through June 2026. Click any card to read their full profile.</p>
     </div>
     <div class="hero-year">2026</div>
   </section>
@@ -155,13 +155,27 @@
     <div class="container">
       <div class="potm-card-grid">
 
+        <!-- June 2026 — Dr. Andrea Harangozo -->
+        <div class="potm-card reveal" onclick="openSpotlight('jun2026')">
+          <div class="potm-card-photo" style="background:#0f172a">
+            <div class="potm-card-initials">AH</div>
+            <div class="potm-month-badge">June 2026</div>
+            <div class="potm-current-badge">Current</div>
+          </div>
+          <div class="potm-card-body">
+            <div class="potm-card-specialty">Pulmonology &amp; Critical Care &middot; East Brunswick, NJ</div>
+            <div class="potm-card-name">Dr. Andrea Harangozo, M.D.</div>
+            <div class="potm-card-location">PICSNJ &middot; Rutgers RWJMS Clinical Assoc. Professor</div>
+            <div class="potm-card-cta">Read full profile <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </div>
+        </div>
+
         <!-- May 2026 — Dr. Priyanka Sanjay -->
         <div class="potm-card reveal" onclick="openSpotlight('may2026')">
           <div class="potm-card-photo">
             <img src="/images/Dr. Priyanka Sanjay, M.D..jpg" alt="Dr. Priyanka Sanjay" />
             <div class="potm-card-initials" style="background:#7f181b">PS</div>
             <div class="potm-month-badge">May 2026</div>
-            <div class="potm-current-badge">Current</div>
           </div>
           <div class="potm-card-body">
             <div class="potm-card-specialty">Internal Medicine · Piscataway, NJ</div>
@@ -286,6 +300,32 @@
     document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
     const DATA = {
+      jun2026: {
+        month:'June 2026', current:true, bgColor:'#0f172a', initials:'AH', photo:null,
+        name:'Dr. Andrea Harangozo, M.D.',
+        specialty:'Pulmonology &amp; Critical Care', location:'East Brunswick, NJ',
+        inst:'PICSNJ &middot; 593 Cranbury Road, East Brunswick, NJ 08816',
+        counties:'Middlesex, Monmouth &amp; Somerset Counties',
+        certs:'Clinical Associate Professor &middot; Rutgers Robert Wood Johnson Medical School',
+        memberSince:'Inception',
+        quote:`Proud of my practice, PICSNJ, and of my role in helping develop compassionate, skilled medical providers — both inside and outside the hospital setting.`,
+        highlights:[
+          `Helped shape the model for New Jersey's ground critical care ICU transfer system`,
+          `First female President of the Medical Staff at RWJUH`,
+          `19 years on the Medical Executive Committee at RWJUH`,
+          `Provides expert care for ALS patients at a nationally designated ALS Treatment Center of Excellence`,
+          `Contributed to development of clinical information systems at RWJUH`,
+          `Dedicates 50+ hours/year mentoring medical students, residents &amp; future healthcare professionals`,
+          `Physician of Excellence Award — American Lung Association NJ`,
+          `Academic Award — Middlesex County Medical Society`,
+          `Castle Connolly Top Doctor (2001–Present)`,
+          `Best Doctors in America`,
+          `Compassionate Doctor Award`,
+          `Teaching Awards — Rutgers RWJMS`
+        ],
+        bio:`Dr. Harangozo is a Clinical Associate Professor at Rutgers Robert Wood Johnson Medical School and a founding force in New Jersey's critical care landscape. She provides expert pulmonary and medical management including dedicated care for ALS patients at a nationally designated ALS Treatment Center of Excellence in New Brunswick. Affiliated with Robert Wood Johnson University Hospital and St. Peter's University Hospital, she served 19 years on the Medical Executive Committee and became the first female President of the Medical Staff at RWJUH.`,
+        memberships:'American College of Chest Physicians &middot; Hungarian Medical Association of America &middot; JWPA (Member since inception)'
+      },
       may2026: {
         month:'May 2026', current:true, bgColor:'#7f181b', initials:'PS',
         photo:'/images/Dr. Priyanka Sanjay, M.D..jpg',

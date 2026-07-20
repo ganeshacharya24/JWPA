@@ -9,390 +9,114 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-
+    html { scroll-behavior: smooth; background: #0f172a; }
     :root {
-      --crimson:       #7f181b;
-      --crimson-dark:  #5e1114;
-      --crimson-light: #a52024;
-      --crimson-mist:  #fdf2f2;
-      --navy:          #0f172a;
-      --slate:         #334155;
-      --muted:         #64748b;
-      --muted-light:   #94a3b8;
-      --border:        #e2e8f0;
-      --border-light:  #f1f5f9;
-      --bg:            #f8fafc;
-      --white:         #ffffff;
-      --font-display:  'Playfair Display', Georgia, serif;
-      --font-body:     'Outfit', system-ui, sans-serif;
-      --container:     1160px;
-      --radius-sm:     8px;
-      --radius:        12px;
-      --radius-lg:     20px;
-      --shadow-sm:     0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
-      --shadow:        0 4px 16px rgba(15,23,42,.07), 0 1px 4px rgba(15,23,42,.04);
-      --shadow-md:     0 12px 32px rgba(15,23,42,.10), 0 2px 8px rgba(15,23,42,.05);
-      --shadow-lg:     0 24px 48px rgba(15,23,42,.13), 0 4px 12px rgba(15,23,42,.06);
+      --crimson: #7f181b; --crimson-dark: #5e1114; --crimson-mist: #fdf2f2;
+      --navy: #0f172a; --slate: #334155; --muted: #64748b; --muted-light: #94a3b8;
+      --border: #e2e8f0; --border-light: #f1f5f9; --bg: #f8fafc; --white: #ffffff;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'Outfit', system-ui, sans-serif;
+      --container: 1160px;
+      --radius-sm: 8px; --radius: 12px; --radius-lg: 20px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.06);
+      --shadow: 0 4px 16px rgba(15,23,42,.07);
+      --shadow-md: 0 12px 32px rgba(15,23,42,.10);
+      --shadow-lg: 0 24px 48px rgba(15,23,42,.13);
     }
-
-    html {
-      margin: 0; padding: 0;
-      background: #0f172a;
-    }
-    body {
-      font-family: var(--font-body);
-      font-size: 15px; line-height: 1.65;
-      color: var(--slate);
-      background: var(--white);
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-      margin: 0; padding: 0;
-    }
+    body { font-family: var(--font-body); font-size: 15px; line-height: 1.65; color: var(--slate); background: var(--white); -webkit-font-smoothing: antialiased; overflow-x: hidden; margin: 0; padding: 0; }
     a { text-decoration: none; color: inherit; }
-    :focus-visible { outline: 3px solid rgba(127,24,27,.3); outline-offset: 3px; border-radius: 4px; }
     .container { max-width: var(--container); margin: 0 auto; padding: 0 2rem; }
-
-    /* ── Buttons ── */
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center;
-      gap: .45rem; font-family: var(--font-body); font-weight: 600;
-      border: none; border-radius: var(--radius-sm); cursor: pointer;
-      line-height: 1; white-space: nowrap; transition: all .2s ease;
-    }
-    .btn-sm  { padding: .5rem 1.1rem;  font-size: .8rem; }
-    .btn-md  { padding: .7rem 1.5rem;  font-size: .875rem; }
-    .btn-lg  { padding: .875rem 2rem;  font-size: .9rem; }
-    .btn-primary { background: var(--crimson); color: var(--white); box-shadow: 0 2px 8px rgba(127,24,27,.3); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: .45rem; font-family: var(--font-body); font-weight: 600; border: none; border-radius: var(--radius-sm); cursor: pointer; line-height: 1; white-space: nowrap; transition: all .2s; }
+    .btn-sm  { padding: .5rem 1.1rem; font-size: .8rem; }
+    .btn-md  { padding: .7rem 1.5rem; font-size: .875rem; }
+    .btn-primary { background: var(--crimson); color: var(--white); }
     .btn-primary:hover { background: var(--crimson-dark); transform: translateY(-1px); }
     .btn-outline { background: var(--white); color: var(--navy); border: 1.5px solid var(--border); }
-    .btn-outline:hover { border-color: var(--muted-light); background: var(--bg); transform: translateY(-1px); }
+    .btn-outline:hover { border-color: var(--muted-light); background: var(--bg); }
 
-    /* ── Type ── */
-    .section-label {
-      display: inline-flex; align-items: center; gap: .6rem;
-      font-size: .68rem; font-weight: 700; letter-spacing: .16em;
-      text-transform: uppercase; color: var(--crimson); margin-bottom: 1rem;
-    }
-    .section-label::before {
-      content: ''; display: block; width: 22px; height: 2px;
-      background: var(--crimson); border-radius: 2px; flex-shrink: 0;
-    }
-    .section-heading {
-      font-family: var(--font-display);
-      font-size: clamp(1.6rem, 3vw, 2.25rem);
-      font-weight: 800; color: var(--navy);
-      letter-spacing: -.02em; line-height: 1.15; margin-bottom: .75rem;
-    }
-
-    /* ══════════════════════════════════════════
-       NAVIGATION
-    ══════════════════════════════════════════ */
-    #navbar {
-      position: sticky; top: 0; z-index: 200;
-      background: rgba(255,255,255,.96);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-inner {
-      display: flex; align-items: center; height: 66px;
-      max-width: var(--container); margin: 0 auto; padding: 0 2rem; gap: 2rem;
-    }
-    .nav-brand { display: flex; flex-direction: column; line-height: 1.2; flex-shrink: 0; }
-    .nav-brand-name { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; color: var(--navy); }
-    .nav-brand-sub { font-size: .58rem; font-weight: 600; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+    /* NAV */
+    #navbar { position: sticky; top: 0; z-index: 200; background: rgba(255,255,255,.96); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-inner { display: flex; align-items: center; height: 66px; max-width: var(--container); margin: 0 auto; padding: 0 2rem; gap: 2rem; }
+    .nav-brand { display: flex; align-items: center; flex-shrink: 0; }
+    .nav-brand img { height: 38px; width: auto; display: block; }
     .nav-links { display: flex; align-items: center; gap: .15rem; list-style: none; flex: 1; }
-    .nav-item { position: relative; }
-    .nav-link {
-      display: inline-flex; align-items: center; gap: .3rem; padding: .45rem .8rem;
-      border-radius: 6px; font-size: .775rem; font-weight: 600; color: var(--muted);
-      letter-spacing: .03em; text-transform: uppercase; transition: all .18s;
-      cursor: pointer; user-select: none;
-    }
+    .nav-item { position: relative; padding-bottom: 8px; margin-bottom: -8px; }
+    .nav-link { display: inline-flex; align-items: center; gap: .3rem; padding: .45rem .8rem; border-radius: 6px; font-size: .775rem; font-weight: 600; color: var(--muted); letter-spacing: .03em; text-transform: uppercase; transition: all .18s; cursor: pointer; user-select: none; }
     .nav-link:hover, .nav-item:hover .nav-link, .nav-item.open .nav-link { color: var(--navy); background: var(--bg); }
     .nav-link.active { color: var(--crimson); }
     .nav-chevron { width: 11px; height: 11px; transition: transform .2s; flex-shrink: 0; }
     .nav-item:hover .nav-chevron, .nav-item.open .nav-chevron { transform: rotate(180deg); }
-    .dropdown {
-      display: none; position: absolute; top: calc(100% + 6px); left: 0;
-      min-width: 210px; background: var(--white); border: 1.5px solid var(--border);
-      border-radius: var(--radius); box-shadow: var(--shadow-md);
-      padding: .5rem; z-index: 300; animation: dropFade .15s ease;
-    }
-    @keyframes dropFade { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+    .dropdown { display: none; position: absolute; top: 100%; left: 0; min-width: 210px; background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-md); padding: .5rem; padding-top: 8px; z-index: 300; }
     .nav-item:hover .dropdown, .nav-item.open .dropdown { display: block; }
-    .dropdown a { display: block; padding: .625rem 1rem; font-size: .85rem; font-weight: 500; color: var(--slate); border-radius: 8px; transition: all .15s; white-space: nowrap; }
+    .dropdown a { display: block; padding: .625rem 1rem; font-size: .85rem; font-weight: 500; color: var(--slate); border-radius: 8px; transition: all .15s; }
     .dropdown a:hover { background: var(--bg); color: var(--crimson); }
+    .dropdown a.active { color: var(--crimson); font-weight: 700; background: var(--crimson-mist); }
     .dropdown-divider { height: 1px; background: var(--border-light); margin: .4rem .5rem; }
     .nav-actions { display: flex; align-items: center; gap: .65rem; flex-shrink: 0; }
     .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: .5rem; }
     .hamburger span { display: block; width: 22px; height: 2px; background: var(--navy); border-radius: 2px; }
-    .mobile-menu {
-      display: none; position: fixed; top: 66px; left: 0; right: 0;
-      background: var(--white); border-top: 1px solid var(--border);
-      box-shadow: var(--shadow-lg); padding: 1rem 2rem 2rem;
-      z-index: 199; max-height: calc(100vh - 66px); overflow-y: auto;
-    }
+    .mobile-menu { display: none; position: fixed; top: 66px; left: 0; right: 0; background: var(--white); border-top: 1px solid var(--border); box-shadow: var(--shadow-lg); padding: 1rem 2rem 2rem; z-index: 199; max-height: calc(100vh - 66px); overflow-y: auto; }
     .mobile-menu.open { display: block; }
     .mobile-menu a { display: block; padding: .7rem 0; font-size: .95rem; font-weight: 600; color: var(--slate); border-bottom: 1px solid var(--border-light); }
     .mobile-menu a:hover { color: var(--crimson); }
     .mobile-group-label { font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted-light); padding: .875rem 0 .35rem; }
     .mobile-sub a { padding: .5rem 1rem; font-size: .875rem; font-weight: 500; color: var(--muted); }
 
-    /* ══════════════════════════════════════════
-       PAGE HERO
-    ══════════════════════════════════════════ */
-    #page-hero {
-      background: var(--bg);
-      border-bottom: 1px solid var(--border);
-      padding: 4rem 0 3.5rem;
-      position: relative; overflow: hidden;
-    }
-    #page-hero::before {
-      content: '';
-      position: absolute; top: -120px; right: -80px;
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(127,24,27,.045) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .hero-label {
-      display: inline-flex; align-items: center; gap: .6rem;
-      font-size: .68rem; font-weight: 700; letter-spacing: .16em;
-      text-transform: uppercase; color: var(--crimson); margin-bottom: 1rem;
-    }
-    .hero-label::before {
-      content: ''; display: block; width: 22px; height: 2px;
-      background: var(--crimson); border-radius: 2px;
-    }
-    .hero-title {
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 800; color: var(--navy);
-      letter-spacing: -.02em; line-height: 1.1; margin-bottom: .875rem;
-    }
-    .hero-desc {
-      font-size: 1rem; color: var(--muted);
-      line-height: 1.75; max-width: 560px;
-    }
+    /* PAGE HERO */
+    #page-hero { background: var(--navy); padding: 4rem 0 3rem; position: relative; overflow: hidden; }
+    #page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 80% 20%, rgba(127,24,27,.25) 0%, transparent 55%); pointer-events: none; }
+    .section-label { display: inline-flex; align-items: center; gap: .6rem; font-size: .68rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--crimson); margin-bottom: 1rem; }
+    .section-label::before { content: ''; display: block; width: 22px; height: 2px; background: var(--crimson); border-radius: 2px; }
+    .section-heading { font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.25rem); font-weight: 800; color: var(--navy); letter-spacing: -.02em; line-height: 1.15; margin-bottom: .75rem; }
 
-    /* ══════════════════════════════════════════
-       FOUNDER FEATURE — full-width distinguished card
-    ══════════════════════════════════════════ */
-    #founder-feature {
-      padding: 4rem 0 3rem;
-      background: var(--white);
-    }
+    /* FOUNDER */
+    #founder-feature { padding: 5rem 0; background: var(--white); border-bottom: 1px solid var(--border); }
+    .founder-card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; display: grid; grid-template-columns: 280px 1fr; box-shadow: var(--shadow-md); }
+    .founder-card-photo { position: relative; background: var(--navy); min-height: 320px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .founder-card-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; position: absolute; inset: 0; }
+    .founder-initials { font-family: var(--font-display); font-size: 4rem; font-weight: 800; color: rgba(255,255,255,.15); position: relative; z-index: 1; }
+    .founder-badge { position: absolute; top: 1rem; left: 1rem; background: var(--crimson); color: var(--white); font-size: .6rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: .35rem .875rem; border-radius: 20px; z-index: 2; }
+    .founder-card-body { padding: 2.5rem 2.75rem; display: flex; flex-direction: column; justify-content: center; }
+    .founder-name { font-family: var(--font-display); font-size: 1.75rem; font-weight: 800; color: var(--navy); letter-spacing: -.02em; margin-bottom: .25rem; }
+    .founder-title { font-size: .85rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .founder-quote { border-left: 3px solid var(--crimson); padding-left: 1.25rem; margin-bottom: 1.5rem; }
+    .founder-quote p { font-family: var(--font-display); font-size: 1rem; font-style: italic; color: var(--slate); line-height: 1.75; }
+    .founder-bio { font-size: .875rem; color: var(--muted); line-height: 1.8; }
 
-    .founder-card {
-      background: var(--navy);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      box-shadow: var(--shadow-lg);
-      position: relative;
-    }
-    .founder-card::before {
-      content: '';
-      position: absolute; top: -60px; right: -60px;
-      width: 280px; height: 280px;
-      background: radial-gradient(circle, rgba(127,24,27,.35), transparent 65%);
-      pointer-events: none;
-    }
+    /* BOARD GRID */
+    .board-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; align-items: stretch; }
 
-    /* Photo side */
-    .founder-card-photo {
-      position: relative;
-      background: var(--border-light);
-      min-height: 240px;
-    }
-    .founder-card-photo img {
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: top center;
-      display: block;
-    }
-    .founder-card-photo-placeholder {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: .75rem;
-    }
-    .founder-initials {
-      width: 68px; height: 68px;
-      background: rgba(255,255,255,.12);
-      border: 2px solid rgba(255,255,255,.2);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-display);
-      font-size: 1.4rem; font-weight: 800;
-      color: var(--white);
-    }
-    .founder-photo-hint {
-      font-size: .65rem; font-weight: 600;
-      color: rgba(255,255,255,.3);
-      text-align: center; padding: 0 1.25rem;
-    }
+    /* FLIP CARD */
+    .board-card { background: transparent; border: none; box-shadow: none; perspective: 1000px; cursor: pointer; min-height: 300px; }
+    .flip-inner { position: relative; width: 100%; height: 100%; min-height: 300px; transition: transform 0.6s cubic-bezier(.4,0,.2,1); transform-style: preserve-3d; }
+    .board-card:hover .flip-inner, .board-card:focus-visible .flip-inner { transform: rotateY(180deg); }
+    .board-card:focus-visible { outline: 3px solid var(--crimson); border-radius: var(--radius); }
+    .flip-front, .flip-back { position: absolute; inset: 0; border-radius: var(--radius); backface-visibility: hidden; -webkit-backface-visibility: hidden; overflow: hidden; }
+    .flip-front { background: var(--white); border: 1.5px solid var(--border); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; }
+    .flip-back { background: var(--navy); transform: rotateY(180deg); display: flex; flex-direction: column; justify-content: center; padding: 1.5rem; }
+    .flip-back-role { font-size: .58rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: .35rem; }
+    .flip-back-name { font-family: var(--font-display); font-size: 1rem; font-weight: 800; color: var(--white); margin-bottom: .75rem; line-height: 1.25; }
+    .flip-back-divider { width: 28px; height: 2px; background: var(--crimson); border-radius: 2px; margin-bottom: .75rem; }
+    .flip-back-bio { font-size: .78rem; color: rgba(255,255,255,.7); line-height: 1.75; }
+    .flip-hint { font-size: .58rem; color: var(--muted-light); text-align: center; padding: .4rem; border-top: 1px solid var(--border-light); letter-spacing: .05em; }
 
-    /* Content side */
-    .founder-card-body {
-      padding: 1.75rem 2rem;
-      position: relative; z-index: 1;
-      display: flex; flex-direction: column; justify-content: center;
-    }
-    .founder-card-badge {
-      display: inline-flex; align-items: center; gap: .5rem;
-      background: rgba(127,24,27,.5);
-      border: 1px solid rgba(127,24,27,.6);
-      border-radius: 20px;
-      padding: .25rem .75rem;
-      font-size: .58rem; font-weight: 700;
-      letter-spacing: .12em; text-transform: uppercase;
-      color: rgba(255,255,255,.85);
-      margin-bottom: .875rem;
-      width: fit-content;
-    }
-    .founder-card-name {
-      font-family: var(--font-display);
-      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
-      font-weight: 800; color: var(--white);
-      letter-spacing: -.02em; line-height: 1.1;
-      margin-bottom: .35rem;
-    }
-    .founder-card-title {
-      font-size: .8rem; font-weight: 600;
-      color: rgba(255,255,255,.5);
-      margin-bottom: 1rem;
-    }
-    .founder-card-bio {
-      font-size: .825rem; color: rgba(255,255,255,.6);
-      line-height: 1.7; margin-bottom: 1.35rem;
-      max-width: 520px;
-    }
-    .founder-card-actions { display: flex; gap: .65rem; flex-wrap: wrap; }
-    .btn-ghost {
-      background: rgba(255,255,255,.1); color: var(--white);
-      border: 1.5px solid rgba(255,255,255,.25);
-    }
-    .btn-ghost:hover { background: rgba(255,255,255,.18); }
+    /* BOARD PHOTO */
+    .board-photo { height: 170px; flex-shrink: 0; background: var(--border-light); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .board-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; position: absolute; inset: 0; }
+    .board-initials { width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1.15rem; font-weight: 800; color: var(--white); position: relative; z-index: 1; flex-shrink: 0; }
+    .board-info { padding: 1.1rem 1.25rem; flex: 1; display: flex; flex-direction: column; }
+    .board-role { font-size: .6rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--crimson); margin-bottom: .25rem; }
+    .board-name { font-family: var(--font-display); font-size: .95rem; font-weight: 800; color: var(--navy); line-height: 1.2; margin-bottom: .2rem; }
+    .board-specialty { font-size: .75rem; color: var(--muted); }
 
-    /* ══════════════════════════════════════════
-       LEADERSHIP TEAM GRID
-    ══════════════════════════════════════════ */
-    #board {
-      padding: 4rem 0 5rem;
-      background: var(--bg);
-      border-top: 1px solid var(--border);
-    }
+    /* NOMINATE */
+    #nominate { padding: 3rem 0 0; background: var(--white); }
+    .nominate-card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; box-shadow: var(--shadow-sm); flex-wrap: wrap; }
+    .nominate-title { font-family: var(--font-display); font-size: 1rem; font-weight: 800; color: var(--navy); margin-bottom: .25rem; }
+    .nominate-desc { font-size: .82rem; color: var(--muted); line-height: 1.6; max-width: 440px; }
 
-    .board-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.25rem;
-      align-items: stretch;
-    }
-
-    .board-card {
-      background: var(--white);
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      transition: box-shadow .25s, transform .25s, border-color .25s;
-      display: flex;
-      flex-direction: column;
-    }
-    .board-card:hover {
-      box-shadow: var(--shadow-md);
-      transform: translateY(-3px);
-      border-color: rgba(127,24,27,.15);
-    }
-
-    /* Photo area — fixed height so all cards align */
-    .board-photo {
-      height: 180px;
-      flex-shrink: 0;
-      background: var(--border-light);
-      position: relative; overflow: hidden;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .board-photo img {
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: top center;
-      display: block;
-      position: absolute; inset: 0;
-    }
-    /* Initials fallback */
-    .board-initials {
-      width: 64px; height: 64px;
-      background: var(--crimson);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-display);
-      font-size: 1.15rem; font-weight: 800;
-      color: var(--white);
-      position: relative; z-index: 1;
-      flex-shrink: 0;
-    }
-    /* Placeholder hint shown when no image */
-    .board-photo-hint {
-      position: absolute; bottom: .5rem; left: 0; right: 0;
-      text-align: center;
-      font-size: .6rem; font-weight: 600;
-      color: var(--muted-light);
-    }
-    /* Info section fills remaining space so all cards are same height */
-    .board-info {
-      padding: 1.1rem 1.25rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-    }
-
-    .board-info { padding: 1.1rem 1.25rem; }
-    .board-role {
-      font-size: .6rem; font-weight: 700;
-      letter-spacing: .12em; text-transform: uppercase;
-      color: var(--crimson); margin-bottom: .3rem;
-    }
-    .board-name {
-      font-size: .95rem; font-weight: 700;
-      color: var(--navy); margin-bottom: .2rem; line-height: 1.25;
-    }
-    .board-specialty { font-size: .78rem; color: var(--muted); line-height: 1.45; }
-
-    /* ══════════════════════════════════════════
-       LEADERSHIP INQUIRY CTA
-    ══════════════════════════════════════════ */
-    #nominate {
-      padding: 3rem 0 0;
-      background: var(--white);
-    }
-    .nominate-card {
-      background: var(--white);
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.5rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 2rem;
-      box-shadow: var(--shadow-sm);
-      flex-wrap: wrap;
-    }
-    .nominate-title {
-      font-family: var(--font-display);
-      font-size: 1rem; font-weight: 800;
-      color: var(--navy); margin-bottom: .25rem;
-    }
-    .nominate-desc {
-      font-size: .82rem; color: var(--muted);
-      line-height: 1.6; max-width: 440px;
-    }
-
-    /* ══════════════════════════════════════════
-       FOOTER
-    ══════════════════════════════════════════ */
-    footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,.06); padding: 4rem 0 0; color: rgba(255,255,255,.55); }
+    /* FOOTER */
+    footer { background: var(--navy); padding: 4rem 0 0; color: rgba(255,255,255,.55); }
     .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.3fr; gap: 2.5rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,.07); margin-bottom: 1.75rem; }
     .footer-brand-name { font-family: var(--font-display); font-size: 1.2rem; font-weight: 800; color: var(--white); margin-bottom: .4rem; }
     .footer-brand-sub { font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; color: rgba(255,255,255,.3); margin-bottom: .875rem; }
@@ -409,62 +133,49 @@
     .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding-bottom: 2rem; }
     .footer-bottom p { font-size: .78rem; }
 
-    /* ── Toast ── */
-    .toast { position: fixed; bottom: 1.75rem; right: 1.75rem; background: var(--navy); color: var(--white); padding: .875rem 1.25rem; border-radius: 10px; box-shadow: var(--shadow-lg); font-size: .83rem; font-weight: 600; display: flex; align-items: center; gap: .65rem; z-index: 999; transform: translateY(80px); opacity: 0; transition: all .35s cubic-bezier(.34,1.56,.64,1); max-width: 320px; }
+    .toast { position: fixed; bottom: 1.75rem; right: 1.75rem; background: var(--navy); color: var(--white); padding: .875rem 1.25rem; border-radius: 10px; box-shadow: var(--shadow-lg); font-size: .83rem; font-weight: 600; display: flex; align-items: center; gap: .65rem; z-index: 999; transform: translateY(80px); opacity: 0; transition: all .35s cubic-bezier(.34,1.56,.64,1); }
     .toast.show { transform: translateY(0); opacity: 1; }
     .toast-icon { width: 22px; height: 22px; background: var(--crimson); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .toast-icon svg { width: 11px; height: 11px; color: var(--white); }
 
-    /* ── Reveal ── */
     .reveal { opacity: 0; transform: translateY(20px); transition: opacity .55s ease, transform .55s ease; }
     .reveal.in { opacity: 1; transform: translateY(0); }
 
-    /* ── Responsive ── */
     @media (max-width: 980px) {
-      .founder-card      { grid-template-columns: 1fr; }
-      .founder-card-photo { min-height: 200px; }
-      .founder-card-body  { padding: 1.5rem; }
-      .board-grid         { grid-template-columns: repeat(3, 1fr); }
-      .nominate-card      { flex-direction: column; align-items: flex-start; }
-      .footer-grid        { grid-template-columns: 1fr 1fr; }
+      .board-grid { grid-template-columns: repeat(3, 1fr); }
+      .founder-card { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 640px) {
       .nav-links, .nav-actions { display: none; }
-      .hamburger     { display: flex; }
-      .board-grid    { grid-template-columns: 1fr 1fr; }
-      .footer-grid   { grid-template-columns: 1fr; }
-      .nominate-card { padding: 1.75rem; }
+      .hamburger { display: flex; }
+      .board-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ══════════════════════════════════════════ NAV ══ -->
+  <!-- NAV -->
   <nav id="navbar">
     <div class="nav-inner">
       <a href="index.html" class="nav-brand">
-        <span class="nav-brand-name">JWPA</span>
-        <span class="nav-brand-sub">Jersey Women Physician Alliance</span>
+        <img src="/images/JWPA LOGO.png" alt="JWPA — Jersey Women Physician Alliance" onerror="this.outerHTML='<span style=&quot;font-family:Georgia,serif;font-size:1.3rem;font-weight:800;color:#0f172a&quot;>JWPA</span>'" />
       </a>
       <ul class="nav-links">
         <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
         <li class="nav-item" id="navAbout">
-          <span class="nav-link active" tabindex="0">About Us
-            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-          </span>
+          <span class="nav-link active" tabindex="0">About Us <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
           <div class="dropdown">
             <a href="about.html">About JWPA</a>
             <a href="mission.html">Mission Statement</a>
             <a href="founder.html">The Founder</a>
             <div class="dropdown-divider"></div>
-            <a href="leadership.html">Leadership Team</a>
+            <a href="leadership.html" class="active">Leadership Team</a>
             <a href="partners.html">Partners</a>
           </div>
         </li>
         <li class="nav-item" id="navPrograms">
-          <span class="nav-link" tabindex="0">Programs
-            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-          </span>
+          <span class="nav-link" tabindex="0">Programs <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
           <div class="dropdown">
             <a href="programs.html">All Programs</a>
             <div class="dropdown-divider"></div>
@@ -473,9 +184,7 @@
           </div>
         </li>
         <li class="nav-item" id="navEvents">
-          <span class="nav-link" tabindex="0">Events
-            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-          </span>
+          <span class="nav-link" tabindex="0">Events <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
           <div class="dropdown">
             <a href="calendar.html">Calendar</a>
             <a href="past-events.html">Past Events</a>
@@ -485,9 +194,7 @@
           </div>
         </li>
         <li class="nav-item" id="navMedia">
-          <span class="nav-link" tabindex="0">Media
-            <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-          </span>
+          <span class="nav-link" tabindex="0">Media <svg class="nav-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
           <div class="dropdown">
             <a href="physician-of-the-month.html">Physician of the Month</a>
             <a href="news.html">News</a>
@@ -501,7 +208,7 @@
       </ul>
       <div class="nav-actions">
         <a href="contact.html" class="btn btn-primary btn-sm">Join JWPA</a>
-        <a href="donate.html"  class="btn btn-outline btn-sm">Donate</a>
+        <a href="donate.html" class="btn btn-outline btn-sm">Donate</a>
       </div>
       <button class="hamburger" id="hamburger" aria-label="Open menu">
         <span></span><span></span><span></span>
@@ -509,7 +216,6 @@
     </div>
   </nav>
 
-  <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobileMenu">
     <a href="index.html">Home</a>
     <div class="mobile-group-label">About Us</div>
@@ -517,7 +223,7 @@
       <a href="about.html">About JWPA</a>
       <a href="mission.html">Mission Statement</a>
       <a href="founder.html">The Founder</a>
-      <a href="leadership.html">Leadership Team</a>
+      <a href="leadership.html" style="color:var(--crimson);font-weight:700">Leadership Team</a>
       <a href="partners.html">Partners</a>
     </div>
     <div class="mobile-group-label">Programs</div>
@@ -542,316 +248,509 @@
       <a href="photo-gallery.html">Photo Gallery</a>
     </div>
     <a href="contact.html">Contact</a>
-    <a href="donate.html" style="color:var(--crimson)">Donate</a>
+    <a href="donate.html">Donate</a>
   </div>
 
-  <!-- ══════════════════════════════════════════
-       PAGE HERO
-  ══════════════════════════════════════════ -->
+  <!-- PAGE HERO -->
   <section id="page-hero">
-    <div class="container">
-      <div class="hero-label reveal">About Us</div>
-      <h1 class="hero-title reveal">Leadership Team</h1>
-      <p class="hero-desc reveal">
-        JWPA is led by its founder and supported by a dedicated leadership team of women
-        physicians and healthcare professionals committed to advancing the mission
-        across New Jersey.
-      </p>
+    <div class="container" style="position:relative;z-index:1">
+      <div style="font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem">
+        <a href="about.html" style="color:rgba(255,255,255,.4);transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.4)'">About Us</a>
+        <span>/</span> Leadership Team
+      </div>
+      <h1 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:800;color:var(--white);letter-spacing:-.02em;line-height:1.1;margin-bottom:.5rem">Leadership Team</h1>
+      <p style="font-size:.95rem;color:rgba(255,255,255,.55);max-width:520px">The physicians, leaders, and volunteers who make JWPA's mission real across New Jersey. Hover over any card to learn more.</p>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════
-       FOUNDER FEATURE
-  ══════════════════════════════════════════ -->
+  <!-- FOUNDER -->
   <section id="founder-feature">
     <div class="container">
-
       <div class="section-label reveal">Founder &amp; President</div>
-      <h2 class="section-heading reveal" style="margin-bottom:1.75rem">The woman behind JWPA</h2>
-
       <div class="founder-card reveal">
-
-        <!-- Photo — replace src with Dr. Nahar's headshot -->
         <div class="founder-card-photo">
-          <img
-            src="/images/Dr. Sudha Nahar.JPG"
-            alt="Dr. Sudha Nahar"
-            onerror="this.style.display='none'"
-          />
-          <div class="founder-card-photo-placeholder" style="display:none"></div>
+          <img src="/images/Dr. Sudha Nahar.JPG" alt="Dr. Sudha Nahar" onerror="this.style.display='none'" />
+          <div class="founder-initials">SN</div>
+          <div class="founder-badge">Founder &amp; President</div>
         </div>
-
-        <!-- Content -->
         <div class="founder-card-body">
-          <div class="founder-card-badge">Founder &amp; President · Est. 2018</div>
-          <div class="founder-card-name">Dr. Sudha Nahar, MD</div>
-          <div class="founder-card-title">
-            Gastroenterologist &nbsp;&middot;&nbsp; Gyan Gastroenterology LLC &nbsp;&middot;&nbsp; New Brunswick, NJ
+          <div class="founder-name">Dr. Sudha Nahar, MD</div>
+          <div class="founder-title">Gastroenterologist &middot; Allied Digestive Health &middot; Robert Wood Johnson University Hospital</div>
+          <div class="founder-quote">
+            <p>"I founded JWPA because I wanted every woman physician to have a community where she belongs — and every young person with a dream of medicine to have someone who looks like them show them the way."</p>
           </div>
-          <p class="founder-card-bio">
-            Dr. Nahar founded JWPA in November 2018 with a singular belief: women in
-            medicine are stronger together. A board-certified gastroenterologist and
-            Board Member of the Medical Executive Committee at Robert Wood Johnson
-            University Hospital, she brings both clinical expertise and institutional
-            leadership to every aspect of JWPA's work.
-          </p>
-          <div class="founder-card-actions">
-            <a href="founder.html" class="btn btn-primary btn-md">Full Profile</a>
-            <a href="https://independentgastronj.com/" target="_blank" rel="noopener" class="btn btn-ghost btn-md">Visit Practice</a>
-          </div>
+          <p class="founder-bio">Dr. Sudha Nahar is a practicing gastroenterologist, a physician leader, and the founder of the Jersey Women Physician Alliance. What began in 2008 as informal gatherings of women physicians grew into a formal nonprofit organization in 2018, now counting 600+ members across New Jersey. She also founded Teens With Stethoscopes (TWS), JWPA's flagship student immersion program, which hosted its inaugural event on March 21, 2026 at RWJUH.</p>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════
-       BOARD TRUSTEES
-  ══════════════════════════════════════════ -->
-  <section id="board" style="padding:5rem 0;background:var(--bg);border-top:1px solid var(--border)">
+  <!-- BOARD OF TRUSTEES -->
+  <section style="padding:5rem 0;background:var(--bg);border-top:1px solid var(--border)">
     <div class="container">
-      <div class="section-label reveal">Board Trustees</div>
+      <div class="section-label reveal">Board of Trustees</div>
       <h2 class="section-heading reveal" style="margin-bottom:.5rem">Board of Trustees</h2>
-      <p style="font-size:.925rem;color:var(--muted);line-height:1.7;margin-bottom:2rem;max-width:560px" class="reveal">
-        JWPA's trustees provide governance, strategic direction, and institutional accountability.
-      </p>
+      <p style="font-size:.925rem;color:var(--muted);line-height:1.7;margin-bottom:2rem;max-width:560px" class="reveal">JWPA's trustees provide governance, strategic direction, and institutional accountability.</p>
       <div class="board-grid">
-        <div class="board-card reveal">
-          <div class="board-photo">
-            <img src="/images/Dr. Gloria Bachman.png" alt="Dr. Gloria Bachmann" onerror="this.style.display='none'" />
-          </div>
-          <div class="board-info">
-            <div class="board-role" style="">Board Trustee</div>
-            <div class="board-name">Dr. Gloria Bachmann</div>
-            <div class="board-specialty">OB-GYN · RWJUH</div>
+
+        <div class="board-card reveal" tabindex="0">
+          <div class="flip-inner">
+            <div class="flip-front">
+              <div class="board-photo">
+                <img src="/images/Dr. Gloria Bachman.png" alt="Dr. Gloria Bachmann" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'" />
+                <div class="board-initials" style="background:#7f181b">GB</div>
+              </div>
+              <div class="board-info">
+                <div class="board-role">Board Trustee</div>
+                <div class="board-name">Dr. Gloria Bachmann</div>
+                <div class="board-specialty">OB-GYN &middot; RWJUH</div>
+              </div>
+              <div class="flip-hint">Hover to read bio</div>
+            </div>
+            <div class="flip-back">
+              <div class="flip-back-role">Board Trustee</div>
+              <div class="flip-back-name">Dr. Gloria Bachmann</div>
+              <div class="flip-back-divider"></div>
+              <p class="flip-back-bio">A distinguished OB-GYN and academic leader at RWJUH and Rutgers RWJMS, Dr. Bachmann has dedicated her career to advancing women's reproductive health and preventive care. A pioneering voice for women in medicine and steadfast JWPA supporter since inception.</p>
+            </div>
           </div>
         </div>
 
-        <div class="board-card reveal">
-          <div class="board-photo">
-            <img src="/images/Dr. Rachna Kulkarni.jpeg" alt="Dr. Rachna Kulkarni" onerror="this.style.display='none'" />
-          </div>
-          <div class="board-info">
-            <div class="board-role" style="">Board Trustee</div>
-            <div class="board-name">Dr. Rachna Kulkarni</div>
-            <div class="board-specialty">Cardiologist · RWJUH</div>
+        <div class="board-card reveal" tabindex="0">
+          <div class="flip-inner">
+            <div class="flip-front">
+              <div class="board-photo">
+                <img src="/images/Dr. Rachna Kulkarni.jpeg" alt="Dr. Rachna Kulkarni" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'" />
+                <div class="board-initials" style="background:#0f172a">RK</div>
+              </div>
+              <div class="board-info">
+                <div class="board-role">Board Trustee</div>
+                <div class="board-name">Dr. Rachna Kulkarni</div>
+                <div class="board-specialty">Cardiologist &middot; RWJUH</div>
+              </div>
+              <div class="flip-hint">Hover to read bio</div>
+            </div>
+            <div class="flip-back">
+              <div class="flip-back-role">Board Trustee</div>
+              <div class="flip-back-name">Dr. Rachna Kulkarni</div>
+              <div class="flip-back-divider"></div>
+              <p class="flip-back-bio">A board-certified cardiologist at RWJUH providing expert cardiovascular care with a focus on heart health, diagnostics, and disease prevention. Patient-centered and deeply committed to advancing women's representation in medicine through JWPA.</p>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════
-       ADVISORY BOARD
-  ══════════════════════════════════════════ -->
+  <!-- ADVISORY BOARD -->
   <section style="padding:5rem 0;background:var(--white);border-top:1px solid var(--border)">
     <div class="container">
       <div class="section-label reveal">Advisory Board</div>
       <h2 class="section-heading reveal" style="margin-bottom:.5rem">Advisory Board</h2>
-      <p style="font-size:.925rem;color:var(--muted);line-height:1.7;margin-bottom:2rem;max-width:560px" class="reveal">
-        Women physicians who guide JWPA's programs, mentorship circles, and community outreach across New Jersey.
-      </p>
+      <p style="font-size:.925rem;color:var(--muted);line-height:1.7;margin-bottom:2rem;max-width:560px" class="reveal">Women physicians who guide JWPA's programs, mentorship circles, and community outreach across New Jersey.</p>
       <div class="board-grid">
-        <div class="board-card reveal">
-          <div class="board-photo">
-            <img src="/images/Dr. Andrea Harangozo.jpg" alt="Dr. Andrea Harangozo" onerror="this.style.display='none'" />
-          </div>
-          <div class="board-info">
-            <div class="board-role">Advisory Board</div>
-            <div class="board-name">Dr. Andrea Harangozo</div>
-            <div class="board-specialty">Pulmonologist · RWJUH</div>
-          </div>
-        </div>
-        <div class="board-card reveal">
-          <div class="board-photo">
-            <img src="/images/Dr. Rizwana Khan.webp" alt="Dr. Rizwana Khan" onerror="this.style.display='none'" />
-          </div>
-          <div class="board-info">
-            <div class="board-role">Advisory Board</div>
-            <div class="board-name">Dr. Rizwana Khan</div>
-            <div class="board-specialty">Internist · AAA Medical Group</div>
-          </div>
-        </div>
-        <div class="board-card reveal">
-          <div class="board-photo">
-            <img src="/images/Dr. Sameera Maganti.png" alt="Dr. Sameera Maganti" onerror="this.style.display='none'" />
-          </div>
-          <div class="board-info">
-            <div class="board-role">Advisory Board</div>
-            <div class="board-name">Dr. Sameera Maganti</div>
-            <div class="board-specialty">Internist · RWJUH</div>
+
+        <div class="board-card reveal" tabindex="0">
+          <div class="flip-inner">
+            <div class="flip-front">
+              <div class="board-photo">
+                <img src="/images/Dr. Andrea Harangozo.jpg" alt="Dr. Andrea Harangozo" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'" />
+                <div class="board-initials" style="background:#0f172a">AH</div>
+              </div>
+              <div class="board-info">
+                <div class="board-role">Advisory Board</div>
+                <div class="board-name">Dr. Andrea Harangozo</div>
+                <div class="board-specialty">Pulmonology &middot; East Brunswick</div>
+              </div>
+              <div class="flip-hint">Hover to read bio</div>
+            </div>
+            <div class="flip-back">
+              <div class="flip-back-role">Advisory Board</div>
+              <div class="flip-back-name">Dr. Andrea Harangozo</div>
+              <div class="flip-back-divider"></div>
+              <p class="flip-back-bio">Helped shape NJ's ground critical care ICU transfer system. Served 19 years on RWJUH's Medical Executive Committee and became its first female President of Medical Staff. Castle Connolly Top Doctor. JWPA member since inception.</p>
+            </div>
           </div>
         </div>
-        <div class="board-card reveal">
-          <div class="board-photo">
-            <img src="/images/Rashmi Acharya.png" alt="Dr. Rashmi Acharya" onerror="this.style.display='none'" />
-          </div>
-          <div class="board-info">
-            <div class="board-role">Advisory Board</div>
-            <div class="board-name">Dr. Rashmi Acharya</div>
-            <div class="board-specialty">OB-GYN · IU Health</div>
-          </div>
-        </div>
-        <div class="board-card reveal">
-          <div class="board-photo">
-            <img src="/images/Dr. Narinder Dhillon.jpeg" alt="Dr. Narinder Dhillon" onerror="this.style.display='none'" />
-          </div>
-          <div class="board-info">
-            <div class="board-role">Advisory Board</div>
-            <div class="board-name">Dr. Narinder Dhillon</div>
-            <div class="board-specialty">Family Medicine · RWJUH</div>
-          </div>
-        </div>
-        <div class="board-card reveal">
-          <div class="board-photo">
-            <img src="/images/Dr. Jenny Liu.png" alt="Dr. Jenny Liu" onerror="this.style.display='none'" />
-          </div>
-          <div class="board-info">
-            <div class="board-role">Advisory Board</div>
-            <div class="board-name">Dr. Jenny Liu</div>
-            <div class="board-specialty">Internal Medicine · UniMed Center</div>
+
+        <div class="board-card reveal" tabindex="0">
+          <div class="flip-inner">
+            <div class="flip-front">
+              <div class="board-photo" style="background:#7f181b">
+                <img src="/images/Dr. Rizwana Khan.webp" alt="Dr. Rizwana Khan" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'" />
+                <div class="board-initials" style="background:#7f181b">RK</div>
+              </div>
+              <div class="board-info">
+                <div class="board-role">Advisory Board</div>
+                <div class="board-name">Dr. Rizwana Khan</div>
+                <div class="board-specialty">Internal Medicine &middot; Old Bridge</div>
+              </div>
+              <div class="flip-hint">Hover to read bio</div>
+            </div>
+            <div class="flip-back">
+              <div class="flip-back-role">Advisory Board</div>
+              <div class="flip-back-name">Dr. Rizwana Khan</div>
+              <div class="flip-back-divider"></div>
+              <p class="flip-back-bio">Leads AAA Medical Group. Served as APPNA NJ President (2018), sits on RWJ Barnabas Health's Medical Executive Committee, and organizes charity clinics and health fairs for underserved communities across New Jersey.</p>
+            </div>
           </div>
         </div>
-        <div class="board-card reveal">
-          <div class="board-photo">
-            <img src="/images/Dr. Nilam Srivastava.jpeg" alt="Dr. Nilam Srivastava" onerror="this.style.display='none'" />
-          </div>
-          <div class="board-info">
-            <div class="board-role">Advisory Board</div>
-            <div class="board-name">Dr. Nilam Srivastava</div>
-            <div class="board-specialty">Internal Medicine  · SPPA of Somerset</div>
-          </div>
-        </div>
-        <div class="board-card reveal">
-          <div class="board-photo">
-            <img src="/images/Dr. Archna Parmar.jpg" alt="Dr. Archna Parmar" onerror="this.style.display='none'" />
-          </div>
-          <div class="board-info">
-            <div class="board-role">Advisory Board</div>
-            <div class="board-name">Dr. Archna Parmar</div>
-            <div class="board-specialty">Internal Medicine · SPPA of Piscataway</div>
-          </div>
-        </div>
-        <div class="board-card reveal">
-          <div class="board-photo">
-            <img src="/images/Dr. Juana Hutchinson.jpg" alt="Dr. Juana Hutchinson" onerror="this.style.display='none'" />
-          </div>
-          <div class="board-info">
-            <div class="board-role">Advisory Board</div>
-            <div class="board-name">Dr. Juana Hutchinson</div>
-            <div class="board-specialty">OB-GYN · RWJUH</div>
+
+        <div class="board-card reveal" tabindex="0">
+          <div class="flip-inner">
+            <div class="flip-front">
+              <div class="board-photo">
+                <img src="/images/Dr. Sameera Maganti.png" alt="Dr. Sameera Maganti" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'" />
+                <div class="board-initials" style="background:#0f172a">SM</div>
+              </div>
+              <div class="board-info">
+                <div class="board-role">Advisory Board</div>
+                <div class="board-name">Dr. Sameera Maganti</div>
+                <div class="board-specialty">Internist &middot; RWJUH</div>
+              </div>
+              <div class="flip-hint">Hover to read bio</div>
+            </div>
+            <div class="flip-back">
+              <div class="flip-back-role">Advisory Board</div>
+              <div class="flip-back-name">Dr. Sameera Maganti</div>
+              <div class="flip-back-divider"></div>
+              <p class="flip-back-bio">Board-certified internist at RWJUH and Co-Chair of JWPA's Teens With Stethoscopes program. A respected physician leader committed to mentoring the next generation of healthcare professionals across New Jersey.</p>
+            </div>
           </div>
         </div>
-        <div class="board-card reveal">
-          <div class="board-photo">
-            <img src="/images/Dr. Nidhi Goel.png" alt="Dr. Nidhi Goel" onerror="this.style.display='none'" />
-          </div>
-          <div class="board-info">
-            <div class="board-role">Advisory Board</div>
-            <div class="board-name">Dr. Nidhi Goel</div>
-            <div class="board-specialty">Psychiatrist · HMH</div>
+
+        <div class="board-card reveal" tabindex="0">
+          <div class="flip-inner">
+            <div class="flip-front">
+              <div class="board-photo">
+                <img src="/images/Rashmi Acharya.png" alt="Dr. Rashmi Acharya" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'" />
+                <div class="board-initials" style="background:#7f181b">RA</div>
+              </div>
+              <div class="board-info">
+                <div class="board-role">Advisory Board</div>
+                <div class="board-name">Dr. Rashmi Acharya</div>
+                <div class="board-specialty">OB-GYN &middot; IU Health</div>
+              </div>
+              <div class="flip-hint">Hover to read bio</div>
+            </div>
+            <div class="flip-back">
+              <div class="flip-back-role">Advisory Board</div>
+              <div class="flip-back-name">Dr. Rashmi Acharya</div>
+              <div class="flip-back-divider"></div>
+              <p class="flip-back-bio">Board-certified OB-GYN at IU Health specializing in women's health, reproductive care, and maternal wellness. Committed to advancing equity in women's healthcare and physician mentorship through JWPA.</p>
+            </div>
           </div>
         </div>
+
+        <div class="board-card reveal" tabindex="0">
+          <div class="flip-inner">
+            <div class="flip-front">
+              <div class="board-photo" style="background:#0f172a">
+                <img src="/images/Dr. Narinder Dhillon.jpeg" alt="Dr. Narinder Dhillon" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'" />
+                <div class="board-initials" style="background:#7f181b">ND</div>
+              </div>
+              <div class="board-info">
+                <div class="board-role">Advisory Board</div>
+                <div class="board-name">Dr. Narinder Dhillon</div>
+                <div class="board-specialty">Family Medicine &middot; RWJUH</div>
+              </div>
+              <div class="flip-hint">Hover to read bio</div>
+            </div>
+            <div class="flip-back">
+              <div class="flip-back-role">Advisory Board</div>
+              <div class="flip-back-name">Dr. Narinder Dhillon</div>
+              <div class="flip-back-divider"></div>
+              <p class="flip-back-bio">Brings clinical expertise and a strong commitment to community health across New Jersey. Contributes her leadership to JWPA's mission of advancing women in medicine and fostering physician networks statewide.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="board-card reveal" tabindex="0">
+          <div class="flip-inner">
+            <div class="flip-front">
+              <div class="board-photo" style="background:#7f181b">
+                <img src="/images/Dr. Jenny Liu.png" alt="Dr. Jenny Liu" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'" />
+                <div class="board-initials" style="background:#7f181b">JL</div>
+              </div>
+              <div class="board-info">
+                <div class="board-role">Advisory Board</div>
+                <div class="board-name">Dr. Jenny Liu</div>
+                <div class="board-specialty">Internal &amp; Obesity Medicine</div>
+              </div>
+              <div class="flip-hint">Hover to read bio</div>
+            </div>
+            <div class="flip-back">
+              <div class="flip-back-role">Advisory Board</div>
+              <div class="flip-back-name">Dr. Jenny Liu</div>
+              <div class="flip-back-divider"></div>
+              <p class="flip-back-bio">Founder of UniMed Center and Founding President of NJCAPA (300+ physicians statewide). Led $800K+ in COVID-19 relief, established free clinics for underserved communities. Multilingual: English, Mandarin, and Cantonese.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="board-card reveal" tabindex="0">
+          <div class="flip-inner">
+            <div class="flip-front">
+              <div class="board-photo" style="background:#0f172a">
+                <img src="/images/Dr. Nilam Srivastava.jpeg" alt="Dr. Nilam Srivastava" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'" />
+                <div class="board-initials" style="background:#7f181b">NS</div>
+              </div>
+              <div class="board-info">
+                <div class="board-role">Advisory Board</div>
+                <div class="board-name">Dr. Nilam Srivastava</div>
+                <div class="board-specialty">Internal Medicine &middot; SPPA of Somerset</div>
+              </div>
+              <div class="flip-hint">Hover to read bio</div>
+            </div>
+            <div class="flip-back">
+              <div class="flip-back-role">Advisory Board</div>
+              <div class="flip-back-name">Dr. Nilam Srivastava</div>
+              <div class="flip-back-divider"></div>
+              <p class="flip-back-bio">A valued JWPA Advisory Board member dedicated to patient-centered care and community health. Contributes clinical expertise and leadership to JWPA's programs and mentorship initiatives across New Jersey.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="board-card reveal" tabindex="0">
+          <div class="flip-inner">
+            <div class="flip-front">
+              <div class="board-photo" style="background:#7f181b">
+                <img src="/images/Dr. Archna Parmar.jpg" alt="Dr. Archana Parmar" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'" />
+                <div class="board-initials" style="background:#7f181b">AP</div>
+              </div>
+              <div class="board-info">
+                <div class="board-role">Advisory Board</div>
+                <div class="board-name">Dr. Archna Parmar</div>
+                <div class="board-specialty">Internal Medicine &middot; SPPA of Piscataway</div>
+              </div>
+              <div class="flip-hint">Hover to read bio</div>
+            </div>
+            <div class="flip-back">
+              <div class="flip-back-role">Advisory Board</div>
+              <div class="flip-back-name">Dr. Archna Parmar</div>
+              <div class="flip-back-divider"></div>
+              <p class="flip-back-bio">Committed to compassionate patient care across New Jersey. Actively supports JWPA's mentorship and advocacy initiatives, helping women physicians build meaningful careers and lasting connections within the medical community.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="board-card reveal" tabindex="0">
+          <div class="flip-inner">
+            <div class="flip-front">
+              <div class="board-photo" style="background:#0f172a">
+                <img src="/images/Dr. Juana Hutchinson.jpg" alt="Dr. Juana Hutchinson" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'" />
+                <div class="board-initials" style="background:#0f172a">JH</div>
+              </div>
+              <div class="board-info">
+                <div class="board-role">Advisory Board</div>
+                <div class="board-name">Dr. Juana Hutchinson</div>
+                <div class="board-specialty">OB-GYN &middot; RWJUH</div>
+              </div>
+              <div class="flip-hint">Hover to read bio</div>
+            </div>
+            <div class="flip-back">
+              <div class="flip-back-role">Advisory Board</div>
+              <div class="flip-back-name">Dr. Juana Hutchinson</div>
+              <div class="flip-back-divider"></div>
+              <p class="flip-back-bio">Dedicated to compassionate patient care and the advancement of women in healthcare. Her participation in JWPA reflects her commitment to mentorship, community outreach, and physician leadership across New Jersey.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="board-card reveal" tabindex="0">
+          <div class="flip-inner">
+            <div class="flip-front">
+              <div class="board-photo">
+                <img src="/images/Dr. Nidhi Goel.png" alt="Dr. Nidhi Goel" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'" />
+                <div class="board-initials" style="background:#7f181b">NG</div>
+              </div>
+              <div class="board-info">
+                <div class="board-role">Advisory Board</div>
+                <div class="board-name">Dr. Nidhi Goel</div>
+                <div class="board-specialty">Psychiatrist &middot; HMH</div>
+              </div>
+              <div class="flip-hint">Hover to read bio</div>
+            </div>
+            <div class="flip-back">
+              <div class="flip-back-role">Advisory Board</div>
+              <div class="flip-back-name">Dr. Nidhi Goel</div>
+              <div class="flip-back-divider"></div>
+              <p class="flip-back-bio">Interventional Psychiatrist at HMH specializing in treatment-resistant depression. Founder of HealMed Solutions Inc., an AI-driven digital health startup. Former state-level basketball player and passionate mental health innovator.</p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════
-       VOLUNTEERS
-  ══════════════════════════════════════════ -->
+  <!-- VOLUNTEERS -->
   <section style="padding:4rem 0;background:var(--bg);border-top:1px solid var(--border)">
     <div class="container">
       <div class="section-label reveal">Volunteers</div>
       <h2 class="section-heading reveal" style="margin-bottom:.5rem">Volunteers</h2>
-      <p style="font-size:.925rem;color:var(--muted);line-height:1.7;margin-bottom:2rem;max-width:560px" class="reveal">
-        The people who show up to make JWPA events and programs run smoothly.
-      </p>
+      <p style="font-size:.925rem;color:var(--muted);line-height:1.7;margin-bottom:2rem;max-width:560px" class="reveal">The people who show up to make JWPA events and programs run smoothly.</p>
       <div class="board-grid">
-        <div class="board-card reveal">
-          <div class="board-photo">
-            <img src="/images/Diana Quintanilla.png" alt="Diana Quintanilla" onerror="this.style.display='none'" />
-          </div>
-          <div class="board-info">
-            <div class="board-role">Volunteer</div>
-            <div class="board-name">Diana Quintanilla</div>
-            <div class="board-specialty">Medical Assistant · Allied Digestive Health</div>
-          </div>
-        </div>
-        <div class="board-card reveal">
-          <div class="board-photo">
-            <img src="/images/profile-picture-circle-hd.png.webp" alt="Nohely Alvarez" onerror="this.style.display='none'" />
-          </div>
-          <div class="board-info">
-            <div class="board-role">Volunteer</div>
-            <div class="board-name">Nohely Alvarez</div>
-            <div class="board-specialty">Medical Assistant · Allied Digestive Health</div>
-          </div>
-        </div>
-        <div class="board-card reveal">
-          <div class="board-photo">
-            <img src="/images/Leenam Dalal.JPG" alt="Leenam Dalal" onerror="this.style.display='none'" />
-          </div>
-          <div class="board-info">
-            <div class="board-role">Volunteer</div>
-            <div class="board-name">Leenam Dalal</div>
-            <div class="board-specialty">Teacher · JWPA</div>
+
+        <div class="board-card reveal" tabindex="0">
+          <div class="flip-inner">
+            <div class="flip-front">
+              <div class="board-photo">
+                <img src="/images/Diana Quintanilla.png" alt="Diana Quintanilla" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'" />
+                <div class="board-initials" style="background:#7f181b">DQ</div>
+              </div>
+              <div class="board-info">
+                <div class="board-role">Volunteer</div>
+                <div class="board-name">Diana Quintanilla</div>
+                <div class="board-specialty">Medical Assistant &middot; ADH</div>
+              </div>
+              <div class="flip-hint">Hover to read bio</div>
+            </div>
+            <div class="flip-back">
+              <div class="flip-back-role">Volunteer</div>
+              <div class="flip-back-name">Diana Quintanilla</div>
+              <div class="flip-back-divider"></div>
+              <p class="flip-back-bio">Medical Assistant at Allied Digestive Health and a key JWPA volunteer. She was instrumental in the inaugural Teens With Stethoscopes event, helping the day run smoothly for students, physicians, and families across New Jersey.</p>
+            </div>
           </div>
         </div>
-        <div class="board-card reveal">
-          <div class="board-photo">
-            <img src="/images/Rupal Nahar.jpeg" alt="Rupal Nahar" onerror="this.style.display='none'" />
-          </div>
-          <div class="board-info">
-            <div class="board-role">Volunteer</div>
-            <div class="board-name">Rupal Nahar</div>
-            <div class="board-specialty">Software Engineer · JWPA</div>
-          </div>
-        </div>
-        <div class="board-card reveal">
-          <div class="board-photo">
-            <img src="/images/Dr. Ritu Nahar.png" alt="Dr. Ritu Nahar" onerror="this.style.display='none'" />
-          </div>
-          <div class="board-info">
-            <div class="board-role">Volunteer</div>
-            <div class="board-name">Dr. Ritu Nahar</div>
-            <div class="board-specialty">Gastroenterologist · Allied Digestive Health</div>
-          </div>
-        </div>
-        <div class="board-card reveal">
-          <div class="board-photo">
-            <img src="/images/Ganesh AcHARYA.JPG" alt="Ganesh Acharya" onerror="this.style.display='none'" />
-          </div>
-          <div class="board-info">
-            <div class="board-role">Volunteer</div>
-            <div class="board-name">Ganesh Acharya</div>
-            <div class="board-specialty">Clinical Operations PM · Aegis Health Services</div>
+
+        <div class="board-card reveal" tabindex="0">
+          <div class="flip-inner">
+            <div class="flip-front">
+              <div class="board-photo" style="background:#0f172a">
+                <img src="/images/profile-picture-circle-hd.png.webp" alt="Nohely Alvarez" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'" />
+                <div class="board-initials" style="background:#7f181b">NA</div>
+              </div>
+              <div class="board-info">
+                <div class="board-role">Volunteer</div>
+                <div class="board-name">Nohely Alvarez</div>
+                <div class="board-specialty">Medical Assistant &middot; ADH</div>
+              </div>
+              <div class="flip-hint">Hover to read bio</div>
+            </div>
+            <div class="flip-back">
+              <div class="flip-back-role">Volunteer</div>
+              <div class="flip-back-name">Nohely Alvarez</div>
+              <div class="flip-back-divider"></div>
+              <p class="flip-back-bio">Medical Assistant at Allied Digestive Health and dedicated JWPA volunteer. Contributed to the Teens With Stethoscopes inaugural event and continues to support JWPA programs with reliability and a team-first spirit.</p>
+            </div>
           </div>
         </div>
+
+        <div class="board-card reveal" tabindex="0">
+          <div class="flip-inner">
+            <div class="flip-front">
+              <div class="board-photo">
+                <img src="/images/Leenam Dalal.JPG" alt="Leenam Dalal" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'" />
+                <div class="board-initials" style="background:#7f181b">LD</div>
+              </div>
+              <div class="board-info">
+                <div class="board-role">Volunteer</div>
+                <div class="board-name">Leenam Dalal</div>
+                <div class="board-specialty">Teacher &middot; JWPA</div>
+              </div>
+              <div class="flip-hint">Hover to read bio</div>
+            </div>
+            <div class="flip-back">
+              <div class="flip-back-role">Volunteer</div>
+              <div class="flip-back-name">Leenam Dalal</div>
+              <div class="flip-back-divider"></div>
+              <p class="flip-back-bio">Educator and JWPA volunteer who brings her passion for student learning to the organization's outreach programs. Played an important role in the Teens With Stethoscopes inaugural event, creating an engaging environment for students.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="board-card reveal" tabindex="0">
+          <div class="flip-inner">
+            <div class="flip-front">
+              <div class="board-photo" style="background:#0f172a">
+                <img src="/images/Rupal Nahar.jpeg" alt="Rupal Nahar" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'" />
+                <div class="board-initials" style="background:#0f172a">RN</div>
+              </div>
+              <div class="board-info">
+                <div class="board-role">Volunteer</div>
+                <div class="board-name">Rupal Nahar</div>
+                <div class="board-specialty">Volunteer &middot; JWPA</div>
+              </div>
+              <div class="flip-hint">Hover to read bio</div>
+            </div>
+            <div class="flip-back">
+              <div class="flip-back-role">Volunteer</div>
+              <div class="flip-back-name">Rupal Nahar</div>
+              <div class="flip-back-divider"></div>
+              <p class="flip-back-bio">Dedicated JWPA volunteer who supports the organization's events with enthusiasm and commitment. Her behind-the-scenes contributions help make JWPA gatherings welcoming, well-organized, and impactful for members and guests.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="board-card reveal" tabindex="0">
+          <div class="flip-inner">
+            <div class="flip-front">
+              <div class="board-photo">
+                <img src="/images/Dr. Ritu Nahar.png" alt="Dr. Ritu Nahar" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'" />
+                <div class="board-initials" style="background:#7f181b">RN</div>
+              </div>
+              <div class="board-info">
+                <div class="board-role">Volunteer</div>
+                <div class="board-name">Dr. Ritu Nahar</div>
+                <div class="board-specialty">Gastroenterologist &middot; ADH</div>
+              </div>
+              <div class="flip-hint">Hover to read bio</div>
+            </div>
+            <div class="flip-back">
+              <div class="flip-back-role">Volunteer</div>
+              <div class="flip-back-name">Dr. Ritu Nahar</div>
+              <div class="flip-back-divider"></div>
+              <p class="flip-back-bio">Gastroenterologist at Allied Digestive Health focusing on digestive health and GI screening. A dedicated JWPA volunteer and physician mentor at Teens With Stethoscopes, inspiring the next generation of healthcare professionals.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="board-card reveal" tabindex="0">
+          <div class="flip-inner">
+            <div class="flip-front">
+              <div class="board-photo" style="background:#0f172a">
+                <img src="/images/Ganesh AcHARYA.JPG" alt="Dr. Jenny Liu" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'" />
+                <div class="board-initials" style="background:#0f172a">GA</div>
+              </div>
+              <div class="board-info">
+                <div class="board-role">Volunteer</div>
+                <div class="board-name">Ganesh Acharya</div>
+                <div class="board-specialty">PM &middot; Aegis Health</div>
+              </div>
+              <div class="flip-hint">Hover to read bio</div>
+            </div>
+            <div class="flip-back">
+              <div class="flip-back-role">Volunteer</div>
+              <div class="flip-back-name">Ganesh Acharya</div>
+              <div class="flip-back-divider"></div>
+              <p class="flip-back-bio">Project Manager at Aegis Health. As a JWPA volunteer, built and maintains the JWPA website and supports digital operations — contributing to the infrastructure connecting JWPA's growing community across New Jersey.</p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════
-       NOMINATION CTA
-  ══════════════════════════════════════════ -->
-  <section id="nominate">
+  <!-- NOMINATE CTA -->
+  <section id="nominate" style="padding:3rem 0 0;background:var(--white)">
     <div class="container">
       <div class="nominate-card reveal">
         <div>
           <div class="nominate-title">Interested in joining the leadership team?</div>
-          <p class="nominate-desc">
-            JWPA welcomes inquiries from members committed to advancing our mission.
-            Reach out to start the conversation.
-          </p>
+          <p class="nominate-desc">JWPA welcomes inquiries from members committed to advancing our mission. Reach out to start the conversation.</p>
         </div>
-        <a href="mailto:info@jwpa.org?subject=Leadership+Inquiry" class="btn btn-primary btn-md">
-          Inquire about leadership service
-        </a>
+        <div>
+          <a href="mailto:info@jwpa.org?subject=Leadership+Service+Inquiry" class="btn btn-primary btn-md">Inquire about leadership service</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════ FOOTER ══ -->
+  <!-- FOOTER -->
   <footer>
     <div class="container">
       <div class="footer-grid">
@@ -866,8 +765,8 @@
             <li><a href="about.html">About JWPA</a></li>
             <li><a href="mission.html">Mission Statement</a></li>
             <li><a href="founder.html">The Founder</a></li>
-            <li><a href="leadership.html">Leadership Team</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="leadership.html" style="color:rgba(255,255,255,.9);font-weight:600">Leadership Team</a></li>
+            <li><a href="partners.html">Partners</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -886,11 +785,11 @@
             <input type="email" id="footerNl" placeholder="Your email address" />
             <button class="btn btn-primary btn-sm" onclick="submitFooterNl()">Go</button>
           </div>
-          <p class="footer-nl-note">Join our newsletter for events, programs, and opportunities.</p>
+          <p class="footer-nl-note">Join our newsletter to stay updated on events, programs, and opportunities.</p>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2025 JWPA. All rights reserved.</p>
+        <p>&copy; <span id="year"></span> JWPA. All rights reserved.</p>
         <p>Jersey Women Physician Alliance &middot; New Jersey, USA</p>
       </div>
     </div>
@@ -902,36 +801,38 @@
   </div>
 
   <script>
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobileMenu');
-    hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const obs = new IntersectionObserver((entries, o) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); o.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    const hb = document.getElementById('hamburger');
+    const mm = document.getElementById('mobileMenu');
+    if (hb && mm) hb.addEventListener('click', () => mm.classList.toggle('open'));
+
     document.querySelectorAll('.nav-item[id]').forEach(item => {
-      item.querySelector('.nav-link').addEventListener('click', e => {
+      const link = item.querySelector('.nav-link');
+      if (link) link.addEventListener('click', e => {
         e.stopPropagation();
-        const isOpen = item.classList.contains('open');
+        const open = item.classList.contains('open');
         document.querySelectorAll('.nav-item[id]').forEach(i => i.classList.remove('open'));
-        if (!isOpen) item.classList.add('open');
+        if (!open) item.classList.add('open');
       });
     });
-    document.addEventListener('click', () => {
-      document.querySelectorAll('.nav-item[id]').forEach(i => i.classList.remove('open'));
-    });
-    const observer = new IntersectionObserver((entries, obs) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
-      });
-    }, { threshold: 0.07 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    document.addEventListener('click', () => document.querySelectorAll('.nav-item[id]').forEach(i => i.classList.remove('open')));
+
     function showToast(msg) {
       const t = document.getElementById('toast');
       document.getElementById('toastMsg').textContent = msg;
       t.classList.add('show');
-      setTimeout(() => t.classList.remove('show'), 3800);
+      setTimeout(() => t.classList.remove('show'), 4000);
     }
     function submitFooterNl() {
-      const email = document.getElementById('footerNl').value.trim();
-      if (!email || !email.includes('@')) { showToast('Please enter a valid email address.'); return; }
-      window.location.href = 'mailto:newsletter@jwpa.org?subject=Newsletter+Subscription&body=Please+add+me+to+the+JWPA+newsletter.+Email:+' + encodeURIComponent(email);
+      const e = document.getElementById('footerNl').value.trim();
+      if (!e || !e.includes('@')) { showToast('Please enter a valid email.'); return; }
+      window.location.href = 'mailto:newsletter@jwpa.org?subject=Newsletter+Subscription&body=Please+add+me+to+the+JWPA+newsletter.+Email:+' + encodeURIComponent(e);
       showToast('Request sent!');
     }
   </script>

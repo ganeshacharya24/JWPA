@@ -96,7 +96,7 @@
     .nav-brand-name { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; color: var(--navy); }
     .nav-brand-sub { font-size: .58rem; font-weight: 600; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
     .nav-links { display: flex; align-items: center; gap: .15rem; list-style: none; flex: 1; }
-    .nav-item { position: relative; }
+    .nav-item { position: relative; padding-bottom: 8px; margin-bottom: -8px; }
     .nav-link {
       display: inline-flex; align-items: center; gap: .3rem; padding: .45rem .8rem;
       border-radius: 6px; font-size: .775rem; font-weight: 600; color: var(--muted);
@@ -456,8 +456,7 @@
   <nav id="navbar">
     <div class="nav-inner">
       <a href="index.html" class="nav-brand">
-        <span class="nav-brand-name">JWPA</span>
-        <span class="nav-brand-sub">Jersey Women Physician Alliance</span>
+        <img src="/images/JWPA LOGO.png" alt="JWPA — Jersey Women Physician Alliance" style="height:38px;width:auto;display:block" onerror="this.outerHTML='<span style=&quot;font-family:Georgia,serif;font-size:1.3rem;font-weight:800;color:#0f172a&quot;>JWPA</span>'" />
       </a>
       <ul class="nav-links">
         <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
@@ -591,6 +590,32 @@
       -->
 
       <!-- Partner 1: RWJBarnabas Health -->
+      <!-- Partner 1: Allied Digestive Health -->
+      <div class="partner-card reveal">
+        <div class="partner-logo-panel">
+          <img
+            src="/images/ADH Logo (1).png"
+            alt="Allied Digestive Health logo"
+            onerror="this.style.display='none'"
+          />
+        </div>
+        <div class="partner-body">
+          <div class="partner-type">Specialty Practice Network</div>
+          <div class="partner-name">Allied Digestive Health</div>
+          <p class="partner-desc">
+            New Jersey's leading independent gastroenterology network and a valued
+            collaborator supporting JWPA's physician community. Their partnership
+            reflects a shared commitment to advancing digestive health, physician
+            excellence, and community care across New Jersey.
+          </p>
+          <a href="https://www.allieddigestivehealth.com" target="_blank" rel="noopener" class="partner-link">
+            Visit allieddigestivehealth.com
+            <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Partner 2: RWJBarnabas Health -->
       <div class="partner-card reveal">
         <div class="partner-logo-panel">
           <img
@@ -598,18 +623,10 @@
             alt="RWJBarnabas Health logo"
             onerror="this.style.display='none'"
           />
-          <!-- Shown until logo is added -->
-          <div class="partner-logo-placeholder" style="display:none">
-            <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24" style="color:var(--border)">
-              <rect x="3" y="3" width="18" height="18" rx="3"/>
-              <path d="M3 15l4-4 3 3 4-5 4 6"/><circle cx="8.5" cy="8.5" r="1.5"/>
-            </svg>
-            <div class="partner-logo-placeholder-name">RWJBarnabas Health</div>
-            <span class="partner-logo-hint">Replace src="RWJBARNABAS-LOGO.png"</span>
-          </div>
+          
         </div>
         <div class="partner-body">
-          <div class="partner-type">Hospital System · Academic Medical Center</div>
+          <div class="partner-type">Hospital System &middot; Academic Medical Center</div>
           <div class="partner-name">RWJBarnabas Health &amp; Robert Wood Johnson University Hospital</div>
           <p class="partner-desc">
             One of New Jersey's largest academic health systems and a longtime home for
@@ -624,34 +641,27 @@
         </div>
       </div>
 
-      <!-- Partner 2: Allied Digestive Health -->
+      <!-- Partner 3: Cares Surgicenter -->
       <div class="partner-card reveal">
         <div class="partner-logo-panel">
           <img
-            src="/images/ADH Logo (1).png"
-            alt="Allied Digestive Health logo"
+            src="/images/CARES Logo.png"
+            alt="Cares Surgicenter logo"
             onerror="this.style.display='none'"
           />
-          <div class="partner-logo-placeholder" style="display:none">
-            <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24" style="color:var(--border)">
-              <rect x="3" y="3" width="18" height="18" rx="3"/>
-              <path d="M3 15l4-4 3 3 4-5 4 6"/><circle cx="8.5" cy="8.5" r="1.5"/>
-            </svg>
-            <div class="partner-logo-placeholder-name">Allied Digestive Health</div>
-            <span class="partner-logo-hint">Replace src="ALLIED-DIGESTIVE-LOGO.png"</span>
-          </div>
+          
         </div>
         <div class="partner-body">
-          <div class="partner-type">Specialty Practice Network</div>
-          <div class="partner-name">Allied Digestive Health</div>
+          <div class="partner-type">Ambulatory Surgery Center</div>
+          <div class="partner-name">Cares Surgicenter</div>
           <p class="partner-desc">
-            New Jersey's leading independent gastroenterology network and a valued
-            collaborator supporting JWPA's physician community. Their partnership
-            reflects a shared commitment to advancing women in specialty medicine
-            across the state.
+            A trusted ambulatory surgery center and valued JWPA collaborator committed
+            to exceptional patient care across New Jersey. Cares Surgicenter shares
+            JWPA's dedication to advancing healthcare excellence and supporting the
+            physician community throughout the region.
           </p>
-          <a href="https://www.allieddigestive.com" target="_blank" rel="noopener" class="partner-link">
-            Visit allieddigestive.com
+          <a href="https://www.saintpetershcs.com" target="_blank" rel="noopener" class="partner-link">
+            Visit saintpetershcs.com
             <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
         </div>

@@ -119,8 +119,7 @@
   <nav id="navbar">
     <div class="nav-inner">
       <a href="index.html" class="nav-brand">
-        <span class="nav-brand-name">JWPA</span>
-        <span class="nav-brand-sub">Jersey Women Physician Alliance</span>
+        <img src="/images/JWPA LOGO.png" alt="JWPA — Jersey Women Physician Alliance" style="height:38px;width:auto;display:block" onerror="this.outerHTML='<span style=&quot;font-family:Georgia,serif;font-size:1.3rem;font-weight:800;color:#0f172a&quot;>JWPA</span>'" />
       </a>
       <div style="flex:1;display:flex;align-items:center;gap:.5rem">
         <a href="physician-of-the-month.html" class="back-link">
@@ -145,7 +144,7 @@
         <a href="physician-of-the-month.html" style="color:rgba(255,255,255,.45);transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.75)'" onmouseout="this.style.color='rgba(255,255,255,.45)'">Physician of the Month</a>
       </div>
       <h1 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:800;color:var(--white);letter-spacing:-.02em;line-height:1.1;margin-bottom:.5rem">2026 Honorees</h1>
-      <p style="font-size:.95rem;color:rgba(255,255,255,.55);max-width:520px">Six exceptional women physicians celebrated by JWPA — January through June 2026. Click any card to read their full profile.</p>
+      <p style="font-size:.95rem;color:rgba(255,255,255,.55);max-width:520px">Seven exceptional women physicians celebrated by JWPA — January through July 2026. Click any card to read their full profile.</p>
     </div>
     <div class="hero-year">2026</div>
   </section>
@@ -155,12 +154,27 @@
     <div class="container">
       <div class="potm-card-grid">
 
+        <!-- July 2026 — Dr. Archna Parmar -->
+        <div class="potm-card reveal" onclick="openSpotlight('jul2026')">
+          <div class="potm-card-photo" style="background:#7f181b">
+            <img src="/images/Dr. Archna Parmar.jpg" alt="Dr. Archna Parmar" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block;position:absolute;inset:0" onerror="this.style.display='none'" />
+            <div class="potm-card-initials">AP</div>
+            <div class="potm-month-badge">July 2026</div>
+            <div class="potm-current-badge">Current</div>
+          </div>
+          <div class="potm-card-body">
+            <div class="potm-card-specialty">Internal Medicine &amp; Aesthetics &middot; Piscataway, NJ</div>
+            <div class="potm-card-name">Dr. Archna Parmar, DO, MBA</div>
+            <div class="potm-card-location">1636 Stelton Road, Suite 301</div>
+            <div class="potm-card-cta">Read full profile <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </div>
+        </div>
+
         <!-- June 2026 — Dr. Andrea Harangozo -->
         <div class="potm-card reveal" onclick="openSpotlight('jun2026')">
           <div class="potm-card-photo" style="background:#0f172a">
-            <img src="/images/Dr. Andrea Harangozo.jpg" alt="Dr. Andrea Harangozo" />
+            <div class="potm-card-initials">AH</div>
             <div class="potm-month-badge">June 2026</div>
-            <div class="potm-current-badge">Current</div>
           </div>
           <div class="potm-card-body">
             <div class="potm-card-specialty">Pulmonology &amp; Critical Care &middot; East Brunswick, NJ</div>
@@ -174,6 +188,7 @@
         <div class="potm-card reveal" onclick="openSpotlight('may2026')">
           <div class="potm-card-photo">
             <img src="/images/Dr. Priyanka Sanjay, M.D..jpg" alt="Dr. Priyanka Sanjay" />
+            <div class="potm-card-initials" style="background:#7f181b">PS</div>
             <div class="potm-month-badge">May 2026</div>
           </div>
           <div class="potm-card-body">
@@ -187,7 +202,7 @@
         <!-- April 2026 — Dr. Payal Parikh -->
         <div class="potm-card reveal" onclick="openSpotlight('apr2026')">
           <div class="potm-card-photo" style="background:#7f181b">
-            <img src="/images/Dr. Payal Parikh.jpg" alt="Dr. Payal Parikh" />
+            <div class="potm-card-initials">PP</div>
             <div class="potm-month-badge">April 2026</div>
           </div>
           <div class="potm-card-body">
@@ -201,7 +216,7 @@
         <!-- March 2026 — Dr. Deval Gadhvi -->
         <div class="potm-card reveal" onclick="openSpotlight('mar2026')">
           <div class="potm-card-photo" style="background:#0f172a">
-            <img src="/images/Dr. Deval Gadhvi.jpg" alt="Dr. Deval Gadhvi" />
+            <div class="potm-card-initials">DG</div>
             <div class="potm-month-badge">March 2026</div>
           </div>
           <div class="potm-card-body">
@@ -215,7 +230,7 @@
         <!-- February 2026 — Dr. Preeti Saran -->
         <div class="potm-card reveal" onclick="openSpotlight('feb2026')">
           <div class="potm-card-photo" style="background:#7f181b">
-            <img src="/images/Dr. Preeti Saran.jpeg" alt="Dr. Preeti Saran" />
+            <div class="potm-card-initials">PS</div>
             <div class="potm-month-badge">February 2026</div>
           </div>
           <div class="potm-card-body">
@@ -229,7 +244,7 @@
         <!-- January 2026 — Dr. Jenny Liu -->
         <div class="potm-card reveal" onclick="openSpotlight('jan2026')">
           <div class="potm-card-photo" style="background:#0f172a">
-            <img src="/images/Dr. Jenny Liu.png" alt="Dr. Jenny Liu" />
+            <div class="potm-card-initials">JL</div>
             <div class="potm-month-badge">January 2026</div>
           </div>
           <div class="potm-card-body">
@@ -299,9 +314,35 @@
     document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
     const DATA = {
+      jul2026: {
+        month:'July 2026', current:true, bgColor:'#7f181b', initials:'AP',
+        photo:'/images/Dr. Archna Parmar.jpg',
+        name:'Dr. Archna Parmar, DO, MBA',
+        specialty:'Internal Medicine &amp; Aesthetics',
+        location:'Piscataway, NJ',
+        inst:'1636 Stelton Road, Suite 301, Piscataway, NJ 08854',
+        counties:'Central New Jersey',
+        certs:`Board Certified: Internal Medicine, Wound Care &amp; Aesthetics &middot; MBA Healthcare Administration &middot; Physician Director &amp; Advisor, Saint Peter's University Hospital since 2015`,
+        memberSince:null,
+        quote:`I am grateful for my family, especially my husband, and for the opportunity to raise two wonderful daughters. I am also grateful to be a physician and to have the privilege of helping people improve their health and well-being.`,
+        highlights:[
+          `Osteopathic Medical Degree — Rowan University`,
+          `Internal Medicine Residency — Saint Peter's University Hospital`,
+          `MBA in Healthcare Administration`,
+          `Physician Director &amp; Advisor, Saint Peter's University Hospital (2015 – present)`,
+          `Board Certified in Internal Medicine, Wound Care, and Aesthetics`,
+          `Specializes in neuromodulators and dermal fillers — natural, sophisticated aesthetic results`,
+          `Women in Medicine Award — October 2021`,
+          `National Society of Leadership and Success Recognition — December 2020`,
+          `Best Teaching Attending Award — June 2019`,
+          `Competitive Dancer`,
+          `Actively volunteers within her spiritual community`
+        ],
+        bio:`Dr. Archna Parmar is a board-certified internist whose approach is rooted in precision, longevity, and deeply personalized care. A proud New Jersey native, she earned her osteopathic medical degree from Rowan University and completed her Internal Medicine residency at Saint Peter's University Hospital. She further expanded her expertise with an MBA in Healthcare Administration, bridging exceptional patient care with the evolving landscape of modern medicine. She practices at 1636 Stelton Road, Suite 301, Piscataway, NJ 08854, serving patients across Central New Jersey. She also specializes in advanced aesthetic medicine and has served as Physician Director and Advisor at Saint Peter's University Hospital since 2015.`,
+        memberships:`AAPI (American Association of Physicians of Indian Origin) &middot; JWPA`
+      },
       jun2026: {
-        month:'June 2026', current:true, bgColor:'#0f172a', initials:'AH', photo:null,
-        photo:'/images/Dr. Andrea Harangozo.jpg',
+        month:'June 2026', current:false, bgColor:'#0f172a', initials:'AH', photo:null,
         name:'Dr. Andrea Harangozo, M.D.',
         specialty:'Pulmonology &amp; Critical Care', location:'East Brunswick, NJ',
         inst:'PICSNJ &middot; 593 Cranbury Road, East Brunswick, NJ 08816',
@@ -342,7 +383,6 @@
       },
       apr2026: {
         month:'April 2026', current:false, bgColor:'#7f181b', initials:'PP', photo:null,
-        photo:'/images/Dr. Payal Parikh.jpg',
         name:'Dr. Payal Parikh, MD, FACP, FHM',
         specialty:'Hospital Medicine', location:'New Brunswick, NJ',
         inst:'Robert Wood Johnson University Hospital &middot; 1 Robert Wood Johnson Place, New Brunswick, NJ 08901',
@@ -356,7 +396,6 @@
       },
       mar2026: {
         month:'March 2026', current:false, bgColor:'#0f172a', initials:'DG', photo:null,
-        photo:'/images/Dr. Deval Gadhvi.jpg',
         name:'Dr. Deval Gadhvi, MD',
         specialty:'Internal Medicine &amp; Primary Care', location:'Jersey City, NJ',
         inst:'26 Journal Square, Jersey City, NJ 07306 &middot; Hudson County',
@@ -370,7 +409,6 @@
       },
       feb2026: {
         month:'February 2026', current:false, bgColor:'#7f181b', initials:'PS', photo:null,
-        photo:'/images/Dr. Preeti Saran.jpeg',
         name:'Dr. Preeti Saran, MD, MPH, MBA',
         specialty:'Internal Medicine', location:'Camden, NJ',
         inst:'Virtua Health &middot; 1800 Davis Street, Camden, NJ 08104',
@@ -384,7 +422,6 @@
       },
       jan2026: {
         month:'January 2026', current:false, bgColor:'#0f172a', initials:'JL', photo:null,
-        photo:'/images/Dr. Jenny Liu.png',
         name:'Dr. Jenny Liu, MD, MS',
         specialty:'Internal &amp; Obesity Medicine', location:'Warren &amp; East Brunswick, NJ',
         inst:'UniMed Center &middot; 513 Warrenville Rd, Warren &amp; 190 Route 18, East Brunswick, NJ',

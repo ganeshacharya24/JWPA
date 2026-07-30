@@ -99,7 +99,7 @@
     .nav-brand-name { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; color: var(--navy); }
     .nav-brand-sub { font-size: .58rem; font-weight: 600; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
     .nav-links { display: flex; align-items: center; gap: .15rem; list-style: none; flex: 1; }
-    .nav-item { position: relative; }
+    .nav-item { position: relative; padding-bottom: 8px; margin-bottom: -8px; }
     .nav-link {
       display: inline-flex; align-items: center; gap: .3rem; padding: .45rem .8rem;
       border-radius: 6px; font-size: .775rem; font-weight: 600; color: var(--muted);
@@ -576,8 +576,7 @@
   <nav id="navbar">
     <div class="nav-inner">
       <a href="index.html" class="nav-brand">
-        <span class="nav-brand-name">JWPA</span>
-        <span class="nav-brand-sub">Jersey Women Physician Alliance</span>
+        <img src="/images/JWPA LOGO.png" alt="JWPA — Jersey Women Physician Alliance" style="height:38px;width:auto;display:block" onerror="this.outerHTML='<span style=&quot;font-family:Georgia,serif;font-size:1.3rem;font-weight:800;color:#0f172a&quot;>JWPA</span>'" />
       </a>
       <ul class="nav-links">
         <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
@@ -709,8 +708,15 @@
         <div class="reveal">
           <div class="potm-photo-wrap">
             <div class="potm-photo">
-              <img src="/images/Dr. Andrea Harangozo.jpg" alt="Dr. Andrea Harangozo, MD" onerror="this.style.display='none'" />
-              <div class="potm-badge">June 2026 &middot; Physician of the Month</div>
+              <img src="/images/Dr. Archna Parmar.jpg" alt="Dr. Archna Parmar, DO" onerror="this.style.display='none'" />
+              <div class="potm-photo-placeholder">
+                <svg fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24">
+                  <circle cx="12" cy="8" r="4"/>
+                  <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+                </svg>
+                <span>Dr. Andrea Harangozo</span>
+              </div>
+              <div class="potm-badge">July 2026 &middot; Physician of the Month</div>
             </div>
             <div class="potm-photo-actions">
               <a href="#" onclick="openNomModal();return false;"
@@ -723,10 +729,10 @@
 
         <!-- Content column -->
         <div class="reveal">
-          <div class="potm-month-tag">June 2026 &middot; Physician of the Month</div>
+          <div class="potm-month-tag">July 2026 &middot; Physician of the Month</div>
 
-          <div class="potm-name">Dr. Andrea Harangozo, M.D.</div>
-          <div class="potm-role">Pulmonology &amp; Critical Care &nbsp;&middot;&nbsp; PICSNJ &nbsp;&middot;&nbsp; East Brunswick, NJ</div>
+          <div class="potm-name">Dr. Archna Parmar, DO, MBA</div>
+          <div class="potm-role">Internal Medicine &amp; Aesthetics &nbsp;&middot;&nbsp; Piscataway, NJ</div>
 
           <div class="potm-meta">
             <span class="potm-meta-item">
@@ -734,43 +740,45 @@
                 <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
                 <path d="M6 12v5c3 3 9 3 12 0v-5"/>
               </svg>
-              Clinical Associate Professor &middot; Rutgers RWJMS
+              Board Certified: Internal Medicine, Wound Care &amp; Aesthetics
             </span>
             <span class="potm-meta-item">
               <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
                 <circle cx="12" cy="10" r="3"/>
               </svg>
-              Middlesex, Monmouth &amp; Somerset Counties
+              Central New Jersey
             </span>
             <span class="potm-meta-item">
               <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <circle cx="12" cy="12" r="10"/>
                 <path d="M12 6v6l4 2"/>
               </svg>
-              JWPA Member since inception
+              Physician Director &amp; Advisor &middot; Saint Peter's University Hospital since 2015
             </span>
           </div>
 
           <div class="potm-quote">
-            <p>"Proud of my practice, PICSNJ, and of my role in helping develop compassionate, skilled medical providers &mdash; both inside and outside the hospital setting."</p>
-            <cite>— Dr. Andrea Harangozo, M.D. &middot; Pulmonology &amp; Critical Care</cite>
+            <p>"I am grateful for my family, especially my husband, and for the opportunity to raise two wonderful daughters. I am also grateful to be a physician and to have the privilege of helping people improve their health and well-being."</p>
+            <cite>— Dr. Archna Parmar, DO, MBA &middot; Internal Medicine &amp; Aesthetics</cite>
           </div>
 
           <p class="potm-bio">
-            Dr. Harangozo is a Clinical Associate Professor at Rutgers Robert Wood Johnson Medical School
-            and helped shape the model for New Jersey's ground critical care ICU transfer system. She
-            practices at <a href="https://www.picsnj.org" target="_blank" style="color:var(--crimson);font-weight:600">PICSNJ</a>,
-            593 Cranbury Road, East Brunswick, NJ 08816, serving Middlesex, Monmouth, and Somerset counties.
-            She provides expert pulmonary and medical management — including care for many ALS patients at a
-            nationally designated ALS Treatment Center of Excellence in New Brunswick.
+            Dr. Archna Parmar is a board-certified internist whose approach to medicine is rooted in precision,
+            longevity, and deeply personalized care. A proud New Jersey native, she earned her osteopathic
+            medical degree from Rowan University and completed her Internal Medicine residency at Saint Peter's
+            University Hospital. She further expanded her expertise with an MBA in Healthcare Administration,
+            allowing her to bridge exceptional patient care with the evolving landscape of modern medicine.
+            She practices at 1636 Stelton Road, Suite 301, Piscataway, NJ 08854, serving patients across
+            Central New Jersey.
           </p>
           <p class="potm-bio">
-            Affiliated with Robert Wood Johnson University Hospital and St. Peter's University Hospital,
-            Dr. Harangozo has served 19 years on the Medical Executive Committee and became the
-            <strong>first female President of the Medical Staff at RWJUH</strong>. She also contributed to
-            the development of clinical information systems at RWJUH and dedicates over 50 hours each year
-            mentoring medical students, residents, and future healthcare professionals.
+            In addition to primary care and wellness, Dr. Parmar is board certified in Wound Care and Aesthetics,
+            specializing in advanced aesthetic treatments including neuromodulators and dermal fillers — with a
+            philosophy centered on enhancing natural beauty through subtle, sophisticated results. She has served
+            as Physician Director &amp; Advisor at Saint Peter's University Hospital since 2015, and is
+            actively involved in volunteer work within her spiritual community, reflecting her commitment to
+            service both inside and outside medicine.
           </p>
 
           <div class="potm-actions">
@@ -846,7 +854,7 @@
             <div>
               <div style="font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:.5rem">Physicians of the Month</div>
               <div style="font-family:var(--font-display);font-size:3.5rem;font-weight:800;color:var(--white);line-height:1;margin-bottom:.5rem">2025</div>
-              <div style="font-size:.82rem;color:rgba(255,255,255,.65)">Program launched Aug 2025</div>
+              <div style="font-size:.82rem;color:rgba(255,255,255,.65)">5 honorees &middot; Aug &ndash; Dec</div>
             </div>
             <div style="display:flex;align-items:center;gap:.5rem;font-size:.8rem;font-weight:700;color:rgba(255,255,255,.8);margin-top:1.5rem">
               View 2025 honorees

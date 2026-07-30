@@ -247,7 +247,7 @@
       flex: 1;
     }
 
-    .nav-item { position: relative; }
+    .nav-item { position: relative; padding-bottom: 8px; margin-bottom: -8px; }
 
     .nav-link {
       display: inline-flex;
@@ -721,7 +721,7 @@
 
     .stats-inner {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
     }
 
     .stat-item {
@@ -1545,8 +1545,7 @@
   <nav id="navbar">
     <div class="nav-inner">
       <a href="index.html" class="nav-brand">
-        <span class="nav-brand-name">JWPA</span>
-        <span class="nav-brand-sub">Jersey Women Physician Alliance</span>
+        <img src="/images/JWPA LOGO.png" alt="JWPA — Jersey Women Physician Alliance" style="height:38px;width:auto;display:block" onerror="this.outerHTML='<span style=&quot;font-family:Georgia,serif;font-size:1.3rem;font-weight:800;color:#0f172a&quot;>JWPA</span>'" />
       </a>
 
       <ul class="nav-links">
@@ -1713,14 +1712,7 @@
             />
 
             <!-- Placeholder grid shown until you swap in a real image -->
-            <div class="hero-img-placeholder" style="display:none">
-              <svg fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24">
-                <rect x="3" y="3" width="18" height="18" rx="3"/>
-                <path d="M3 15l4-4 3 3 4-5 4 6"/>
-                <circle cx="8.5" cy="8.5" r="1.5"/>
-              </svg>
-              <span>Replace src="/images/NJWPA_GROUP_PICTURE.JPG"<br>with your group or event photo</span>
-            </div>
+            
 
             <!-- Caption overlaid at the bottom of the image -->
             <div class="hero-img-caption">
@@ -1912,14 +1904,7 @@
             onerror="this.style.display='none'"
           />
           <!-- Placeholder shown until you add a real image -->
-          <div class="tws-image-placeholder" style="display:none">
-            <svg fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24">
-              <rect x="3" y="3" width="18" height="18" rx="3"/>
-              <path d="M3 15l4-4 3 3 4-5 4 6"/>
-              <circle cx="8.5" cy="8.5" r="1.5"/>
-            </svg>
-            
-          </div>
+          
         </div>
 
       </div>
@@ -2082,8 +2067,8 @@
         <!-- Left: photo — update src each month with the physician's headshot -->
         <div class="potm-photo">
           <img
-            src="/images/Dr. Andrea Harangozo.jpg"
-            alt="Dr. Andrea Harangozo, MD — JWPA Physician of the Month June 2026"
+            src="/images/Dr. Archna Parmar.jpg"
+            alt="Dr. Archna Parmar, DO — JWPA Physician of the Month July 2026"
             onerror="this.style.display='none'"
           />
           <div class="potm-photo-placeholder" style="display:none">
@@ -2093,23 +2078,24 @@
             </svg>
             <span></span>
           </div>
-          <div class="potm-month-badge">June 2026</div>
+          <div class="potm-month-badge">July 2026</div>
         </div>
 
         <!-- Right: physician details -->
         <div class="potm-body">
-          <div class="potm-specialty">Pulmonology &amp; Critical Care &middot; East Brunswick, NJ</div>
-          <div class="potm-name">Dr. Andrea Harangozo, M.D.</div>
-          <div class="potm-title">PICSNJ &middot; Clinical Associate Professor, Rutgers RWJMS &middot; Middlesex, Monmouth &amp; Somerset Counties</div>
+          <div class="potm-specialty">Internal Medicine &amp; Aesthetics &middot; Piscataway, NJ</div>
+          <div class="potm-name">Dr. Archna Parmar, DO, MBA</div>
+          <div class="potm-title">1636 Stelton Rd, Suite 301, Piscataway &middot; Board Certified: Internal Medicine, Wound Care &amp; Aesthetics</div>
 
           <div class="potm-quote">
-            <p>"Proud of my practice, PICSNJ, and of my role in helping develop compassionate, skilled medical providers &mdash; both inside and outside the hospital setting."</p>
-            <cite>— Dr. Andrea Harangozo, M.D. &middot; JWPA Member since inception</cite>
+            <p>"I am grateful for my family, especially my husband, and for the opportunity to raise two wonderful daughters. I am also grateful to be a physician and to have the privilege of helping people improve their health and well-being."</p>
+            <cite>— Dr. Archna Parmar, DO, MBA &middot; Internal Medicine &amp; Aesthetics</cite>
           </div>
 
           <div class="potm-actions">
             <a href="physician-of-the-month.html" class="btn btn-primary btn-md">Read Full Profile</a>
-            <a href="physician-of-the-month.html#pasthonorees" class="btn btn-outline btn-md">Past Honorees</a>
+            <a href="physician-of-the-month.html#nominate" class="btn btn-outline btn-md">Nominate a Physician</a>
+            <a href="physician-of-the-month.html#archive" class="btn btn-outline btn-md">View Past Spotlights</a>
           </div>
         </div>
 
@@ -2151,7 +2137,7 @@
                   <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/>
                   <circle cx="12" cy="10" r="3"/>
                 </svg>
-                 21 Cortlandt St Suite 1, Edison, NJ 08837
+                Akbar Restaurant, Edison, NJ
               </div>
               <div class="event-meta-row">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -2261,17 +2247,17 @@
       <div class="partners-row reveal">
 
         <div class="partner-tile">
-          <img src="/images/ADH Logo (1).png" alt="Allied Digestive Health"
-               onerror="this.style.display='none'" />
-        </div>
-
-        <div class="partner-tile">
           <img src="/images/rwj_logo.jpg" alt="RWJBarnabas Health / Robert Wood Johnson University Hospital"
                onerror="this.style.display='none'" />
         </div>
 
         <div class="partner-tile">
-          <img src="/images/CARES Logo.png" alt="Teens With Stethoscopes"
+          <img src="/images/ADH Logo (1).png" alt="Allied Digestive Health"
+               onerror="this.style.display='none'" />
+        </div>
+
+        <div class="partner-tile">
+          <img src="/images/TWS Logo.png" alt="Teens With Stethoscopes"
                onerror="this.style.display='none'" />
         </div>
 
@@ -2427,15 +2413,15 @@
     // ── Footer newsletter ──
     
     function openGalaModal() {
-      const m = document.getElementById('annual event-modal');
+      const m = document.getElementById('annual-event-modal');
       m.style.display = 'flex';
       document.body.style.overflow = 'hidden';
     }
     function closeGalaModal() {
-      document.getElementById('annual event-modal').style.display = 'none';
+      document.getElementById('annual-event-modal').style.display = 'none';
       document.body.style.overflow = '';
     }
-    document.getElementById('annual event-modal').addEventListener('click', function(e) {
+    document.getElementById('annual-event-modal').addEventListener('click', function(e) {
       if (e.target === this) closeGalaModal();
     });
     document.addEventListener('keydown', e => {
@@ -2463,7 +2449,7 @@
         'Notes:      ' + (notes || '—') + '\n\n' +
         'Event: JWPA Annual Women Physician Meetup & Celebration\n' +
         'Date:  Friday, October 10, 2026\n' +
-        'Venue:  RWJUH / Auditorium, Jack & Sheryl Morris Cancer Center, New Jersey'
+        'Venue: Akbar Restaurant, 21 Cortlandt St, Edison, NJ 08837'
       );
       window.location.href = 'mailto:events@jwpa.org?subject=' + subject + '&body=' + body;
       closeGalaModal();
@@ -2489,7 +2475,7 @@
   <!-- ══════════════════════════════════════════
        ANNUAL EVENT REGISTRATION MODAL
   ══════════════════════════════════════════ -->
-  <div id="annual event-modal" style="display:none;position:fixed;inset:0;z-index:500;background:rgba(10,14,26,.88);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:1.5rem">
+  <div id="annual-event-modal" style="display:none;position:fixed;inset:0;z-index:500;background:rgba(10,14,26,.88);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:1.5rem">
     <div style="background:var(--white);border-radius:var(--radius-lg);max-width:520px;width:100%;box-shadow:var(--shadow-lg);overflow:hidden;animation:dropFade .2s ease">
 
       <!-- Header -->
@@ -2507,7 +2493,7 @@
           </div>
           <div style="display:flex;align-items:center;gap:.4rem;font-size:.78rem;color:rgba(255,255,255,.65)">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
-             RWJUH / Auditorium, Jack & Sheryl Morris Cancer Center, New Jersey
+            Akbar Restaurant · 21 Cortlandt St, Edison, NJ 08837
           </div>
         </div>
         <button onclick="closeGalaModal()" style="position:absolute;top:1rem;right:1.25rem;background:rgba(255,255,255,.1);border:none;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--white)">

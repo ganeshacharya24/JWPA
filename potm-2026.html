@@ -144,7 +144,7 @@
         <a href="physician-of-the-month.html" style="color:rgba(255,255,255,.45);transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.75)'" onmouseout="this.style.color='rgba(255,255,255,.45)'">Physician of the Month</a>
       </div>
       <h1 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:800;color:var(--white);letter-spacing:-.02em;line-height:1.1;margin-bottom:.5rem">2026 Honorees</h1>
-      <p style="font-size:.95rem;color:rgba(255,255,255,.55);max-width:520px">Seven exceptional women physicians celebrated by JWPA — January through July 2026. Click any card to read their full profile.</p>
+      <p style="font-size:.95rem;color:rgba(255,255,255,.55);max-width:520px">Eight exceptional women physicians celebrated by JWPA — January through August 2026. Click any card to read their full profile.</p>
     </div>
     <div class="hero-year">2026</div>
   </section>
@@ -154,13 +154,26 @@
     <div class="container">
       <div class="potm-card-grid">
 
+        <!-- August 2026 — Dr. Irfana Khan -->
+        <div class="potm-card reveal" onclick="openSpotlight('aug2026')">
+          <div class="potm-card-photo" style="background:#0f172a">
+            <img src="/images/Dr. Irfana Khan.jpeg" alt="Dr. Irfana Khan" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block;position:absolute;inset:0" onerror="this.style.display='none'" />
+            <div class="potm-month-badge">August 2026</div>
+            <div class="potm-current-badge">Current</div>
+          </div>
+          <div class="potm-card-body">
+            <div class="potm-card-specialty">Hospital Medicine &middot; Stafford Township, NJ</div>
+            <div class="potm-card-name">Dr. Irfana Khan, MD, CPE, FHM</div>
+            <div class="potm-card-location">Southern Ocean Medical Center</div>
+            <div class="potm-card-cta">Read full profile <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </div>
+        </div>
+
         <!-- July 2026 — Dr. Archna Parmar -->
         <div class="potm-card reveal" onclick="openSpotlight('jul2026')">
           <div class="potm-card-photo" style="background:#7f181b">
             <img src="/images/Dr. Archna Parmar.jpg" alt="Dr. Archna Parmar" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block;position:absolute;inset:0" onerror="this.style.display='none'" />
-            <div class="potm-card-initials">AP</div>
             <div class="potm-month-badge">July 2026</div>
-            <div class="potm-current-badge">Current</div>
           </div>
           <div class="potm-card-body">
             <div class="potm-card-specialty">Internal Medicine &amp; Aesthetics &middot; Piscataway, NJ</div>
@@ -173,7 +186,6 @@
         <!-- June 2026 — Dr. Andrea Harangozo -->
         <div class="potm-card reveal" onclick="openSpotlight('jun2026')">
           <div class="potm-card-photo" style="background:#0f172a">
-            <div class="potm-card-initials">AH</div>
             <div class="potm-month-badge">June 2026</div>
           </div>
           <div class="potm-card-body">
@@ -188,7 +200,6 @@
         <div class="potm-card reveal" onclick="openSpotlight('may2026')">
           <div class="potm-card-photo">
             <img src="/images/Dr. Priyanka Sanjay, M.D..jpg" alt="Dr. Priyanka Sanjay" />
-            <div class="potm-card-initials" style="background:#7f181b">PS</div>
             <div class="potm-month-badge">May 2026</div>
           </div>
           <div class="potm-card-body">
@@ -216,7 +227,6 @@
         <!-- March 2026 — Dr. Deval Gadhvi -->
         <div class="potm-card reveal" onclick="openSpotlight('mar2026')">
           <div class="potm-card-photo" style="background:#0f172a">
-            <div class="potm-card-initials">DG</div>
             <div class="potm-month-badge">March 2026</div>
           </div>
           <div class="potm-card-body">
@@ -230,7 +240,6 @@
         <!-- February 2026 — Dr. Preeti Saran -->
         <div class="potm-card reveal" onclick="openSpotlight('feb2026')">
           <div class="potm-card-photo" style="background:#7f181b">
-            <div class="potm-card-initials">PS</div>
             <div class="potm-month-badge">February 2026</div>
           </div>
           <div class="potm-card-body">
@@ -244,7 +253,6 @@
         <!-- January 2026 — Dr. Jenny Liu -->
         <div class="potm-card reveal" onclick="openSpotlight('jan2026')">
           <div class="potm-card-photo" style="background:#0f172a">
-            <div class="potm-card-initials">JL</div>
             <div class="potm-month-badge">January 2026</div>
           </div>
           <div class="potm-card-body">
@@ -314,8 +322,34 @@
     document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
     const DATA = {
+      aug2026: {
+        month:'August 2026', current:true, bgColor:'#0f172a', initials:'IK',
+        photo:'/images/Dr. Irfana Khan.jpg',
+        name:'Dr. Irfana Khan, MD, CPE, FHM',
+        specialty:'Internal Medicine &amp; Hospital Medicine',
+        location:'Stafford Township, NJ',
+        inst:'Southern Ocean Medical Center &middot; Stafford Township, New Jersey',
+        counties:'Ocean County &amp; Surrounding',
+        certs:`Board-Certified Internal Medicine &middot; Fellow in Hospital Medicine (FHM) &middot; Certified Physician Executive (CPE)`,
+        memberSince:null,
+        quote:`The greatest privilege in medicine is earning the trust to make a difference in someone's life.`,
+        highlights:[
+          `Medical Director, Hospitalist Program — Southern Ocean Medical Center`,
+          `15+ years of clinical excellence; 10+ years of progressive healthcare leadership`,
+          `Fellow in Hospital Medicine (FHM) — Society of Hospital Medicine`,
+          `Certified Physician Executive (CPE)`,
+          `CARE Deeply Award`,
+          `Champion of Quality &amp; Safety Award`,
+          `Resident of the Year Award`,
+          `President, APPNA New Jersey — launched free ambulance service for underserved rural communities in Pakistan`,
+          `Passionate mentor to physicians; advocates for women in medicine leadership`,
+          `Strengthened physician engagement and built high-performing clinical teams`
+        ],
+        bio:`Dr. Irfana Khan is a distinguished board-certified Internal Medicine physician, physician executive, and healthcare leader with more than 15 years of clinical excellence and over a decade of progressive leadership in hospital medicine, quality improvement, and healthcare operations. As Medical Director of the Hospitalist Program at Southern Ocean Medical Center, she leads physicians, APPs, and multidisciplinary teams in delivering exceptional inpatient care while advancing patient safety, quality, and operational excellence. As President of APPNA New Jersey, she spearheaded the launch of a free ambulance service for underserved rural communities in Pakistan, bringing lifesaving emergency care to those with limited access to healthcare services.`,
+        memberships:`ACP &middot; SHM &middot; ACHE &middot; AMA &middot; APPNA &middot; JWPA`
+      },
       jul2026: {
-        month:'July 2026', current:true, bgColor:'#7f181b', initials:'AP',
+        month:'July 2026', current:false, bgColor:'#7f181b', initials:'AP',
         photo:'/images/Dr. Archna Parmar.jpg',
         name:'Dr. Archna Parmar, DO, MBA',
         specialty:'Internal Medicine &amp; Aesthetics',

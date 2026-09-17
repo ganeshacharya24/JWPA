@@ -144,7 +144,7 @@
         <a href="physician-of-the-month.html" style="color:rgba(255,255,255,.45);transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.75)'" onmouseout="this.style.color='rgba(255,255,255,.45)'">Physician of the Month</a>
       </div>
       <h1 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:800;color:var(--white);letter-spacing:-.02em;line-height:1.1;margin-bottom:.5rem">2026 Honorees</h1>
-      <p style="font-size:.95rem;color:rgba(255,255,255,.55);max-width:520px">Eight exceptional women physicians celebrated by JWPA — January through August 2026. Click any card to read their full profile.</p>
+      <p style="font-size:.95rem;color:rgba(255,255,255,.55);max-width:520px">Nine exceptional women physicians celebrated by JWPA — January through September 2026. Click any card to read their full profile.</p>
     </div>
     <div class="hero-year">2026</div>
   </section>
@@ -154,13 +154,27 @@
     <div class="container">
       <div class="potm-card-grid">
 
+        <!-- September 2026 — Dr. Seema Varma -->
+        <div class="potm-card reveal" onclick="openSpotlight('sep2026')">
+          <div class="potm-card-photo" style="background:#7f181b">
+            <img src="/images/Dr. Seema Varma.jpeg" alt="Dr. Seema Varma" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block;position:absolute;inset:0" onerror="this.style.display='none'" />
+            <div class="potm-month-badge">September 2026</div>
+            <div class="potm-current-badge">Current</div>
+          </div>
+          <div class="potm-card-body">
+            <div class="potm-card-specialty">Hematology &amp; Oncology &middot; East Brunswick &amp; Toms River, NJ</div>
+            <div class="potm-card-name">Dr. Seema Varma, MD</div>
+            <div class="potm-card-location">Astera Cancer Care &middot; QOPI&reg; Certified</div>
+            <div class="potm-card-cta">Read full profile <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </div>
+        </div>
+
         <!-- August 2026 — Dr. Irfana Khan -->
         <div class="potm-card reveal" onclick="openSpotlight('aug2026')">
           <div class="potm-card-photo" style="background:#0f172a">
             <img src="/images/Dr. Irfana Khan.jpeg" alt="Dr. Irfana Khan" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block;position:absolute;inset:0" onerror="this.style.display='none'" />
             <div class="potm-month-badge">August 2026</div>
-            <div class="potm-current-badge">Current</div>
-          </div>
+                      </div>
           <div class="potm-card-body">
             <div class="potm-card-specialty">Hospital Medicine &middot; Stafford Township, NJ</div>
             <div class="potm-card-name">Dr. Irfana Khan, MD, CPE, FHM</div>
@@ -213,7 +227,6 @@
         <!-- April 2026 — Dr. Payal Parikh -->
         <div class="potm-card reveal" onclick="openSpotlight('apr2026')">
           <div class="potm-card-photo" style="background:#7f181b">
-            <div class="potm-card-initials">PP</div>
             <div class="potm-month-badge">April 2026</div>
           </div>
           <div class="potm-card-body">
@@ -227,6 +240,7 @@
         <!-- March 2026 — Dr. Deval Gadhvi -->
         <div class="potm-card reveal" onclick="openSpotlight('mar2026')">
           <div class="potm-card-photo" style="background:#0f172a">
+            <img src="/images/Dr. Deval Gadhvi.jpg" alt="Dr. Deval Gadhvi" />
             <div class="potm-month-badge">March 2026</div>
           </div>
           <div class="potm-card-body">
@@ -240,6 +254,7 @@
         <!-- February 2026 — Dr. Preeti Saran -->
         <div class="potm-card reveal" onclick="openSpotlight('feb2026')">
           <div class="potm-card-photo" style="background:#7f181b">
+            <img src="/images/Dr. Preeti Saran.jpeg" alt="Dr. Preeti Saran" />
             <div class="potm-month-badge">February 2026</div>
           </div>
           <div class="potm-card-body">
@@ -253,6 +268,7 @@
         <!-- January 2026 — Dr. Jenny Liu -->
         <div class="potm-card reveal" onclick="openSpotlight('jan2026')">
           <div class="potm-card-photo" style="background:#0f172a">
+            <img src="/images/Dr. Jenny Liu.png" alt="Dr. Jenny Liu" />
             <div class="potm-month-badge">January 2026</div>
           </div>
           <div class="potm-card-body">
@@ -322,9 +338,38 @@
     document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
     const DATA = {
+      sep2026: {
+        month:'September 2026', current:true, bgColor:'#7f181b', initials:'SV',
+        photo:'/images/Dr. Seema Varma.jpeg',
+        name:'Dr. Seema Varma, MD',
+        specialty:'Hematology &amp; Oncology',
+        location:'East Brunswick &amp; Toms River, NJ',
+        inst:'Astera Cancer Care &middot; 629 Cranbury Road, East Brunswick &amp; 1 Plaza Drive, Toms River, NJ',
+        counties:'Middlesex, Monmouth &amp; Ocean Counties',
+        certs:`Board-Certified Hematologist &amp; Oncologist &middot; QOPI&reg; Certified (ASCO since 2013) &middot; Trained at Northwell Health / Staten Island University Hospital`,
+        memberSince:null,
+        quote:`Providing medical care is a true privilege. I am proud of the impact I make and deeply grateful for everyone who made it possible.`,
+        highlights:[
+          `Physician Partner at Astera Cancer Care — independent, physician-owned community oncology practice`,
+          `QOPI&reg; Certified by ASCO since 2013 — highest national standards for quality and safety in oncology`,
+          `Trained at Northwell Health / Staten Island University Hospital, New York`,
+          `Pfizer Medal — First Rank in Medical School`,
+          `First Prize, Research Competition – NSLIJ/SIUH`,
+          `First Prize, Annual Academy of Richmond Research Competition`,
+          `Honorable Award — Resident Teacher of the Year`,
+          `Research Appreciation Award — Staten Island University Hospital`,
+          `Patient's Choice Award &amp; Compassionate Care Award`,
+          `Fellow Physician Research Award`,
+          `Served on cancer and healthcare quality committees`,
+          `Led medical education and physician mentorship initiatives`,
+          `Advocates for advanced palliative and end-of-life care that preserves dignity`
+        ],
+        bio:`Dr. Seema Varma is a board-certified Hematologist and Oncologist whose approach is rooted in precision, longevity, and deeply personalized cancer care. She trained at Northwell Health / Staten Island University Hospital and is a physician partner at Astera Cancer Care — an independent, physician-owned community oncology practice delivering academic-level care with the convenience and lower cost of a community setting. Astera has been QOPI certified by ASCO since 2013. Dr. Varma serves her community through volunteer medical care, public health leadership, and patient advocacy, helping cancer patients live life to the fullest.`,
+        memberships:`ASCO &middot; ASH &middot; AAHPM &middot; AAPI &middot; JWPA &middot; AIMPA`
+      },
       aug2026: {
-        month:'August 2026', current:true, bgColor:'#0f172a', initials:'IK',
-        photo:'/images/Dr. Irfana Khan.jpg',
+        month:'August 2026', current:false, bgColor:'#0f172a', initials:'IK',
+        photo:'/images/Dr. Irfana Khan.jpeg',
         name:'Dr. Irfana Khan, MD, CPE, FHM',
         specialty:'Internal Medicine &amp; Hospital Medicine',
         location:'Stafford Township, NJ',
@@ -376,7 +421,7 @@
         memberships:`AAPI (American Association of Physicians of Indian Origin) &middot; JWPA`
       },
       jun2026: {
-        month:'June 2026', current:false, bgColor:'#0f172a', initials:'AH', photo:null,
+        month:'June 2026', current:false, bgColor:'#0f172a', initials:'AH', photo:'/images/Dr. Andrea Harangozo, M.D..jpg',
         name:'Dr. Andrea Harangozo, M.D.',
         specialty:'Pulmonology &amp; Critical Care', location:'East Brunswick, NJ',
         inst:'PICSNJ &middot; 593 Cranbury Road, East Brunswick, NJ 08816',
@@ -416,7 +461,7 @@
         memberships:'ABIM Certified &middot; JWPA Member since 2018&ndash;2019'
       },
       apr2026: {
-        month:'April 2026', current:false, bgColor:'#7f181b', initials:'PP', photo:null,
+        month:'April 2026', current:false, bgColor:'#7f181b', initials:'PP', photo:'/images/Dr. Payal Parikh, MD, FACP, FHM.jpg',
         name:'Dr. Payal Parikh, MD, FACP, FHM',
         specialty:'Hospital Medicine', location:'New Brunswick, NJ',
         inst:'Robert Wood Johnson University Hospital &middot; 1 Robert Wood Johnson Place, New Brunswick, NJ 08901',
@@ -429,7 +474,7 @@
         memberships:'FACP &middot; FHM &middot; AMA &middot; JWPA &middot; NJ AAPI'
       },
       mar2026: {
-        month:'March 2026', current:false, bgColor:'#0f172a', initials:'DG', photo:null,
+        month:'March 2026', current:false, bgColor:'#0f172a', initials:'DG', photo:'/images/Dr. Deval Gadhvi.jpg',
         name:'Dr. Deval Gadhvi, MD',
         specialty:'Internal Medicine &amp; Primary Care', location:'Jersey City, NJ',
         inst:'26 Journal Square, Jersey City, NJ 07306 &middot; Hudson County',
@@ -442,7 +487,7 @@
         memberships:'AMA &middot; AAPI &middot; WPONJ (Founder) &middot; JWPA'
       },
       feb2026: {
-        month:'February 2026', current:false, bgColor:'#7f181b', initials:'PS', photo:null,
+        month:'February 2026', current:false, bgColor:'#7f181b', initials:'PS', photo:'/images/Dr. Preeti Saran.jpeg',
         name:'Dr. Preeti Saran, MD, MPH, MBA',
         specialty:'Internal Medicine', location:'Camden, NJ',
         inst:'Virtua Health &middot; 1800 Davis Street, Camden, NJ 08104',
@@ -455,7 +500,7 @@
         memberships:'AAFP &middot; OMA &middot; AAPL &middot; NJAAPI &middot; JWPA'
       },
       jan2026: {
-        month:'January 2026', current:false, bgColor:'#0f172a', initials:'JL', photo:null,
+        month:'January 2026', current:false, bgColor:'#0f172a', initials:'JL', photo:'/images/Dr. Jenny Liu.png',
         name:'Dr. Jenny Liu, MD, MS',
         specialty:'Internal &amp; Obesity Medicine', location:'Warren &amp; East Brunswick, NJ',
         inst:'UniMed Center &middot; 513 Warrenville Rd, Warren &amp; 190 Route 18, East Brunswick, NJ',

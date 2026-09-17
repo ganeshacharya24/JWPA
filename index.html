@@ -1386,12 +1386,13 @@
     /* ─────────────────────────────────────────
        SCROLL REVEAL
     ───────────────────────────────────────── */
-    .reveal {
+    /* Reveal — visible by default, animated only when JS runs */
+    .js-ready .reveal {
       opacity: 0;
       transform: translateY(22px);
       transition: opacity .55s ease, transform .55s ease;
     }
-    .reveal.in {
+    .js-ready .reveal.in {
       opacity: 1;
       transform: translateY(0);
     }
@@ -1713,7 +1714,6 @@
 
             <!-- Placeholder grid shown until you swap in a real image -->
             
-
             <!-- Caption overlaid at the bottom of the image -->
             <div class="hero-img-caption">
               <strong>Jersey Women Physician Alliance</strong>
@@ -2205,7 +2205,7 @@
                   <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/>
                   <circle cx="12" cy="10" r="3"/>
                 </svg>
-                RWJUH / Auditorium, Jack & Sheryl Morris Cancer Center, New Jersey
+                Akbar Restaurant, Edison, NJ
               </div>
               <div class="event-meta-row">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -2247,17 +2247,17 @@
       <div class="partners-row reveal">
 
         <div class="partner-tile">
-          <img src="/images/RWJBH 2016 -RGB.jpg" alt="RWJBarnabas Health / Robert Wood Johnson University Hospital"
+          <img src="/images/rwjbarnabas-health-logo-vector.png" alt="RWJBarnabas Health / Robert Wood Johnson University Hospital"
                onerror="this.style.display='none'" />
         </div>
 
         <div class="partner-tile">
-          <img src="/images/ADH Logo (1).png" alt="Allied Digestive Health"
+          <img src="/images/CARES Logo.png" alt="Allied Digestive Health"
                onerror="this.style.display='none'" />
         </div>
 
         <div class="partner-tile">
-          <img src="/images/CARES Logo.png" alt="Cares"
+          <img src="/images/ADH Logo (1).png" alt="Teens With Stethoscopes"
                onerror="this.style.display='none'" />
         </div>
 
@@ -2352,7 +2352,7 @@
 
       <!-- Bottom bar -->
       <div class="footer-bottom">
-        <p>&copy; 2025 JWPA. All rights reserved.</p>
+        <p>&copy; 2026 JWPA. All rights reserved.</p>
         <p>Jersey Women Physician Alliance &middot; New Jersey, USA</p>
       </div>
     </div>
@@ -2371,7 +2371,128 @@
   <!-- ══════════════════════════════════════════
        JAVASCRIPT
   ══════════════════════════════════════════ -->
-  <script>
+
+
+  <!-- ══════════════════════════════════════════
+       ANNUAL EVENT REGISTRATION MODAL — 2-step
+  ══════════════════════════════════════════ -->
+  <div id="gala-modal" style="display:none;position:fixed;inset:0;z-index:500;background:rgba(10,14,26,.88);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:1.5rem;overflow-y:auto">
+    <div style="background:var(--white);border-radius:var(--radius-lg);max-width:560px;width:100%;box-shadow:var(--shadow-lg);overflow:hidden;margin:auto">
+
+      <!-- Header -->
+      <div style="background:var(--crimson);padding:1.75rem 2rem;position:relative">
+        <div style="font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:.35rem">JWPA · October 10, 2026</div>
+        <div style="font-family:var(--font-display);font-size:1.35rem;font-weight:800;color:var(--white);line-height:1.2">Annual Women Physician Meetup &amp; Celebration</div>
+        <!-- Step indicator -->
+        <div id="gala-step-indicator" style="margin-top:1rem;display:flex;align-items:center;gap:.5rem">
+          <div id="gala-step1-dot" style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.9)"></div>
+          <div style="width:32px;height:2px;background:rgba(255,255,255,.3);border-radius:2px"></div>
+          <div id="gala-step2-dot" style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.3)"></div>
+          <span id="gala-step-label" style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-left:.35rem">Step 1 of 2 &mdash; Registration</span>
+        </div>
+        <button onclick="closeGalaModal()" style="position:absolute;top:1rem;right:1.25rem;background:rgba(255,255,255,.15);border:none;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--white)">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- ── STEP 1: Registration form ── -->
+      <div id="gala-step1" style="padding:1.75rem 2rem">
+        <p style="font-size:.82rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.65">Complete the form below and we&#39;ll be in touch to confirm your registration. Open to JWPA members and women physician guests only. Spouses not included for October 10, 2026.</p>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem">
+          <div style="display:flex;flex-direction:column;gap:.25rem">
+            <label style="font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)">First Name *</label>
+            <input id="gala-fname" type="text" placeholder="Jane" style="padding:.6rem .85rem;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.875rem;color:var(--navy);width:100%;outline:none" onfocus="this.style.borderColor='var(--crimson)'" onblur="this.style.borderColor='var(--border)'" />
+          </div>
+          <div style="display:flex;flex-direction:column;gap:.25rem">
+            <label style="font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)">Last Name *</label>
+            <input id="gala-lname" type="text" placeholder="Smith" style="padding:.6rem .85rem;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.875rem;color:var(--navy);width:100%;outline:none" onfocus="this.style.borderColor='var(--crimson)'" onblur="this.style.borderColor='var(--border)'" />
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-bottom:.75rem">
+          <label style="font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)">Email Address *</label>
+          <input id="gala-email" type="email" placeholder="jane@hospital.org" style="padding:.6rem .85rem;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.875rem;color:var(--navy);width:100%;outline:none" onfocus="this.style.borderColor='var(--crimson)'" onblur="this.style.borderColor='var(--border)'" />
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem">
+          <div style="display:flex;flex-direction:column;gap:.25rem">
+            <label style="font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)">Phone</label>
+            <input id="gala-phone" type="tel" placeholder="(732) 555-0100" style="padding:.6rem .85rem;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.875rem;color:var(--navy);width:100%;outline:none" onfocus="this.style.borderColor='var(--crimson)'" onblur="this.style.borderColor='var(--border)'" />
+          </div>
+          <div style="display:flex;flex-direction:column;gap:.25rem">
+            <label style="font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)">Attending As *</label>
+            <select id="gala-role" style="padding:.6rem .85rem;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.875rem;color:var(--navy);width:100%;outline:none;background:var(--white)" onfocus="this.style.borderColor='var(--crimson)'" onblur="this.style.borderColor='var(--border)'">
+              <option value="">Select…</option>
+              <option>JWPA Member</option>
+              <option>Women Physician Guest</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:.25rem;margin-bottom:1.25rem">
+          <label style="font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)">Dietary Restrictions / Notes</label>
+          <input id="gala-notes" type="text" placeholder="Vegetarian, allergies, accessibility needs…" style="padding:.6rem .85rem;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.875rem;color:var(--navy);width:100%;outline:none" onfocus="this.style.borderColor='var(--crimson)'" onblur="this.style.borderColor='var(--border)'" />
+        </div>
+
+        <button onclick="submitGalaReg()" style="width:100%;padding:.875rem;background:var(--crimson);color:var(--white);font-family:var(--font-body);font-size:.9rem;font-weight:700;border:none;border-radius:var(--radius-sm);cursor:pointer;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:.5rem" onmouseover="this.style.background='var(--crimson-dark)'" onmouseout="this.style.background='var(--crimson)'">
+          Continue to Payment
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <p style="font-size:.68rem;color:var(--muted-light);margin-top:.65rem;text-align:center">You&#39;ll confirm payment on the next step.</p>
+      </div>
+
+      <!-- ── STEP 2: Payment ── -->
+      <div id="gala-step2" style="display:none;padding:1.75rem 2rem">
+
+        <!-- Confirmation banner -->
+        <div style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:var(--radius-sm);padding:.875rem 1.1rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem">
+          <svg width="20" height="20" fill="none" stroke="#16a34a" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          <div>
+            <div style="font-size:.8rem;font-weight:700;color:#15803d">Registration submitted!</div>
+            <div id="gala-confirm-name" style="font-size:.75rem;color:#166534">We&#39;ll send a confirmation to your email. Please complete payment below to secure your spot.</div>
+          </div>
+        </div>
+
+        <div style="font-size:.82rem;font-weight:700;color:var(--navy);margin-bottom:1.25rem">Choose your payment method:</div>
+
+        <!-- Stripe Buy Button -->
+        <div style="background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:1.25rem;margin-bottom:1rem">
+          <div style="font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.875rem">Pay by Card</div>
+          <!--
+            REPLACE buy-button-id and publishable-key below
+            with your actual Stripe Buy Button credentials.
+            Create one at: dashboard.stripe.com → Products → Payment Links → Buy Button
+          -->
+          <stripe-buy-button
+            buy-button-id="YOUR_BUY_BUTTON_ID"
+            publishable-key="YOUR_PUBLISHABLE_KEY">
+          </stripe-buy-button>
+          <p style="font-size:.7rem;color:var(--muted-light);margin-top:.75rem">Secure payment powered by Stripe. Cards accepted: Visa, Mastercard, Amex.</p>
+        </div>
+
+        <!-- Zelle option -->
+        <div style="background:#f5f0ff;border:1.5px solid #c4b5fd;border-radius:var(--radius-sm);padding:1.1rem 1.25rem;margin-bottom:1.25rem;display:flex;gap:.875rem;align-items:flex-start">
+          <div style="width:36px;height:36px;border-radius:50%;background:#6d1ed4;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 18h13l-9-12h13" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div style="font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#6d1ed4;margin-bottom:.35rem">Or Pay with Zelle</div>
+            <div style="font-size:.82rem;color:#334155;line-height:1.7">Send to <strong style="font-family:monospace">naharmd@ymail.com</strong><br><span style="color:#64748b">Recipient: Dr. Sudha Nahar / JWPA</span><br><span style="color:#64748b">Memo: Your name + &ldquo;Annual Event Registration&rdquo;</span></div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+          <button onclick="goBackToStep1()" style="flex:1;padding:.7rem;font-family:var(--font-body);font-size:.85rem;font-weight:600;background:var(--white);color:var(--navy);border:1.5px solid var(--border);border-radius:var(--radius-sm);cursor:pointer">&#8592; Back</button>
+          <button onclick="closeGalaModal()" style="flex:1;padding:.7rem;font-family:var(--font-body);font-size:.85rem;font-weight:600;background:var(--white);color:var(--muted);border:1.5px solid var(--border);border-radius:var(--radius-sm);cursor:pointer">Done</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <script>    document.documentElement.classList.add('js-ready');
+
     // ── Mobile hamburger ──
     const hamburger  = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobileMenu');
@@ -2413,48 +2534,66 @@
     // ── Footer newsletter ──
     
     function openGalaModal() {
-      const m = document.getElementById('annual-event-modal');
+      var m = document.getElementById('gala-modal');
       m.style.display = 'flex';
       document.body.style.overflow = 'hidden';
+      // Always start on step 1
+      showGalaStep(1);
     }
+
     function closeGalaModal() {
-      document.getElementById('annual-event-modal').style.display = 'none';
+      document.getElementById('gala-modal').style.display = 'none';
       document.body.style.overflow = '';
     }
-    document.getElementById('annual-event-modal').addEventListener('click', function(e) {
-      if (e.target === this) closeGalaModal();
-    });
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') closeGalaModal();
-    });
+
+    function showGalaStep(step) {
+      document.getElementById('gala-step1').style.display = step === 1 ? 'block' : 'none';
+      document.getElementById('gala-step2').style.display = step === 2 ? 'block' : 'none';
+      // Update step dots
+      document.getElementById('gala-step1-dot').style.background = 'rgba(255,255,255,.9)';
+      document.getElementById('gala-step2-dot').style.background = step === 2 ? 'rgba(255,255,255,.9)' : 'rgba(255,255,255,.3)';
+      document.getElementById('gala-step-label').innerHTML = step === 1
+        ? 'Step 1 of 2 &mdash; Registration'
+        : 'Step 2 of 2 &mdash; Payment';
+    }
+
+    function goBackToStep1() {
+      showGalaStep(1);
+    }
+
     function submitGalaReg() {
-      const first  = document.getElementById('gFirst').value.trim();
-      const last   = document.getElementById('gLast').value.trim();
-      const email  = document.getElementById('gEmail').value.trim();
-      const role   = document.getElementById('gRole').value || 'Not specified';
-      const guests = document.getElementById('gGuests').value;
-      const notes  = document.getElementById('gNotes').value.trim();
-      if (!first || !email || !email.includes('@')) {
-        showToast('Please fill in your name and email.');
+      var fname = document.getElementById('gala-fname').value.trim();
+      var lname = document.getElementById('gala-lname').value.trim();
+      var email = document.getElementById('gala-email').value.trim();
+      var role  = document.getElementById('gala-role').value;
+
+      if (!fname || !lname || !email || !role) {
+        showToast('Please fill in all required fields.');
         return;
       }
-      const subject = encodeURIComponent('JWPA JWPA Annual Event Registration — October 10, 2026');
-      const body = encodeURIComponent(
+
+      // Send registration email
+      var subject = encodeURIComponent('JWPA Annual Event Registration — ' + fname + ' ' + lname);
+      var body = encodeURIComponent(
         'ANNUAL EVENT REGISTRATION\n' +
-        '─────────────────────────────\n' +
-        'Name:       ' + first + ' ' + last + '\n' +
-        'Email:      ' + email + '\n' +
-        'Attending:  ' + role + '\n' +
-        'Guests:     ' + guests + '\n' +
-        'Notes:      ' + (notes || '—') + '\n\n' +
-        'Event: JWPA Annual Women Physician Meetup & Celebration\n' +
-        'Date:  Friday, October 10, 2026\n' +
-        'Venue: Akbar Restaurant, 21 Cortlandt St, Edison, NJ 08837'
+        '─────────────────────────\n\n' +
+        'Name:   ' + fname + ' ' + lname + '\n' +
+        'Email:  ' + email + '\n' +
+        'Phone:  ' + (document.getElementById('gala-phone').value || '—') + '\n' +
+        'Role:   ' + role + '\n' +
+        'Notes:  ' + (document.getElementById('gala-notes').value || '—')
       );
-      window.location.href = 'mailto:events@jwpa.org?subject=' + subject + '&body=' + body;
-      closeGalaModal();
-      showToast('Registration request sent — we\'ll be in touch!');
+      window.open('mailto:info@jwpa.org?subject=' + subject + '&body=' + body, '_blank');
+
+      // Update confirmation name and move to step 2
+      document.getElementById('gala-confirm-name').textContent =
+        'Confirmation sent for ' + fname + ' ' + lname + ' (' + email + ')';
+      showGalaStep(2);
     }
+
+    // Close on backdrop click
+    var _gm = document.getElementById('gala-modal');
+    if (_gm) _gm.addEventListener('click', function(e) { if (e.target === this) closeGalaModal(); });
 
 
 
@@ -2470,91 +2609,5 @@
       showToast('Request sent!');
     }
   </script>
-
-
-  <!-- ══════════════════════════════════════════
-       ANNUAL EVENT REGISTRATION MODAL
-  ══════════════════════════════════════════ -->
-  <div id="annual-event-modal" style="display:none;position:fixed;inset:0;z-index:500;background:rgba(10,14,26,.88);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:1.5rem">
-    <div style="background:var(--white);border-radius:var(--radius-lg);max-width:520px;width:100%;box-shadow:var(--shadow-lg);overflow:hidden;animation:dropFade .2s ease">
-
-      <!-- Header -->
-      <div style="background:var(--navy);padding:1.75rem 2rem;position:relative">
-        <div style="font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:.4rem">Annual Event · JWPA 2026</div>
-        <div style="font-family:var(--font-display);font-size:1.3rem;font-weight:800;color:var(--white);line-height:1.2;margin-bottom:.75rem">JWPA Annual Women Physician Meetup<br>&amp; Celebration</div>
-        <div style="display:flex;flex-wrap:wrap;gap:1rem">
-          <div style="display:flex;align-items:center;gap:.4rem;font-size:.78rem;color:rgba(255,255,255,.65)">
-            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-            Friday, October 10, 2026
-          </div>
-          <div style="display:flex;align-items:center;gap:.4rem;font-size:.78rem;color:rgba(255,255,255,.65)">
-            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-            6:00 PM
-          </div>
-          <div style="display:flex;align-items:center;gap:.4rem;font-size:.78rem;color:rgba(255,255,255,.65)">
-            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
-            Akbar Restaurant · 21 Cortlandt St, Edison, NJ 08837
-          </div>
-        </div>
-        <button onclick="closeGalaModal()" style="position:absolute;top:1rem;right:1.25rem;background:rgba(255,255,255,.1);border:none;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--white)">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
-        </button>
-      </div>
-
-      <!-- Form -->
-      <div style="padding:1.75rem 2rem">
-        <p style="font-size:.82rem;color:var(--muted);margin-bottom:1.25rem;line-height:1.6">Complete the form below and we'll be in touch to confirm your registration. Open to JWPA members and women physician guests only. Spouses are not included for the October 10, 2026 event.</p>
-
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem">
-          <div style="display:flex;flex-direction:column;gap:.25rem">
-            <label style="font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)">First Name *</label>
-            <input id="gFirst" type="text" placeholder="Jane" style="padding:.6rem .85rem;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.875rem;color:var(--navy);width:100%;outline:none" onfocus="this.style.borderColor='var(--crimson)'" onblur="this.style.borderColor='var(--border)'" />
-          </div>
-          <div style="display:flex;flex-direction:column;gap:.25rem">
-            <label style="font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)">Last Name *</label>
-            <input id="gLast" type="text" placeholder="Smith" style="padding:.6rem .85rem;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.875rem;color:var(--navy);width:100%;outline:none" onfocus="this.style.borderColor='var(--crimson)'" onblur="this.style.borderColor='var(--border)'" />
-          </div>
-        </div>
-
-        <div style="display:flex;flex-direction:column;gap:.25rem;margin-bottom:.75rem">
-          <label style="font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)">Email Address *</label>
-          <input id="gEmail" type="email" placeholder="jane@hospital.org" style="padding:.6rem .85rem;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.875rem;color:var(--navy);width:100%;outline:none" onfocus="this.style.borderColor='var(--crimson)'" onblur="this.style.borderColor='var(--border)'" />
-        </div>
-
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem">
-          <div style="display:flex;flex-direction:column;gap:.25rem">
-            <label style="font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)">Attending as</label>
-            <select id="gRole" style="padding:.6rem .85rem;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.875rem;color:var(--navy);width:100%;outline:none;appearance:none;background:var(--white)" onfocus="this.style.borderColor='var(--crimson)'" onblur="this.style.borderColor='var(--border)'">
-              <option value="">Select…</option>
-              <option>JWPA Member</option>
-              <option>Women Physician Guest</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:.25rem">
-            <label style="font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)">Number of Guests</label>
-            <select id="gGuests" style="padding:.6rem .85rem;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.875rem;color:var(--navy);width:100%;outline:none;appearance:none;background:var(--white)" onfocus="this.style.borderColor='var(--crimson)'" onblur="this.style.borderColor='var(--border)'">
-              <option>Just me</option>
-              <option>1 guest</option>
-              <option>2 guests</option>
-              <option>3 guests</option>
-              <option>4+ guests</option>
-            </select>
-          </div>
-        </div>
-
-        <div style="display:flex;flex-direction:column;gap:.25rem;margin-bottom:1.25rem">
-          <label style="font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)">Dietary needs or notes (optional)</label>
-          <input id="gNotes" type="text" placeholder="e.g. vegetarian, accessibility needs" style="padding:.6rem .85rem;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.875rem;color:var(--navy);width:100%;outline:none" onfocus="this.style.borderColor='var(--crimson)'" onblur="this.style.borderColor='var(--border)'" />
-        </div>
-
-        <button onclick="submitGalaReg()" style="width:100%;padding:.875rem;background:var(--crimson);color:var(--white);font-family:var(--font-body);font-size:.9rem;font-weight:700;border:none;border-radius:var(--radius-sm);cursor:pointer;transition:background .2s" onmouseover="this.style.background='var(--crimson-dark)'" onmouseout="this.style.background='var(--crimson)'">
-          Submit Registration
-        </button>
-        <p style="font-size:.68rem;color:var(--muted-light);margin-top:.65rem;text-align:center">We'll follow up to confirm. Check back for the confirmed start time as October approaches.</p>
-      </div>
-    </div>
-  </div>
-
 </body>
 </html>
